@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'matefinder.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgresql',
+        'USER': 'postgresql',
+        'PASSWORD': 'postgresql',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
