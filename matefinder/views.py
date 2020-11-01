@@ -46,7 +46,7 @@ def logout(request):
         return HttpResponseRedirect(reverse("login"))
     else:
         logout(request)
-        return render(request, "login.html", {
+        return render(request, "login", {
             "message": "Logged out"
         })
 
