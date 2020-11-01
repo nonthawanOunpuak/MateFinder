@@ -15,6 +15,10 @@ def contact(request):
     return render(request, 'contact.html')
 
 
+def home(request):
+    return render(request, 'home.html')
+
+
 def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
@@ -66,4 +70,4 @@ def signup(request):
             return redirect('login')
     else:
         form = UserCreationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'signup.html', {'form': form})

@@ -14,8 +14,8 @@
 			<img src="../static/images/bg.svg">
 		</div>
 		<div class="login-content">
-			<form action="{% url 'login' %}" method="post">
-                {% csrf_token %}
+			<form action="{% url 'home' %}" method="post">
+				{% csrf_token %}
 				<img src="../static/images/avatar.svg">
 				<h2 class="title">MateFinder</h2>
            		<div class="input-div one">
@@ -36,7 +36,7 @@
            		    	<input name="password" type="password" class="input">
             	   </div>
             	</div>
-            	
+            	<a href="{% url 'signup' %}">Signup</a>
             	<input type="submit" class="btn" value="Login">
             </form>
         </div>

@@ -16,16 +16,15 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
-from .views import about, contact, login, signup
+from .views import about, contact, login, home, signup
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', about, name='about'),
-
+    url(r'^$', login, name='login'),
     url(r'^contact$', contact, name='contact'),
-    url(r'^login$', login, name='login'),
+    url(r'^about$', about, name='about'),
     url(r'^signup$', signup, name='signup'),
-
-
+    url(r'^home$', home, name='home'),
 
 ]
