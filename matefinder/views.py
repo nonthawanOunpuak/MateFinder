@@ -45,7 +45,7 @@ def login(request):
 
 def logout(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         logout(request)
         return render(request, "login.html", {
@@ -67,7 +67,7 @@ def signup(request):
             User = authenticate(request, username=username, name=name,
                                 password=password, email=email, phone=phone, year=year)
             login(User)
-            return redirect('login')
+            return HttpResponseRedirect('login')
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
