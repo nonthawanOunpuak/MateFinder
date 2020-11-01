@@ -20,7 +20,7 @@ def index(request):
     return render(request, "index.html")
 
 
-def login_view(request):
+def login(request):
     # if not request.user.is_authenticated:
     #     return HttpResponseRedirect(reverse("index"))
     # else:
@@ -38,11 +38,11 @@ def login_view(request):
     return render(request, "login.html")
 
 
-def logout_view(request):
+def logout(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("index"))
     else:
         logout(request)
-        return render(request, "users/login.html", {
+        return render(request, "login.html", {
             "message": "Logged out"
         })

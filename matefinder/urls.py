@@ -16,12 +16,15 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
-from .views import about, contact
+from .views import about, contact, login
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', about, name='about'),
 
     url(r'^contact$', contact, name='contact'),
+    url(r'^login$', login, name='login'),
+
+
 
 ]
