@@ -17,14 +17,15 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from .views import about, contact, login, home, signup
+from django.urls import path
+from . import views
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', login, name='login'),
-    url(r'^contact$', contact, name='contact'),
-    url(r'^about$', about, name='about'),
-    url(r'^signup$', signup, name='signup'),
-    url(r'^home$', home, name='home'),
-
+    path('', views.index, name='index'),
+    path('login', views.login, name='login'),
+    path('logout', views.logout, name='logout'),
+    path('about', views.about, name='about'),
+    path('signup', views.signup, name='signup'),
+    path('home', views.home, name='home'),
 ]
