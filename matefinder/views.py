@@ -45,7 +45,7 @@ def login(request):
 
 def logout(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         logout(request)
         return render(request, "login.html", {
