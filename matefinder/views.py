@@ -13,6 +13,9 @@ def about(request):
 def contact(request):
     return render(request, 'contact.html')
 
+def home(request):
+    return render(request, 'home.html')
+
 
 def index(request):
     if not request.user.is_authenticated:
@@ -46,3 +49,6 @@ def logout(request):
         return render(request, "login.html", {
             "message": "Logged out"
         })
+
+def register(request):
+    return render(request, 'register.html')

@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
-from .views import about, contact, login
+from .views import about, contact, login, register, home
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,7 +24,7 @@ urlpatterns = [
 
     url(r'^contact$', contact, name='contact'),
     url(r'^login$', login, name='login'),
-
-
+    url(r'^register$', register, name='register'),
+    url(r'^home$', home, name='home'),
 
 ]
