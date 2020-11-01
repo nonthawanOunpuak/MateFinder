@@ -5,17 +5,18 @@ from django.contrib.auth.models import User
 class Student(models.Model):
     username = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
     phone = models.CharField(max_length=20)
     year = models.IntegerField()
 
     def __str__(self):
-        return f"{self.id}, {self.username}, {self.name}, {self.email}, {self.phone}, {self.year}"
+        return f"{self.id}, {self.username}, {self.name},{self.password}, {self.email}, {self.phone}, {self.year}"
 
 
 class RequestInformation(models.Model):
     username = models.CharField(max_length=255)
-    name_req: models.CharField(max_length=255)
+    name_req = models.CharField(max_length=255)
 
     def __str__(self):
         return f"{self.id}, {self.username}, {self.name_req}"
@@ -23,7 +24,7 @@ class RequestInformation(models.Model):
 
 class SentRequestInformation(models.Model):
     username = models.CharField(max_length=255)
-    name_sent: models.CharField(max_length=255)
+    name_sent = models.CharField(max_length=255)
 
     def __str__(self):
         return f"{self.id}, {self.username}, {self.name_sent}"
