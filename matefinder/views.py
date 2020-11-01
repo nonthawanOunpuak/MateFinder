@@ -46,16 +46,9 @@ def logout(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("index"))
     else:
-<<<<<<< HEAD
+
         # logout(request)
         return render(request, "login.html")
-=======
-        logout(request)
-        return render(request, "login", {
-            "message": "Logged out"
-        })
-
->>>>>>> 89e4c1056c7c7660d48aab4415d7686f0f099632
 
 def signup(request):
     if request.method == 'POST':
