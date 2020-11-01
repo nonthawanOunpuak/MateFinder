@@ -70,7 +70,7 @@ class UserTestCase(TestCase):
                 "password":"123456789",
                 "email":"nonthawan@mail.com",
                 "phone":"1234567890",
-                "year":"2"
+                "year":"First years"
             }
             )
         self.assertEqual(response.status_code, 200)
@@ -87,10 +87,10 @@ class UserTestCase(TestCase):
         response = c.post(self.home)
         self.assertEqual(response.status_code, 200)
 
-
     def test_logout(self):
         c = Client()
         c.force_login(self.user1)
         response = c.get(self.logout)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
+
