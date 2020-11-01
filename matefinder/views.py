@@ -42,14 +42,12 @@ def login(request):
 
 
 def logout(request):
+
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("index"))
     else:
-        logout(request)
-        return render(request, "login.html", {
-            "message": "Logged out"
-        })
-
+        # logout(request)
+        return render(request, "login.html")
 
 def signup(request):
     if request.method == 'POST':
