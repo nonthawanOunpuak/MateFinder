@@ -26,9 +26,7 @@ def index(request):
 
 
 def login(request):
-    # if not request.user.is_authenticated:
-    #     return HttpResponseRedirect(reverse("index"))
-    # else:
+
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
