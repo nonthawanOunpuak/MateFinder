@@ -113,6 +113,9 @@
           </center> -->
 
           <center>
+            <div class="section-heading">
+                <h3 class="team"> Create Post</h3> <hr>
+              </div>
           <form action={% url "store" %} method="POST">
             {% csrf_token %}
             <article class="card-body mx-auto" style="max-width: 50%;">
