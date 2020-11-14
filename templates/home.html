@@ -116,6 +116,29 @@
       </div>
       </center>
 
+      <table border="1" class="table">
+        <thead>
+          <tr>
+            <th>My name is</th>
+            <th>Dormitory</th>
+            <th>Price</th>
+            <th>Details</th>
+            <th>Type</th>
+         </tr>
+        </thead>
+        <tbody>
+        {% for d_list in dorms %}
+        <tr>
+          <td>{{ emp_list.username }}</td>
+          <td>{{ emp_list.name_dorm }}</td>
+          <td>{{ emp_list.price }}</td>
+          <td>{{ emp_list.details_dorm}}</td>
+          <td>{{ emp_list.type_dorm}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+       </table>
+
       <div class="row text-center">
         <div class="col-md-12">
           <div class="border-top pt-5">

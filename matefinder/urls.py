@@ -35,4 +35,6 @@ urlpatterns = [
 
     path('store', views.storeDorm, name='store'),
     path('post', views.createDorm, name='post'),
+
+    path('<studentlink>', views.profile, name='profile'),
 ]

@@ -1,0 +1,80 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/style_register.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Profile</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .rectangle {
+            height: 40px;
+            width: 300px;
+            border: 1px solid black;
+            background-color: #c5f0e1;
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+        <img class="wave" src="../static/images/wave.png">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!------ Include the above in your HEAD tag ---------->
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+        <div class="container">
+            <div>
+                <img style="border-radius: 50%; width:550; height:450; padding-left: 200px; padding-top: 25px;" src="../static/images/picperson2.jpg" alt="cat">
+                
+            </div>
+
+            <article class="card-body mx-auto" style="max-width: 400px; margin-top: 50px; padding-right: 50px;">
+                <h4 class="card-title mt-3 text-center">Profile</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Student Name -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <div class="rectangle"><h4>{{name}}</h4></div>
+                    </div> 
+                    <!-- Student Email -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                        </div>
+                        <div class="rectangle"><h4>{{email}}</h4></div>
+                    </div>
+                    <!-- Student Phone No. -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                        </div>
+                        <div class="rectangle"><h4>{{phone}}</h4></div>
+                    </div> 
+                    <!-- Student Year -->
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                        </div>
+                        <div class="rectangle"><h4>Year&nbsp;{{year}}</h4></div>
+                    </div> 
+                    <!-- Profile edit button -->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block" href="{% url 'login' %}"> Edit Profile </button>
+                    </div>
+                    <!-- image -->
+                    <img style="width: 350; height: 250;" src="../static/images/dorm.png">
+                </form>
+            </article>
+        </div>
+    </div>
+</body>
+</html>
