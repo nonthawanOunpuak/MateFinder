@@ -1,91 +1,183 @@
+{% block body %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static '/css/style_register.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" />
-<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="{% static '/css/styleabout.css' %}" />
+
 <html lang="en">
-<head>
+  <head>
     <title>Profile</title>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .rectangle {
-            height: 40px;
-            width: 300px;
-            border: 1px solid black;
-            background-color: #c5f0e1;
-            color: grey;
-        }
-    </style>
-</head>
-<body>
-        <img class="wave" src="../static/images/wave.png">
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!------ Include the above in your HEAD tag ---------->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+        <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <link rel="stylesheet" href="../static/fonts/icomoon/style.css"  rel="stylesheet"  />
 
-        <div class="col-10 col-md-12 d-none d-xl-block" style="background-color:#c5f0e1;" >
-            <nav class="site-navigation position-relative text-right" role="navigation">
-              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a href="home" class="nav-link">Home</a></li>
-                <li class="has-children">                  
-                <li><a href="about" class="nav-link">About</a></li>
-                <li><a href="#" class="nav-link">Blog</a></li>
-                <li class="active"><a href="profile" class="nav-link">Profile</a></li>
-                <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
-              </ul>
-            </nav>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"  rel="stylesheet" />
+    <link rel="stylesheet" href="../static/css/jquery-ui.css"  rel="stylesheet" />
+    <link rel="stylesheet" href="../static/css/owl.carousel.min.css"  rel="stylesheet" />
+    <link rel="stylesheet" href="../static/css/owl.theme.default.min.css"  rel="stylesheet"  />
+    <link rel="stylesheet" href="../static/css/owl.theme.default.min.css"  rel="stylesheet" />
+
+    <link rel="stylesheet" href="../static/css/jquery.fancybox.min.css"  rel="stylesheet" />
+
+    <link rel="stylesheet" href="../static/css/bootstrap-datepicker.css"  rel="stylesheet"  />
+
+    <link rel="stylesheet" href="../static/fonts/flaticon/font/flaticon.css" rel="stylesheet"  />
+    <link rel="stylesheet" href="../static/fonts/flaticon-covid/font/flaticon.css"  rel="stylesheet" />
+
+    <link rel="stylesheet" href="../static/css/aos.css" rel="stylesheet"  />
+
+    <link rel="stylesheet" href="../static/css/styleabout.css" rel="stylesheet"  />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+    <div class="site-wrap">
+  
+      <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
           </div>
-        <div class="container">
-            <div>
-                <img style="border-radius: 50%; width:550; height:450; padding-left: 200px; padding-top: 25px;" src="../static/images/picperson2.jpg" alt="cat">
-                
-            </div>
-
-            <article class="card-body mx-auto" style="max-width: 400px; margin-top: 50px; padding-right: 50px;">
-                <h4 class="card-title mt-3 text-center">Profile</h4>
-                <form method="post">
-                    {% csrf_token %}
-                    <!-- Student Name -->
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                        </div>
-                        <div class="rectangle"><h4>{{name}}</h4></div>
-                    </div> 
-                    <!-- Student Email -->
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-                        </div>
-                        <div class="rectangle"><h4>{{email}}</h4></div>
-                    </div>
-                    <!-- Student Phone No. -->
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                        </div>
-                        <div class="rectangle"><h4>{{phone}}</h4></div>
-                    </div> 
-                    <!-- Student Year -->
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-                        </div>
-                        <div class="rectangle"><h4>Year&nbsp;{{year}}</h4></div>
-                    </div> 
-                    <!-- Profile edit button -->
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block" href="{% url 'login' %}"> Edit Profile </button>
-                    </div>
-                    <!-- image -->
-                    <img style="width: 350; height: 250;" src="../static/images/dorm.png">
-                </form>
-            </article>
         </div>
+        <div class="site-mobile-menu-body"></div>
+      </div>
+  
+      
+      <header class="site-navbar light js-sticky-header site-navbar-target" role="banner">
+  
+        <div class="container">
+           
+          <div class="row align-items-center">
+            <div class="col-10 col-md-12 d-none d-xl-block" style="background-color:#c5f0e1;" >
+    
+              <nav class="site-navigation position-relative text-right" role="navigation">
+                <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                  <li ><a href="home" class="nav-link">Home</a></li>
+                  <li class="has-children">                  
+                  <li><a href="about" class="nav-link">About</a></li>
+                  <li><a href="#" class="nav-link">Blog</a></li>
+                  <li class="active"><a href="profile" class="nav-link">Profile</a></li>
+                  <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3 text-black"></span></a></div>
+          </div>
+        </div>
+      </header>
+      <br><br><br>
+      
+      <div class="row">
+        <div class="col-md-6 img">
+          <img src="../static/images/bg.svg"  alt="" style="max-width: 80%; max-height: 80%; margin-left: 20%;">
+        </div>
+        <div class="col-md-6 details">
+          <blockquote> 
+  <article class="card-body mx-auto" style="max-width: 400px; margin-top: 50px; padding-right: 50px;">
+    <!-- <img src="../static/images/bg.svg" style="max-width: 60%; max-height: 60%;"> -->
+        
+        <div class="section-heading">
+            <h3 class="team">Profile</h3> <hr>
+          </div>
+        <form method="post">
+            {% csrf_token %}
+            <!-- Student Name -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <div class="rectangle"><h4>{{name}}</h4></div>
+            </div> 
+            <!-- Student Email -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <div class="rectangle"><h4>{{email}}</h4></div>
+            </div>
+            <!-- Student Phone No. -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                </div>
+                <div class="rectangle"><h4>{{phone}}</h4></div>
+            </div> 
+            <!-- Student Year -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                </div>
+                <div class="rectangle"><h4>Year&nbsp;{{year}}</h4></div>
+            </div> 
+            <!-- Profile edit button -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block" href="{% url 'login' %}"> Edit Profile </button>
+            </div>
+           
+        </form>
     </div>
-</body>
+</div> 
+      
+<br>
+      <div class="row text-center">
+        <div class="col-md-12">
+          <div class="border-top pt-5">
+            <p class="copyright"><small>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
+
+            </div>
+          </div>
+
+        </div>
+    </div> 
+    <!-- .site-wrap -->
+
+    <script src="{% static '../static/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static '../static/js/popper.min.js' %}"></script>
+    <script src="{% static '../static/js/popper.min.js' %}"></script>
+    <script src="{% static '../static/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '../static/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static '../static/js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static '../static/js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static '../static/js/aos.js' %}"></script>
+    <script src="{% static '../static/js/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static '../static/js/jquery.sticky.js' %}"></script>
+    <script src="{% static '../static/js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static '../static/js/main_about.js' %}"></script>
+    <!-- <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../static/js/jquery-ui.js"></script>
+    <script src="../static/js/popper.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/owl.carousel.min.js"></script>
+    <script src="../static/js/jquery.countdown.min.js"></script>
+    <script src="../static/js/jquery.easing.1.3.js"></script>
+    <script src="../static/js/aos.js"></script>
+    <script src="../static/js/jquery.fancybox.min.js"></script>
+    <script src="../static/js/jquery.sticky.js"></script>
+    <script src="../static/js/isotope.pkgd.min.js"></script> -->
+  
+  
+    <script src="../static/js/main_about.js"></script>
+  
+  
+  </body>
+  </html>
+
 </html>
+
+
+{% endblock %}

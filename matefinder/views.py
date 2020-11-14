@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from .models import Student, RequestInformation, SentRequestInformation, DormInformation, CheckLists, User
+from .models import Student, RequestInformation, SentRequestInformation, DormInformation,  User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
@@ -83,62 +83,30 @@ def profileInfo(request):
         })
 
 
-# def dormCreate(request):
-#     if request.method == 'POST':
-#         form = DormInformationForm(request.POST)
-#         if form.is_valid():
-#             name_dorm = form.cleaned_data['name_dorm']
-#             details_dorm = form.cleaned_data['details_dorm']
-#             type_dorm = form.cleaned_data['type_dorm']
-#             price = form.cleaned_data['price_dorm']
-#             form.save()
-#             return HttpResponseRedirect('home')
-#     else:
-#         form = DormInformationForm()
-#     return render(request, 'home.html', {'form': form})
-
-
 def createDorm(request):
     return render(request, 'post.html')
 
 
 def storeDorm(request):
     d = DormInformation()
-    c = CheckLists()
     d.username = request.POST.get('username')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')
     d.price = request.POST.get('price')
-    c.username = d.username
-    c.timetosleep = request.POST.get('timetosleep')
-    c.pet = request.POST.get('pet')
-    c.light = request.POST.get('light')
+    d.timetosleep = request.POST.get('timetosleep')
+    d.pet = request.POST.get('pet')
+    d.light = request.POST.get('light')
     d.save()
-    c.save()
 
-    messages.success(request, "Employee Added Successfully")
-    return redirect('/home')
-
-def dormCreate(request):
-    if request.method == "POST":
-        form = DormInformationForm(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                model = form.instance
-                return redirect('home')
-            except:
-                pass
-    else:
-        form = DormInformationForm()
-    return render(request, 'home.html', {'form': form})
+    messages.success(request, "Post Added Successfully")
+    return redirect('/homepage')
 
 
 def viewPostDorm(request):
     print("viewPostDorm")
-    return render(request, 'home.html', {
-        "dorms" : DormInformation.objects.all()
+    return render(request, 'homepage.html', {
+        "dorms": DormInformation.objects.all()
     })
 
 
@@ -155,3 +123,19 @@ def profile(request, studentlink):
         "year": student.year,
     }
     )
+
+
+def deleteDorm(request, pk):
+    d = DormInformation.objects.get(id=pk)
+    d.delete()
+    messages.success(request, "Post Deleted Successfully")
+    return redirect('/home')
+
+# def viewPostDorm(request):
+#     if not request.user.is_authenticated:
+#         return HttpResponseRedirect(reverse("homepage"))
+#     else:
+#         dorms = DormInformation.objects.all().get(username=request.user.username)
+#         return render(request, 'homepage.html', {
+#             "dorms": dorms,
+#         })
