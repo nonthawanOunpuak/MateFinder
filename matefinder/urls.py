@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
-from .views import about, contact, login, home, signup, logout
+from .views import about, contact, login, home, signup, logout, dormCreate
 from django.urls import path
 from . import views
 
