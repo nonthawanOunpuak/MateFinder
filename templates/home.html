@@ -93,15 +93,39 @@
       
   
   
-      <div class="hero-v1">
+       <div class="hero-v1">
         <div class="container">
           <div class="row align-items-center">
-            <div class="col-lg-6 mr-auto text-center text-lg-left">
-  
+            <div class="col-lg-6 mr-auto text-center text-lg-left"> 
+
+             
             
-          </div>
+          <!-- </div>
         </div>
-      </div>
+      </div> -->
+        <!-- <div class="card-body">
+                <h5>Post...</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <a type="button" class="btn btn-danger" href="{%url 'home' %}">Cancel</a>
+                    <button type="submit" class="btn btn-success">Create</button>
+                </form>
+        </div> -->
+        <form method="post">
+
+          
+          <label for="name_dorm">Name of Dormitory: </label>
+          <input id="name_dorm" type="text" name="name_dorm" value="{{ current_name }}">
+          <label for="details_dorm">Details: </label>
+          <input id="details_dorm" type="text" name="details_dorm" value="{{ current_name }}">
+          <label for="type_dorm">Type: </label>
+          <input id="type_dorm" type="text" name="type_dorm" value="{{ current_name }}">
+        
+          
+          <input type="submit" value="OK">
+        </form>
+
 
       <div class="row text-center">
         <div class="col-md-12">

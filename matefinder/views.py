@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from .models import Student, RequestInformation, SentRequestInformation, DormInformation, CheckLists
+from .models import Student, RequestInformation, SentRequestInformation, DormInformation, CheckLists, User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from .forms import DormInformationForm
 
 
 def about(request):
@@ -50,6 +52,7 @@ def logout(request):
         # logout(request)
         return render(request, "login.html")
 
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -68,3 +71,50 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+
+def profileInfo(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        profile = User.object.all().get(username=request.user.username)
+        return render(request, "profile.html", {
+            "Profile": profile
+        })
+
+
+def dormCreate(request):
+    if request.method == 'POST':
+        form = DormInformationForm(request.POST)
+        if form.is_valid():
+            name_dorm = form.cleaned_data['name_dorm']
+            details_dorm = form.cleaned_data['details_dorm']
+            type_dorm = form.cleaned_data['type_dorm']
+            price = form.cleaned_data['type_dorm']
+            return HttpResponseRedirect('home')
+    else:
+        form = DormInformationForm()
+    return render(request, 'home.html', {'form': form})
+
+
+# def dormCreate(request):
+#     if request.method == "POST":
+#         form = DormInformationForm(request.POST)
+#         if form.is_valid():
+#             try:
+#                 form.save()
+#                 model = form.instance
+#                 return redirect('home')
+#             except:
+#                 pass
+#     else:
+#         form = DormInformationForm()
+#     return render(request, 'home.html', {'form': form})
+
+
+def viewPostDorm(request):
+    context = {}
+
+    context["dataDorm"] = DormInformation.objects.all()
+
+    return render(request, "home.html", context)
