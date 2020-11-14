@@ -90,7 +90,7 @@ def dormCreate(request):
             name_dorm = form.cleaned_data['name_dorm']
             details_dorm = form.cleaned_data['details_dorm']
             type_dorm = form.cleaned_data['type_dorm']
-            price = form.cleaned_data['type_dorm']
+            price = form.cleaned_data['price_dorm']
             form.save()
             return HttpResponseRedirect('home')
     else:
