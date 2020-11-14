@@ -1,0 +1,4 @@
+<form action="{% url 'editepost' username %}" method="post" >
+  {% csrf_token %}
+  <input type="text" value="name"> 
+</form>

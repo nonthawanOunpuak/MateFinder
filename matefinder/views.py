@@ -24,6 +24,16 @@ def index(request):
         return HttpResponseRedirect(reverse("login"))
     return render(request, "index.html")
 
+def profile(request, studentlink):
+    student = Student.objects.get(username=studentlink)
+    return render(request, 'profile.html',{
+        "name": student.name,
+        "email": student.email,
+        "phone": student.phone,
+        "year" : student.year,
+        }
+       )
+
 
 def login(request):
 
