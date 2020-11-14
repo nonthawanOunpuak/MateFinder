@@ -15,8 +15,6 @@ class UserTestCase(TestCase):
         SentRequestInformation.objects.create(username="nonthawan1", name_sent="nonthawan1")
         DormInformation.objects.create(username="nonthawan1", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000)
         CheckLists.objects.create(username="nonthawan1", light=True,timetosleep="12",pet=True)
-        self.logout = reverse("logout")
-        self.login = reverse("login")
 
         # Create User
         self.user1 = User.objects.create_user(username="knanporn",password="Knanporn1",email="knanporn@mail.com")
@@ -30,7 +28,6 @@ class UserTestCase(TestCase):
     # Django Testing
 
     # Client Testing
-
 
     def test_login(self):
         pass
@@ -47,6 +44,7 @@ class UserTestCase(TestCase):
         # Check that the response is 200 OK.
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
+
         # Check that the response message.
         self.assertEqual(response.context["message"],"กรุณากรอกรหัสผ่านที่ถูกต้อง")
 
@@ -55,6 +53,7 @@ class UserTestCase(TestCase):
         # Check that the response is 200 OK.
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
+
         # Check that the response message.
         self.assertEqual(response.context["message"],"กรุณากรอกรหัสผ่านที่ถูกต้อง")
 
@@ -94,3 +93,11 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
 
+    def test_logout_form_about(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.get(self.about)
+        self.assertEqual(response.status_code, 200)
+        response = c.get(self.logout)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'login.html')
