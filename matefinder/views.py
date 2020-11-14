@@ -87,7 +87,6 @@ def dormCreate(request):
     if request.method == 'POST':
         form = DormInformationForm(request.POST)
         if form.is_valid():
-
             name_dorm = form.cleaned_data['name_dorm']
             details_dorm = form.cleaned_data['details_dorm']
             type_dorm = form.cleaned_data['type_dorm']
@@ -115,8 +114,6 @@ def dormCreate(request):
 
 
 def viewPostDorm(request):
-    context = {}
-
-    context["dataDorm"] = DormInformation.objects.all()
-
-    return render(request, "home.html", context)
+    return render(request, 'home.html', {
+        "Dorms": DormInformation.objects.all()
+    })

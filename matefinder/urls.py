@@ -1,6 +1,6 @@
 """matefinder URL Configuration
 
-The `urlpatterns` list routes URLs to views. For more information please see:
+The urlpatterns list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 Examples:
 Function views
@@ -30,4 +30,8 @@ urlpatterns = [
     path('home', views.home, name='home'),
     path('admin/', admin.site.urls),
     path('dorm-create', views.dormCreate, name='dorm-create')
+<<<<<<< HEAD
 ]
+=======
+]
+>>>>>>> a32ea0bc983d6b6638b69a7841636e04a9ad57ad
