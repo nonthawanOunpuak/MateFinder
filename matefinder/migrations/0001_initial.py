@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CheckLists',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('username', models.CharField(max_length=255)),
                 ('light', models.BooleanField()),
                 ('timetosleep', models.CharField(max_length=255)),
@@ -24,7 +25,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DormInformation',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('username', models.CharField(max_length=255)),
                 ('name_dorm', models.CharField(max_length=255)),
                 ('details_dorm', models.CharField(max_length=255)),
@@ -35,7 +37,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='RequestInformation',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('username', models.CharField(max_length=255)),
                 ('name_req', models.CharField(max_length=255)),
             ],
@@ -43,7 +46,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='SentRequestInformation',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('username', models.CharField(max_length=255)),
                 ('name_sent', models.CharField(max_length=255)),
             ],
@@ -51,7 +55,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Student',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('username', models.CharField(max_length=255)),
                 ('name', models.CharField(max_length=255)),
                 ('password', models.CharField(max_length=255)),

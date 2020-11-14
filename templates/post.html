@@ -86,7 +86,7 @@
       </header>
       <br><br><br>
        
-            <center>
+            <!-- <center>
               <div class="section-heading">
                 <h3 class="team"> Create Post</h3> <hr>
               </div>
@@ -110,8 +110,54 @@
             <p><a href="#" id="post" class="btn btn-primary">Post</a></p>
           </article>
           </form>
-          </center>
-        
+          </center> -->
+
+          <center>
+          <form action={% url "store" %} method="POST">
+            {% csrf_token %}
+            <article class="card-body mx-auto" style="max-width: 50%;">
+
+                <div class="form-group">
+                    <!-- <label for="username">Your name</label> -->
+                    <input for="username" type="username" class="form-control" id="username" name="username" placeholder="Name Surname (e.g. Alice Jodan)">
+                  </div>
+
+              <div class="form-group">
+                <!-- <label for="name_dorm">Dormitory</label> -->
+                <input type="name_dorm" class="form-control" id="name_dorm" name="name_dorm" placeholder="Dormitory (e.g. city park, inter, etc.)">
+              </div>
+
+              <div class="form-group">
+                <!-- <label for="type_dorm">Type</label> -->
+                <input type="type_dorm" class="form-control" id="type_dorm" name="type_dorm" placeholder="Type (e.g. Male, Female)">
+              </div>
+
+              <div class="form-group">
+                <!-- <label for="price">Price</label> -->
+                <input type="price" class="form-control" id="price" name="price" placeholder="Price (baht)">
+              </div>
+
+              <div class="form-group">
+                <!-- <label for="details_dorm">Details</label> -->
+                <input type="details_dorm" class="form-control" id="details_dorm" name="details_dorm" placeholder="Detail (e.g. don't snoring )">
+              </div>
+
+              Sleeping with lights : 
+              <input type="radio" id="lightOn" name="light" value="lightOn">
+              <label for="lightOn">On</label>
+              <input type="radio" id="lightOff" name="light" value="lightOff">
+              <label for="lightOff">Off</label><br>
+              Raising animals : 
+              <input type="radio" id="lightOn" name="animal" value="animalYes">
+              <label for="animalYes">Yes</label>
+              <input type="radio" id="lightOff" name="animal" value="animalNo">
+              <label for="animalNo">No</label> <br>
+
+              <button type="submit" class="btn btn-primary">Post</button>
+
+       </article> 
+      </form>
+    </center>
       <br>
     
 

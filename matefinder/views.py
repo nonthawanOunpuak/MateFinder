@@ -83,40 +83,57 @@ def profileInfo(request):
         })
 
 
-def dormCreate(request):
-    if request.method == 'POST':
-        form = DormInformationForm(request.POST)
-        if form.is_valid():
-            name_dorm = form.cleaned_data['name_dorm']
-            details_dorm = form.cleaned_data['details_dorm']
-            type_dorm = form.cleaned_data['type_dorm']
-            price = form.cleaned_data['price_dorm']
-            form.save()
-            return HttpResponseRedirect('home')
-    else:
-        form = DormInformationForm()
-    return render(request, 'home.html', {'form': form})
-
-
 # def dormCreate(request):
-#     if request.method == "POST":
+#     if request.method == 'POST':
 #         form = DormInformationForm(request.POST)
 #         if form.is_valid():
-#             try:
-#                 form.save()
-#                 model = form.instance
-#                 return redirect('home')
-#             except:
-#                 pass
+#             name_dorm = form.cleaned_data['name_dorm']
+#             details_dorm = form.cleaned_data['details_dorm']
+#             type_dorm = form.cleaned_data['type_dorm']
+#             price = form.cleaned_data['price_dorm']
+#             form.save()
+#             return HttpResponseRedirect('home')
 #     else:
 #         form = DormInformationForm()
 #     return render(request, 'home.html', {'form': form})
 
 
+def createDorm(request):
+    return render(request, 'post.html')
+
+
+def storeDorm(request):
+    d = DormInformation()
+    d.username = request.POST.get('username')
+    d.name_dorm = request.POST.get('name_dorm')
+    d.details_dorm = request.POST.get('details_dorm')
+    d.type_dorm = request.POST.get('type_dorm')
+    d.price = request.POST.get('price')
+    d.save()
+    messages.success(request, "Employee Added Successfully")
+    return redirect('/home')
+
+def dormCreate(request):
+    if request.method == "POST":
+        form = DormInformationForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                model = form.instance
+                return redirect('home')
+            except:
+                pass
+    else:
+        form = DormInformationForm()
+    return render(request, 'home.html', {'form': form})
+
+
 def viewPostDorm(request):
+    print("viewPostDorm")
     return render(request, 'home.html', {
         "dorms": DormInformation.objects.all()
     })
+
 
 def post(request):
     return render(request, 'post.html')
