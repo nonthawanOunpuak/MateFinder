@@ -27,7 +27,18 @@
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-
+        <div class="col-10 col-md-12 d-none d-xl-block" style="background-color:#c5f0e1;" >
+            <nav class="site-navigation position-relative text-right" role="navigation">
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                <li><a href="home" class="nav-link">Home</a></li>
+                <li class="has-children">                  
+                <li><a href="about" class="nav-link">About</a></li>
+                <li><a href="#" class="nav-link">Blog</a></li>
+                <li class="active"><a href="profile" class="nav-link">Profile</a></li>
+                <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
+              </ul>
+            </nav>
+          </div>
         <div class="container">
             <div>
                 <img style="border-radius: 50%; width:550; height:450; padding-left: 200px; padding-top: 25px;" src="../static/images/picperson2.jpg" alt="cat">

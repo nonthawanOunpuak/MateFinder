@@ -146,8 +146,6 @@ def post(request):
     return render(request, 'post.html')
 
 
-<<<<<<< HEAD
-=======
 def profile(request, studentlink):
     student = Student.objects.get(username=studentlink)
     return render(request, 'profile.html', {
@@ -157,4 +155,3 @@ def profile(request, studentlink):
         "year": student.year,
     }
     )
->>>>>>> 47bb095421b6d1deeba567ce2a77cd99f19afbb2
