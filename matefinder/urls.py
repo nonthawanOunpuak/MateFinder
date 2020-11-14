@@ -31,8 +31,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dorm-create', views.dormCreate, name='dorm-create'),
     path('home', views.viewPostDorm, name='viewPost'),
+
+
     path('store', views.storeDorm, name='store'),
     path('post', views.createDorm, name='post'),
-
-
 ]
