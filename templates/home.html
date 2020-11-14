@@ -94,34 +94,39 @@
               <div class="section-heading">
                 <h3 class="team"> Create Post</h3> <hr>
               </div>
-            <form action="dorm-create" method="POST">
-              {% csrf_token %}
-              <article class="card-body mx-auto">
-              <input name="name_dorm" class="form-control" placeholder="Dormitory (e.g. city park, inter, etc.)" type="text"> <br>
-              <input name="type_dorm" class="form-control" placeholder="Type (e.g. Male, Female)" type="text"> <br>
-              <input name="price" class="form-control" placeholder="Price" type="text"> <br>
-              <input name="" class="form-control" placeholder="Time to sleep (e.g. 10 p.m., 1 a.m.)" type="text"> <br>
-              Sleeping with lights : 
-              <input type="radio" id="lightOn" name="light" value="lightOn">
-              <label for="lightOn">On</label>
-              <input type="radio" id="lightOff" name="light" value="lightOff">
-              <label for="lightOff">Off</label><br>
-              Raising animals : 
-              <input type="radio" id="lightOn" name="animal" value="animalYes">
-              <label for="animalYes">Yes</label>
-              <input type="radio" id="lightOff" name="animal" value="animalNo">
-              <label for="animalNo">No</label> <br>
-              <input type="submit" value="OK">
-              <!-- <p><a type="submit" value="OK" class="btn btn-primary">Post</a></p> -->
-              <form action="dorm-create" method="POST">
+            
+              <form action={% url "store" %} method="POST">
                 {% csrf_token %}
                 <article class="card-body mx-auto">
-                <input name="" class="form-control" placeholder="Dormitory (e.g. city park, inter, etc.)" type="text"> <br>
-                <input name="name_dorm" class="form-control" placeholder="Type (e.g. Male, Female)" type="text"> <br>
+
+                  <div class="form-group">
+                    <label for="name_dorm">Dormitory</label>
+                    <input type="name_dorm" class="form-control" id="dname" name="dname" placeholder="Dormitory (e.g. city park, inter, etc.)">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="type_dorm">Type</label>
+                    <input type="type_dorm" class="form-control" id="dtype" name="dtype" placeholder="Type (e.g. Male, Female)">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="price" class="form-control" id="dprice" name="dprice" placeholder="Price (baht)">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="details_dorm">Details</label>
+                    <input type="details_dorm" class="form-control" id="ddetails" name="ddetails" placeholder="Detail (e.g. don't snoring )">
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Post</button>
+<!-- 
+                <input name="name_dorm" class="form-control" placeholder="Dormitory (e.g. city park, inter, etc.)" type="text"> <br>
+                <input name="type_dorm" class="form-control" placeholder="Type (e.g. Male, Female)" type="text"> <br>
                 <input name="price" class="form-control" placeholder="Price" type="text"> <br>
-                <input name="" class="form-control" placeholder="Time to sleep (e.g. 10 p.m., 1 a.m.)" type="text"> <br>
-                <input name="details_dorm" class="form-control" placeholder="Detail (e.g. don't snoring )" type="text"> <br>
-                Sleeping with lights : 
+                <input name="" class="form-control" placeholder="Time to sleep (e.g. 10 p.m., 1 a.m.)" type="text"> <br> -->
+                <!-- <input name="details_dorm" class="form-control" placeholder="Detail (e.g. don't snoring )" type="text"> <br> -->
+                <!-- Sleeping with lights : 
                 <input type="radio" id="lightOn" name="light" value="lightOn">
                 <label for="lightOn">On</label>
                 <input type="radio" id="lightOff" name="light" value="lightOff">
@@ -131,10 +136,13 @@
                 <label for="animalYes">Yes</label>
                 <input type="radio" id="lightOff" name="animal" value="animalNo">
                 <label for="animalNo">No</label> <br>
-                <input type="submit" value="OK">
+                <button type="submit" class="btn btn-primary btn-block" href="{% url 'home' %}">Post</button>
+                <input type="submit" value="OK"> -->
                 <!-- <p><a id="myBtn" class="btn btn-primary">Post</a></p> -->
+                
+           </article> 
           </form>
-          </article>
+          
           </center>
         </div>
       </div>

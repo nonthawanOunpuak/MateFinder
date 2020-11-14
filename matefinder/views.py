@@ -87,10 +87,11 @@ def dormCreate(request):
     if request.method == 'POST':
         form = DormInformationForm(request.POST)
         if form.is_valid():
-            name_dorm = form.cleaned_data['name_dorm']
-            details_dorm = form.cleaned_data['details_dorm']
-            type_dorm = form.cleaned_data['type_dorm']
-            price = form.cleaned_data['type_dorm']
+            name_dorm = form.cleaned_data.get('name_dorm')
+            details_dorm = form.cleaned_data.get('details_dorm')
+            type_dorm = form.cleaned_data.get('type_dorm')
+            price = form.cleaned_data.get('price')
+
             form.save()
             return HttpResponseRedirect('home')
     else:
@@ -98,6 +99,19 @@ def dormCreate(request):
     return render(request, 'home.html', {'form': form})
 
 
+def createDorm(request):
+    return render(request, 'post.html')
+
+
+def storeDorm(request):
+    d = DormInformation()
+    d.name_dorm = request.POST.get('name_dorm')
+    d.details_dorm = request.POST.get('details_dorm')
+    d.type_dorm = request.POST.get('type_dorm')
+    d.price = request.POST.get('price')
+    d.save()
+    messages.success(request, "Employee Added Successfully")
+    return redirect('/post')
 # def dormCreate(request):
 #     if request.method == "POST":
 #         form = DormInformationForm(request.POST)
@@ -114,6 +128,7 @@ def dormCreate(request):
 
 
 def viewPostDorm(request):
+    print("viewPostDorm")
     return render(request, 'home.html', {
         "dorms": DormInformation.objects.all()
     })

@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
-from .views import about, contact, login, home, signup, logout, dormCreate
+from .views import about, contact, login, home, signup, logout, dormCreate, storeDorm, createDorm
 from django.urls import path
 from . import views
 
@@ -31,4 +31,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dorm-create', views.dormCreate, name='dorm-create'),
     path('home', views.viewPostDorm, name='viewPost'),
+    path('store', views.storeDorm, name='store'),
+    path('post', views.createDorm, name='post'),
+
+
 ]
