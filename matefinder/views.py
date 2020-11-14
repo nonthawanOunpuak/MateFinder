@@ -105,13 +105,14 @@ def createDorm(request):
 
 def storeDorm(request):
     d = DormInformation()
+    d.username = request.POST.get('username')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')
     d.price = request.POST.get('price')
     d.save()
     messages.success(request, "Employee Added Successfully")
-    return redirect('/post')
+    return redirect('/home')
 # def dormCreate(request):
 #     if request.method == "POST":
 #         form = DormInformationForm(request.POST)

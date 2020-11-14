@@ -116,6 +116,11 @@
             {% csrf_token %}
             <article class="card-body mx-auto">
 
+                <div class="form-group">
+                    <label for="username">Your name</label>
+                    <input type="username" class="form-control" id="username" name="username" placeholder="e.g. Alice Jodan">
+                  </div>
+
               <div class="form-group">
                 <label for="name_dorm">Dormitory</label>
                 <input type="name_dorm" class="form-control" id="name_dorm" name="name_dorm" placeholder="Dormitory (e.g. city park, inter, etc.)">
