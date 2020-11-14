@@ -87,10 +87,12 @@ def dormCreate(request):
     if request.method == 'POST':
         form = DormInformationForm(request.POST)
         if form.is_valid():
+
             name_dorm = form.cleaned_data['name_dorm']
             details_dorm = form.cleaned_data['details_dorm']
             type_dorm = form.cleaned_data['type_dorm']
             price = form.cleaned_data['type_dorm']
+            form.save()
             return HttpResponseRedirect('home')
     else:
         form = DormInformationForm()

@@ -44,6 +44,7 @@ class UserTestCase(TestCase):
         # Check that the response is 200 OK.
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
+
         # Check that the response message.
         self.assertEqual(response.context["message"],"กรุณากรอกรหัสผ่านที่ถูกต้อง")
 
@@ -52,6 +53,7 @@ class UserTestCase(TestCase):
         # Check that the response is 200 OK.
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
+
         # Check that the response message.
         self.assertEqual(response.context["message"],"กรุณากรอกรหัสผ่านที่ถูกต้อง")
 
@@ -91,3 +93,11 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
 
+    def test_logout_form_about(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.get(self.about)
+        self.assertEqual(response.status_code, 200)
+        response = c.get(self.logout)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'login.html')
