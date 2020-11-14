@@ -104,12 +104,19 @@ def createDorm(request):
 
 def storeDorm(request):
     d = DormInformation()
+    c = CheckLists()
     d.username = request.POST.get('username')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')
     d.price = request.POST.get('price')
+    c.username = d.username
+    c.timetosleep = request.POST.get('timetosleep')
+    c.pet = request.POST.get('pet')
+    c.light = request.POST.get('light')
     d.save()
+    c.save()
+
     messages.success(request, "Employee Added Successfully")
     return redirect('/home')
 
@@ -139,3 +146,15 @@ def post(request):
     return render(request, 'post.html')
 
 
+<<<<<<< HEAD
+=======
+def profile(request, studentlink):
+    student = Student.objects.get(username=studentlink)
+    return render(request, 'profile.html', {
+        "name": student.name,
+        "email": student.email,
+        "phone": student.phone,
+        "year": student.year,
+    }
+    )
+>>>>>>> 47bb095421b6d1deeba567ce2a77cd99f19afbb2
