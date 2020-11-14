@@ -35,7 +35,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             dj_login(request, user)
-            return HttpResponseRedirect(reverse("home"))
+            return HttpResponseRedirect(reverse("homepage"))
         else:
             return render(request, "login.html", {
                 "message": "กรุณากรอกรหัสผ่านที่ถูกต้อง"
@@ -101,14 +101,14 @@ def storeDorm(request):
     d.save()
 
     messages.success(request, "Post Added Successfully")
-    return redirect('/home')
+    return redirect('/homepage')
 
 
-# def viewPostDorm(request):
-#     print("viewPostDorm")
-#     return render(request, 'home.html', {
-#         "dorms": DormInformation.objects.all()
-#     })
+def viewPostDorm(request):
+    print("viewPostDorm")
+    return render(request, 'homepage.html', {
+        "dorms": DormInformation.objects.all()
+    })
 
 
 def post(request):
@@ -130,14 +130,4 @@ def deleteDorm(request, pk):
     d = DormInformation.objects.get(id=pk)
     d.delete()
     messages.success(request, "Post Deleted Successfully")
-    return redirect('/home')
-
-
-def viewPostDorm(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("home"))
-    else:
-        dorms = DormInformation.objects.all().get(username=request.user.username)
-        return render(request, 'home.html', {
-            "dorms": dorms,
-        })
+    return redirect('/homepage')
