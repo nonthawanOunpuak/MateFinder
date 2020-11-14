@@ -113,8 +113,9 @@ def dormCreate(request):
 
 
 def viewPostDorm(request):
-    context = {}
+    return render(request, 'home.html', {
+        "dorms": DormInformation.objects.all()
+    })
 
-    context["dataDorm"] = DormInformation.objects.all()
-
-    return render(request, "home.html", context)
+def post(request):
+    return render(request, 'post.html')
