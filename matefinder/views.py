@@ -104,11 +104,11 @@ def storeDorm(request):
     return redirect('/home')
 
 
-def viewPostDorm(request):
-    print("viewPostDorm")
-    return render(request, 'home.html', {
-        "dorms": DormInformation.objects.all()
-    })
+# def viewPostDorm(request):
+#     print("viewPostDorm")
+#     return render(request, 'home.html', {
+#         "dorms": DormInformation.objects.all()
+#     })
 
 
 def post(request):
@@ -131,3 +131,13 @@ def deleteDorm(request, pk):
     d.delete()
     messages.success(request, "Post Deleted Successfully")
     return redirect('/home')
+
+
+def viewPostDorm(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("home"))
+    else:
+        dorms = DormInformation.objects.all().get(username=request.user.username)
+        return render(request, 'home.html', {
+            "dorms": dorms,
+        })
