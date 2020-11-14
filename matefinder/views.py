@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, logout, login as dj_login
 from .models import Student, RequestInformation, SentRequestInformation, DormInformation,  User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
@@ -34,8 +34,8 @@ def login(request):
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            dj_login(request, user)
+            return HttpResponseRedirect(reverse("home"))
         else:
             return render(request, "login.html", {
                 "message": "กรุณากรอกรหัสผ่านที่ถูกต้อง"
@@ -89,8 +89,8 @@ def createDorm(request):
 
 def storeDorm(request):
     d = DormInformation()
-    d.username = Student.objects.get(pk=1)
-    d.name_owner = request.POST.get('name_owner')
+    d.username = request.POST.get('username')
+    #d.name_owner = request.POST.get('name_owner')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')
