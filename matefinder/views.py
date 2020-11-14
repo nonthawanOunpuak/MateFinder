@@ -115,5 +115,5 @@ def dormCreate(request):
 
 def viewPostDorm(request):
     return render(request, 'home.html', {
-        "Dorms": DormInformation.objects.all()
+        "dorms": DormInformation.objects.all()
     })

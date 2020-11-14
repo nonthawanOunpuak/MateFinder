@@ -29,9 +29,6 @@ urlpatterns = [
     path('signup', views.signup, name='signup'),
     path('home', views.home, name='home'),
     path('admin/', admin.site.urls),
-    path('dorm-create', views.dormCreate, name='dorm-create')
-<<<<<<< HEAD
+    path('dorm-create', views.dormCreate, name='dorm-create'),
+    path('home', views.viewPostDorm, name='viewPost'),
 ]
-=======
-]
->>>>>>> a32ea0bc983d6b6638b69a7841636e04a9ad57ad
