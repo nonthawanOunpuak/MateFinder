@@ -89,7 +89,8 @@ def createDorm(request):
 
 def storeDorm(request):
     d = DormInformation()
-    d.username = request.POST.get('username')
+    d.username = Student.objects.get(pk=1)
+    d.name_owner = request.POST.get('name_owner')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')

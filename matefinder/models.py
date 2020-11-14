@@ -31,7 +31,10 @@ class SentRequestInformation(models.Model):
 
 
 class DormInformation(models.Model):
-    username = models.CharField(max_length=255)
+
+    username = models.ForeignKey(
+        Student, on_delete=models.CASCADE, related_name="ustudent")
+    name_owner = models.CharField(max_length=255)
     name_dorm = models.CharField(max_length=255)
     details_dorm = models.CharField(max_length=255)
     type_dorm = models.CharField(max_length=255)
@@ -41,4 +44,4 @@ class DormInformation(models.Model):
     pet = models.BooleanField()
 
     def __str__(self):
-        return f"{self.id}, {self.username}, {self.name_dorm}, {self.details_dorm}, {self.type_dorm}, {self.price}"
+        return f"{self.id}, {self.username},{self.name_owner}, {self.name_dorm}, {self.details_dorm}, {self.type_dorm}, {self.price},{self.light}, {self.timetosleep},{self.pet}"
