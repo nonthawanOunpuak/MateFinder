@@ -13,8 +13,10 @@
 		<div class="img">
 			<img src="../static/images/bg.svg">
 		</div>
+		
+			
 		<div class="login-content">
-			<form action="{% url 'home' %}" method="post">
+			<form action="{% url 'login' %}" method="post">
 				{% csrf_token %}
 				<img src="../static/images/avatar.svg">
 				<h2 class="title">MateFinder</h2>
@@ -35,7 +37,12 @@
            		    	<h5>Password</h5>
            		    	<input name="password" type="password" class="input">
             	   </div>
-            	</div>
+				</div>
+
+				{% if message %}
+					<div class="alert alert-danger" role="alert"><h5>{{message}}</h5></div>
+				{% endif %}
+		 
             	<a href="{% url 'signup' %}">Sign up</a>
             	<input type="submit" class="btn" value="Login">
             </form>
@@ -43,4 +50,11 @@
     </div>
     <script type="text/javascript" src="{% static '../static/js/main.js' %}"></script>
 </body>
+ 
+	<style>
+		h5 {
+			color: #cd3545
+		}
+	</style>
 </html>
+

@@ -1,5 +1,4 @@
-﻿
-{% block body %}
+﻿{% block body %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static '/css/styleabout.css' %}" />
 
@@ -76,8 +75,8 @@
                   <li class="has-children">                  
                   <li><a href="about" class="nav-link">About</a></li>
                   <li><a href="#" class="nav-link">Blog</a></li>
-                  <li><a href="profile" class="nav-link">student1</a></li>
-                  <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
+                  <li><a href="{{request.user.username}}" class="nav-link">profile</a></li>
+                  <li style="margin-left: 300px;">{{request.user.username}}<a href="{% url 'login' %}" class="nav-link">Logout</a></li>
                 </ul>
               </nav>
             </div>
@@ -90,39 +89,44 @@
     
       <br>
       <center>
-        
-      <div class="card mb-3" style="max-width: 720px;">
+    {% for i in dorms %} 
+    <div class="card mb-3" style="max-width: 720px;">
         <div class="row no-gutters">
           <div class="col-md-4">
             <img src="../static/images/dorm2.jpg" class="card-img" alt="Image" style="height: 100%; width: 100%;">
           </div>
           <div class="col-md-8">
             <form method="post">
-              asas <br>
-            {% for i in dorms %}
-            xxxx
+            
             <div class="card-body">          
               <div class="section-heading">
                 <h3 class="team">{{ i.username }}</h3>
-              <!-- </div>
-                Dorm : Golfview<br> 
-                Type : Male <br>
-                Price : 9000 Baht <br>
-                Sleeping with lights : Close <br>
-                Time to sleep : 1 a.m. <br>
-                Raising animals : No <br>
-                Detail : No <br>
-              </div> -->
-              
-            </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Join</button>
+              </div>
+                Dorm : {{ i.name_dorm }}<br> 
+                Type : {{ i.type_dorm }} <br>
+                Price : {{ i.price }} Baht <br>
+                Sleeping with lights : {{ i.light }} <br>
+                Time to sleep : {{ i.timetosleep }} <br>
+                Raising animals : {{ i.pet }} <br>
+                Detail : {{ i.details_dorm }} <br>
+              </div>
+              {% if i.username != user.username %}
+              <button type="submit" class="btn btn-primary">Join</button>
+              {% endif %}
+              {% if i.username == user.username %}
+              <button type="button" class="btn btn-warning"><a href="{% url 'post' %}"></a>Edit</button>
+              <button type="button" class="btn btn-danger"><a href="{% url 'delete' i.id %}">Delete</button>
+              {% endif %}
+             {% csrf_token %}
+
+             </div>     
               <br><br>
           </form>
         </div>
       
       </div>
       <br>
+      {% endfor %}
       </center>
 <br>
       <div class="row text-center">
@@ -174,4 +178,3 @@
 
 
 {% endblock %}
->>>>>>> a3a872963f6ccf5c853180d90d35a98f7c3a80cd

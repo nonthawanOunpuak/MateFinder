@@ -17,8 +17,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from .views import about, contact, login, home, signup, logout, storeDorm, createDorm
+from .views import about, contact, login, home, logout, storeDorm, createDorm
 
+from .views import about, contact, login, home, logout, storeDorm, createDorm, viewPostDorm, createAccount, storeAccount
 from django.urls import path
 from . import views
 
@@ -29,17 +30,24 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('logout', views.logout, name='logout'),
     path('about', views.about, name='about'),
-    path('signup', views.signup, name='signup'),
+
+    path('signup', views.createAccount, name='signup'),
+    path('storeAccount', views.storeAccount, name='storeAccount'),
+
     path('home', views.home, name='home'),
 
 
     path('profile_edit', views.profile_edit, name='profile_edit'),
 
     path('home', views.viewPostDorm, name='viewPost'),
+    path('homepage', views.viewPostDorm, name='homepage'),
 
 
     path('store', views.storeDorm, name='store'),
     path('post', views.createDorm, name='post'),
+    path('delete/<int:pk>', views.deleteDorm, name='delete'),
 
-  
+    path('<studentlink>', views.profile, name='profile'),
+
+
 ]
