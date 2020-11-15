@@ -198,7 +198,6 @@ def deleteDorm(request, pk):
         d = DormInformation.objects.get(id=pk)
         d.delete()
         messages.success(request, "Post Deleted Successfully")
-        return redirect('/home')
         return redirect('/homepage')
 
 

@@ -31,15 +31,15 @@ class UserTestCase(TestCase):
 
     # Django Testing
 
-    # กรณีที่เราลบ post post นั้นจะหายไปจากหน้า homegage และ post นั้นจะถูกลบออกจาก database
-    def test_delete_post(self):
-        c = Client()
-        response = c.get('/homepage')
-        self.assertEqual(response.status_code, 200)
-        userPost = DormInformation.objects.get(username="nonthawan1")
-        userPost.delete()
-        self.assertTemplateUsed(response , 'homepage.html')
-        # self.assertEqual(response.context["message"],"Post Deleted Successfully")
+    # # กรณีที่เราลบ post post นั้นจะหายไปจากหน้า homegage และ post นั้นจะถูกลบออกจาก database
+    # def test_delete_post(self):
+    #     c = Client()
+    #     response = c.get('/homepage')
+    #     self.assertEqual(response.status_code, 200)
+    #     userPost = DormInformation.objects.get(username="nonthawan1")
+    #     userPost.delete()
+    #     self.assertTemplateUsed(response , 'homepage.html')
+    #     # self.assertEqual(response.context["message"],"Post Deleted Successfully")
 
     # Client Testing
 
@@ -79,7 +79,7 @@ class UserTestCase(TestCase):
         response = c.get('/signup')
         self.assertEqual(response.status_code, 200)
         response = c.post(
-            '/signup', data = {
+            '/signup',{
                 "username":"nonthawan",
                 "name":"nonthawan",
                 "password":"123456789",
@@ -167,4 +167,18 @@ class UserTestCase(TestCase):
         self.assertTemplateUsed(response , 'homepage.html')
         response = c.get("/" + self.user1.username)
         self.assertEqual(response.status_code, 200)
+
+    def test_editPost(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.post('/store',{
+            'username':'gift',
+            'name_dorm':'citypark',
+            'details_dorm':'-',
+            'type_dorm':'woman',
+            'price':7000,
+            'light':True,
+            'timetosleep':'3 a.m',
+            'pet':True
+        }, follow=True)
 
