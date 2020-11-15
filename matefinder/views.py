@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .forms import DormInformationForm
+from .forms import StudentForm
 
 
 def about(request):
@@ -111,10 +112,8 @@ def profileInfo(request):
             "Profile": profile
         })
 
-
 def createDorm(request):
     return render(request, 'post.html')
-
 
 def storeDorm(request):
     d = DormInformation()
@@ -134,6 +133,11 @@ def storeDorm(request):
 
 
 def viewPostDorm(request):
+    return render(request, 'home.html')
+    return redirect('/homepage')
+
+
+def viewPostDorm(request):
     print("viewPostDorm")
     return render(request, 'homepage.html', {
         "dorms": DormInformation.objects.all()
@@ -143,6 +147,20 @@ def viewPostDorm(request):
 def post(request):
     return render(request, 'post.html')
 
+def profile_edit(request):
+    return render(request, 'profile_edit.html')
+
+def profile_edited(request):
+    s = Student(request.user.username)
+    s.name = request.POST.get('name')
+    s.phone = request.POST.get('phone')
+    s.email = request.POST.get('email')
+    s.year = request.POST.get('year')
+    s.password = request.POST.get('password')
+    s.save()
+
+    messages.success(request, "Profile edited Successfully")
+    return redirect('/home')
 
 def profile(request, studentlink):
     student = Student.objects.get(username=studentlink)
@@ -159,6 +177,7 @@ def deleteDorm(request, pk):
     d = DormInformation.objects.get(id=pk)
     d.delete()
     messages.success(request, "Post Deleted Successfully")
+    return redirect('/home')
     return redirect('/homepage')
 
 

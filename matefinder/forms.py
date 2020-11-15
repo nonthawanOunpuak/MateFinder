@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from .models import DormInformation
+from .models import Student
 from django import forms
 
 
@@ -7,9 +8,15 @@ from django import forms
 #     class Meta:
 #         model = DormInformation
 #         fields = '__all__'
+class StudentForm(forms.Form):
+    class Meta:
+        model = Student
+        fields = '__all__'
 
 class DormInformationForm(forms.Form):
     name_dorm = forms.CharField(label='name_dorm', max_length=255)
     details_dorm = forms.CharField(label='details_dorm', max_length=255)
     type_dorm = forms.CharField(label='type_dorm', max_length=255)
     price = forms.IntegerField(label='price')
+
+

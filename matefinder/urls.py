@@ -1,5 +1,4 @@
 """matefinder URL Configuration
-
 The urlpatterns list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 Examples:
@@ -22,6 +21,7 @@ from . import views
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', views.login, name='login'),
     path('login', views.login, name='login'),
     path('logout', views.logout, name='logout'),
@@ -31,7 +31,13 @@ urlpatterns = [
     path('storeAccount', views.storeAccount, name='storeAccount'),
 
     path('home', views.home, name='home'),
-    path('admin/', admin.site.urls),
+
+
+    path('profile_edit', views.profile_edit, name='profile_edit'),
+    path('edited', views.profile_edited, name='edited'),
+
+
+    path('home', views.viewPostDorm, name='viewPost'),
     path('homepage', views.viewPostDorm, name='homepage'),
 
 
