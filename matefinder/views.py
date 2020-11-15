@@ -31,12 +31,6 @@ def home(request):
         return render(request, 'home.html')
 
 
-def index(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
-    return render(request, "index.html")
-
-
 def login(request):
     print("login methodd")
     if request.method == "POST":
