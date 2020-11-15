@@ -107,11 +107,28 @@ def profileInfo(request):
         })
 
 
+<<<<<<< HEAD
 def createDorm(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, 'post.html')
+=======
+def storeDorm(request):
+    d = DormInformation()
+    d.username = request.POST.get('username')
+    d.name_dorm = request.POST.get('name_dorm')
+    d.details_dorm = request.POST.get('details_dorm')
+    d.type_dorm = request.POST.get('type_dorm')
+    d.price = request.POST.get('price')
+    d.timetosleep = request.POST.get('timetosleep')
+    d.pet = request.POST.get('pet')
+    d.light = request.POST.get('light')
+    d.save()
+
+    messages.success(request, "Post Added Successfully")
+    return redirect('/homepage')
+>>>>>>> 68ebdcede7cdbb21e48ac5930b7dae0aa80b77e6
 
 
 def storeDorm(request):
@@ -150,7 +167,6 @@ def viewPostDorm(request):
             "dorms": DormInformation.objects.all()
         })
 
-
 def post(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
@@ -165,6 +181,7 @@ def profile_edit(request):
         return render(request, 'profile_edit.html')
 
 
+<<<<<<< HEAD
 def profile_edited(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("index"))
@@ -180,6 +197,18 @@ def profile_edited(request):
         messages.success(request, "Profile edited Successfully")
         return redirect('/home')
 
+=======
+def profile_edited(request): 
+    Student.objects.filter(username=request.user.username).update(
+    name = request.POST.get('name'),
+    phone = request.POST.get('phone'),
+    email = request.POST.get('email'),
+    year = request.POST.get('year')
+    )
+
+    messages.success(request, "Profile edited Successfully")
+    return redirect('homepage')
+>>>>>>> 68ebdcede7cdbb21e48ac5930b7dae0aa80b77e6
 
 def profile(request, studentlink):
     if not request.user.is_authenticated:
@@ -193,7 +222,6 @@ def profile(request, studentlink):
             "year": student.year,
         }
         )
-
 
 def deleteDorm(request, pk):
     if not request.user.is_authenticated:
