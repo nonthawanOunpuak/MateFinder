@@ -143,24 +143,34 @@ def post(request):
 
 
 def profile_edit(request):
+    student=Student.objects.get(username=request.user.username)
+    return render(request, 'profile_edit.html', {
+        "name": student.name,
+        "email": student.email,
+        "phone": student.phone,
+        "year": student.year,
+        })
 
-    return render(request, 'profile_edit.html')
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+    else:
+        return render(request, 'profile_edit.html')
 
 
 def profile_edited(request):
+    print("profile_editesdddd")
     Student.objects.filter(username=request.user.username).update(
         name=request.POST.get('name'),
         phone=request.POST.get('phone'),
         email=request.POST.get('email'),
         year=request.POST.get('year')
     )
-
     messages.success(request, "Profile edited Successfully")
     return redirect('homepage')
 
 
 def profile(request, studentlink):
-
+    print("profile")
     student = Student.objects.get(username=studentlink)
     return render(request, 'profile.html', {
         "name": student.name,

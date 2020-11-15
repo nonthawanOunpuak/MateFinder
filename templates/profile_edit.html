@@ -56,30 +56,25 @@
 
 
         <header class="site-navbar light js-sticky-header site-navbar-target" role="banner">
-
-            <div class="container">
-                <div class="row align-items-center">
-
-                    <!-- <div class="col-6 col-xl-2">
-                      <div class="mb-0 site-logo"><a href="index.html" class="mb-0">Covid<span class="text-primary">.</span> </a></div>
-                    </div> -->
-
-                    <div class="col-10 col-md-12 d-none d-xl-block" style="background-color:#c5f0e1;">
-                        <nav class="site-navigation position-relative text-right" role="navigation">
-                            <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                                <li class="active"><a href="homepage" class="nav-link">Home</a></li>
-                                <li class="has-children">
-                                <li><a href="about" class="nav-link">About</a></li>
-                                <li><a href="#" class="nav-link">Blog</a></li>
-                                <li><a href="{{request.user.username}}" class="nav-link">Profile</a></li>
-                                <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3 text-black"></span></a></div>
+            <div class="container"  style="background-color:#c5f0e1; max-width: 140%;" >
+           
+              <div class="col-sm-12">
+                <div class="col-sm-12">
+                  <nav class="site-navigation position-relative text-right" role="navigation"  style="margin-right: 30px;">
+                    <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                      <li class="active"><a href="homepage" class="nav-link">Home</a></li>
+                      <li class="has-children">                  
+                      <li><a href="about" class="nav-link">About</a></li>
+                      <li><a href="#" class="nav-link">Blog</a></li>
+                      <li><a href="{{request.user.username}}" class="nav-link">profile</a></li>
+                      <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
+                    </ul>
+                  </nav>
                 </div>
+                <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3 text-black"></span></a></div>
+              </div>
             </div>
-        </header>
+          </header>
         <br><br><br>
 
         <!-- <center>
@@ -108,20 +103,19 @@
         </form>
         </center> -->
 
-        <center>
+        <!-- <center> -->
             <div class="section-heading">
                 <h3 class="team"> Edit Profile</h3> <hr>
             </div>
             <form action={% url "edited" %} method="POST">
                 {% csrf_token %}
                 <article class="card-body mx-auto" style="max-width: 50%;">
-
-                    <div>
-                        <h1>{{request.user.username}}</h1>
-                    </div>
-
+                    
                     <div class="form-group">
-                        <!-- <label for="name">name</label> -->
+                        <label class="form-control" for="username">{{request.user.username}}</label>
+                    </div>
+                    <div class="form-group">
+                        <!-- <label class="form-control" for="username">{{request.user.username}}</label> -->
                         <input type="name" class="form-control" id="name" name="name" placeholder="{{name}}">
                     </div>
 
@@ -139,14 +133,11 @@
                         <!-- <label for="email">email</label> -->
                         <input type="year" class="form-control" id="year" name="year" placeholder="{{year}}">
                     </div>
-
-
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <center><button type="submit" class="btn btn-primary">Save</button></center>
 
                 </article>
             </form>
-        </center>
+        <!-- </center> -->
         <br>
 
 

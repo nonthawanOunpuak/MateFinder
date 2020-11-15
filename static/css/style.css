@@ -23,7 +23,7 @@ body{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap :7rem;
-    padding: 0 2rem;
+    /* padding: 0 2rem; */
 }
 
 .img{
@@ -230,11 +230,7 @@ a:hover{
 .divider-text span {
     padding: 7px;
     font-size: 12px;
-<<<<<<< HEAD
     position: relative;   
-=======
-    position: relative;
->>>>>>> ae1c93fbfa77a63aff6e06e45c554e7bf5bfd03c
     z-index: 2;
 }
 .divider-text:after {
@@ -245,7 +241,6 @@ a:hover{
     top: 55%;
     left: 0;
     z-index: 1;
-<<<<<<< HEAD
 }
 
 .modal {
@@ -302,6 +297,3 @@ a:hover{
 	text-decoration: none;
 	cursor: pointer;
   }
-=======
-}
->>>>>>> ae1c93fbfa77a63aff6e06e45c554e7bf5bfd03c
