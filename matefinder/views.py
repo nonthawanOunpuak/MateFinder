@@ -159,7 +159,6 @@ def post(request):
 
 
 def profile_edit(request):
-<<<<<<< HEAD
     student=Student.objects.get(username=request.user.username)
     return render(request, 'profile_edit.html', {
         "name": student.name,
@@ -168,12 +167,10 @@ def profile_edit(request):
         "year": student.year,
         })
 
-=======
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
     else:
         return render(request, 'profile_edit.html')
->>>>>>> d34ad4c4cf6c73aa40e3f67e285f6d2b9cde4a6c
 
 
 def profile_edited(request):
