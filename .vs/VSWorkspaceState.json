@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\matefinder",
-    "\\static",
+    "\\matefinder\\migrations",
+    "\\matefinder\\migrations\\__pycache__",
     "\\templates"
   ],
-  "SelectedNode": "\\templates\\home.html",
+  "SelectedNode": "\\matefinder\\views.py",
   "PreviewInSolutionExplorer": false
 }

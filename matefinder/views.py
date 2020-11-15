@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from .models import Student, RequestInformation, SentRequestInformation, DormInformation, CheckLists
+from .models import Student, RequestInformation, SentRequestInformation, DormInformation, CheckLists, User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from .forms import DormInformationForm
+from .forms import StudentForm
 
 
 def about(request):
@@ -23,16 +26,6 @@ def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
     return render(request, "index.html")
-
-def profile(request, studentlink):
-    student = Student.objects.get(username=studentlink)
-    return render(request, 'profile.html',{
-        "name": student.name,
-        "email": student.email,
-        "phone": student.phone,
-        "year" : student.year,
-        }
-       )
 
 
 def login(request):
@@ -60,6 +53,7 @@ def logout(request):
         # logout(request)
         return render(request, "login.html")
 
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -78,3 +72,61 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+
+def profileInfo(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        profile = User.object.all().get(username=request.user.username)
+        return render(request, "profile.html", {
+            "Profile": profile
+        })
+
+
+
+def createDorm(request):
+    return render(request, 'post.html')
+
+
+def storeDorm(request):
+    d = DormInformation()
+    c = CheckLists()
+    d.username = request.POST.get('username')
+    d.name_dorm = request.POST.get('name_dorm')
+    d.details_dorm = request.POST.get('details_dorm')
+    d.type_dorm = request.POST.get('type_dorm')
+    d.price = request.POST.get('price')
+    c.username = d.username
+    c.timetosleep = request.POST.get('timetosleep')
+    c.pet = request.POST.get('pet')
+    c.light = request.POST.get('light')
+    d.save()
+    c.save()
+
+    messages.success(request, "Post Added Successfully")
+    return redirect('/home')
+
+
+def viewPostDorm(request):
+    return render(request, 'home.html', {
+        "dorms": DormInformation.objects.all()
+    })
+
+
+def post(request):  
+    return render(request, 'post.html')
+
+def profile_edit(request):
+    form = StudentForm()
+    context = {'form':form}
+    return render(request, 'profile_edit.html', context)
+
+    
+
+
+def deleteDorm(request, pk):
+    d = DormInformation.objects.get(id=pk)
+    d.delete()
+    messages.success(request, "Post Deleted Successfully")
+    return redirect('/home')
