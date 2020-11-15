@@ -1,16 +1,18 @@
-﻿
 {% block body %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static '/css/styleabout.css' %}" />
 
 <html lang="en">
   <head>
-    <title>MateFinder &mdash; About </title>
+    <title>Profile</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+        <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link
       href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;900&display=swap"
@@ -35,21 +37,15 @@
     <link rel="stylesheet" href="../static/css/aos.css" rel="stylesheet"  />
 
     <link rel="stylesheet" href="../static/css/styleabout.css" rel="stylesheet"  />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-
-    <!-- <div id="overlayer"></div>
-    <div class="loader">
-      <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div> -->
-  
-  
     <div class="site-wrap">
-  
+
       <div class="site-mobile-menu site-navbar-target">
         <div class="site-mobile-menu-header">
           <div class="site-mobile-menu-close mt-3">
@@ -58,25 +54,20 @@
         </div>
         <div class="site-mobile-menu-body"></div>
       </div>
-  
-      
+
+
       <header class="site-navbar light js-sticky-header site-navbar-target" role="banner">
-  
-        <div class="container">
-          <div class="row align-items-center">
-  
-            <!-- <div class="col-6 col-xl-2">
-              <div class="mb-0 site-logo"><a href="index.html" class="mb-0">Covid<span class="text-primary">.</span> </a></div>
-            </div> -->
-  
-            <div class="col-10 col-md-12 d-none d-xl-block" style="background-color:#c5f0e1;" >
-              <nav class="site-navigation position-relative text-right" role="navigation">
+        <div class="container"  style="background-color:#c5f0e1; max-width: 140%;" >
+       
+          <div class="col-sm-12">
+            <div class="col-sm-12">
+              <nav class="site-navigation position-relative text-right" role="navigation"  style="margin-right: 30px;">
                 <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                   <li class="active"><a href="homepage" class="nav-link">Home</a></li>
                   <li class="has-children">                  
                   <li><a href="about" class="nav-link">About</a></li>
                   <li><a href="#" class="nav-link">Blog</a></li>
-                  <li><a href="profile" class="nav-link">student1</a></li>
+                  <li><a href="{{request.user.username}}" class="nav-link">profile</a></li>
                   <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
                 </ul>
               </nav>
@@ -86,57 +77,80 @@
         </div>
       </header>
       <br><br><br>
-      <p><a href="{% url 'post' %}" id="myBtn" class="btn btn-primary" style="margin-left: 67%;">New Post</a></p>
-    
-      <br>
-      <center>
-        
-      <div class="card mb-3" style="max-width: 720px;">
-        <div class="row no-gutters">
-          <div class="col-md-4">
-            <img src="../static/images/dorm2.jpg" class="card-img" alt="Image" style="height: 100%; width: 100%;">
-          </div>
-          <div class="col-md-8">
-            <form method="post">
-              asas <br>
-            {% for i in dorms %}
-            xxxx
-            <div class="card-body">          
-              <div class="section-heading">
-                <h3 class="team">{{ i.username }}</h3>
-              <!-- </div>
-                Dorm : Golfview<br> 
-                Type : Male <br>
-                Price : 9000 Baht <br>
-                Sleeping with lights : Close <br>
-                Time to sleep : 1 a.m. <br>
-                Raising animals : No <br>
-                Detail : No <br>
-              </div> -->
-              
-            </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Join</button>
-              <br><br>
-          </form>
+
+      <div class="row">
+        <div class="col-md-6 img">
+          <img src="../static/images/users.png"  alt="" style="max-width: 50%; max-height: 50%; margin-left: 30%; margin-top: 10%; padding: 0%;">
+
         </div>
-      
-      </div>
-      <br>
-      </center>
+        <div class="col-md-6 details">
+          <blockquote>
+  <article class="card-body mx-auto" style="max-width: 400px; margin-top: 50px; padding-right: 50px;">
+    <!-- <img src="../static/images/bg.svg" style="max-width: 60%; max-height: 60%;"> -->
+
+        <div class="section-heading">
+            <h3 class="team">Profile</h3> <hr>
+          </div>
+        <form method="post">
+            {% csrf_token %}
+            <!-- Student Name -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <div class="form-control"><h4>{{name}}</h4></div>
+            </div>
+            <!-- Student Email -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <div class="form-control"><h4>{{email}}</h4></div>
+            </div>
+            <!-- Student Phone No. -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                </div>
+                <div class="form-control"><h4>{{phone}}</h4></div>
+            </div>
+            <!-- Student Year -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                </div>
+                <div class="form-control"><h4>Year&nbsp;{{year}}</h4></div>
+            </div>
+            <center><a class="btn btn-primary" href="profile_edit" >Edit Profile</a></center>
+
+
+        </form>
+    </div>
+</div>
+
+
+            
+
+        </form>
+    </div>
+</body>
+</html>
+</html>
+</div>
+
 <br>
       <div class="row text-center">
         <div class="col-md-12">
           <div class="border-top pt-5">
             <p class="copyright"><small>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script>
 
             </div>
           </div>
 
         </div>
-    </div> 
+    </div>
     <!-- .site-wrap -->
 
     <script src="{% static '../static/js/jquery-3.3.1.min.js' %}"></script>
@@ -162,11 +176,11 @@
     <script src="../static/js/jquery.fancybox.min.js"></script>
     <script src="../static/js/jquery.sticky.js"></script>
     <script src="../static/js/isotope.pkgd.min.js"></script> -->
-  
-  
+
+
     <script src="../static/js/main_about.js"></script>
-  
-  
+
+
   </body>
   </html>
 
@@ -174,4 +188,3 @@
 
 
 {% endblock %}
->>>>>>> a3a872963f6ccf5c853180d90d35a98f7c3a80cd

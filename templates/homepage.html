@@ -1,5 +1,4 @@
-﻿
-{% block body %}
+﻿{% block body %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static '/css/styleabout.css' %}" />
 
@@ -35,6 +34,85 @@
     <link rel="stylesheet" href="../static/css/aos.css" rel="stylesheet"  />
 
     <link rel="stylesheet" href="../static/css/styleabout.css" rel="stylesheet"  />
+    <style>
+      .toggle-3 {
+        font-size: 0.8rem;
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 15px 0 0;
+    }
+    
+        .toggle-3__input {
+            display: none;
+        }
+    
+        .toggle-3__button {
+            position: relative;
+            display: inline-block;
+            font-family: 'Roboto', sans-serif;
+            text-transform: uppercase;
+    
+            width: 150px;
+            height: 40px;
+            background: #d2d2d2;
+            color: #FFF;
+            border: solid 1px #d2d2d2;
+            border-radius: 7px;
+    
+            padding: 5px 10px 5px 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+    
+        .toggle-3__button::before {
+            position: absolute;
+            content: '';
+            top: 10px;
+            left: 5px;
+    
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+    
+            /* background: #FFF;
+            border-radius: 100%; */
+    
+            transition: all 0.3s ease;
+        }
+    
+        .toggle-3__button::after {
+            content: "JOIN";
+            position: absolute;
+            top: 5px;
+            left: 55px;
+            font-size: 1rem;
+        }
+    
+        .toggle-3__button--correct {
+            position: absolute;
+            width: 12px;
+            top: 16px;
+            left: 14px;
+            visibility: hidden;
+        }
+    
+    
+        .toggle-3__input:checked + .toggle-3__button {
+            background: #32be8f;
+            border: #32be8f;
+            color: white;
+        }
+    
+            .toggle-3__input:checked + .toggle-3__button > .toggle-3__button--correct {
+            visibility: visible;
+            }  
+    
+                .toggle-3__input:checked + .toggle-3__button::after {
+                left:35%;
+                content: "JOINED";
+                }
+      
+    </style>
   </head>
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -48,7 +126,7 @@
     </div> -->
   
   
-    <div class="site-wrap">
+    <!-- <div class="site-wrap">
   
       <div class="site-mobile-menu site-navbar-target">
         <div class="site-mobile-menu-header">
@@ -57,26 +135,20 @@
           </div>
         </div>
         <div class="site-mobile-menu-body"></div>
-      </div>
-  
-      
+      </div> -->
+
       <header class="site-navbar light js-sticky-header site-navbar-target" role="banner">
-  
-        <div class="container">
-          <div class="row align-items-center">
-  
-            <!-- <div class="col-6 col-xl-2">
-              <div class="mb-0 site-logo"><a href="index.html" class="mb-0">Covid<span class="text-primary">.</span> </a></div>
-            </div> -->
-  
-            <div class="col-10 col-md-12 d-none d-xl-block" style="background-color:#c5f0e1;" >
-              <nav class="site-navigation position-relative text-right" role="navigation">
+        <div class="container"  style="background-color:#c5f0e1; max-width: 140%;" >
+       
+          <div class="col-sm-12">
+            <div class="col-sm-12">
+              <nav class="site-navigation position-relative text-right" role="navigation"  style="margin-right: 30px;">
                 <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                   <li class="active"><a href="homepage" class="nav-link">Home</a></li>
                   <li class="has-children">                  
                   <li><a href="about" class="nav-link">About</a></li>
                   <li><a href="#" class="nav-link">Blog</a></li>
-                  <li><a href="profile" class="nav-link">student1</a></li>
+                  <li><a href="{{request.user.username}}" class="nav-link">profile</a></li>
                   <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
                 </ul>
               </nav>
@@ -90,46 +162,57 @@
     
       <br>
       <center>
-        
-      <div class="card mb-3" style="max-width: 720px;">
+    {% for i in dorms %} 
+    <div class="card mb-3" style="max-width: 720px;">
         <div class="row no-gutters">
           <div class="col-md-4">
             <img src="../static/images/dorm2.jpg" class="card-img" alt="Image" style="height: 100%; width: 100%;">
           </div>
           <div class="col-md-8">
             <form method="post">
-              asas <br>
-            {% for i in dorms %}
-            xxxx
+            
             <div class="card-body">          
               <div class="section-heading">
                 <h3 class="team">{{ i.username }}</h3>
-              <!-- </div>
-                Dorm : Golfview<br> 
-                Type : Male <br>
-                Price : 9000 Baht <br>
-                Sleeping with lights : Close <br>
-                Time to sleep : 1 a.m. <br>
-                Raising animals : No <br>
-                Detail : No <br>
-              </div> -->
+              </div>
+                Dorm : {{ i.name_dorm }}<br> 
+                Type : {{ i.type_dorm }} <br>
+                Price : {{ i.price }} Baht <br>
+                Sleeping with lights : {{ i.light }} <br>
+                Time to sleep : {{ i.timetosleep }} <br>
+                Raising animals : {{ i.pet }} <br>
+                Detail : {{ i.details_dorm }} <br>
+              </div>
               
-            </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Join</button>
+              {% if i.username != user.username %}
+              <!-- <button type="submit" class="btn btn-primary">Join</button> -->
+                <label for="toggle-3" class="toggle-3">
+                    <input type="checkbox" name="toggle-3" id="toggle-3" class="toggle-3__input">
+                    <span class="toggle-3__button">
+                    </span>
+                </label>
+              {% endif %}
+              {% if i.username == user.username %}
+              <!-- <a href="{% url 'editPost' i.id %}" id="myBtn" class="btn btn-warning" style="margin-left: 67%;">Edit</a> -->
+              <button class="btn btn-warning"><a href="{% url 'editPost' i.id %}" style="color:white">Edit</a></button>
+              <button type="button" class="btn btn-danger"><a href="{% url 'delete' i.id %}" style="color:white">Delete</button>
+              {% endif %}
+             {% csrf_token %}
+
+             </div>     
               <br><br>
           </form>
         </div>
       
       </div>
       <br>
+      {% endfor %}
       </center>
-<br>
+      <br>
       <div class="row text-center">
         <div class="col-md-12">
           <div class="border-top pt-5">
             <p class="copyright"><small>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
               Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
 
             </div>
@@ -174,4 +257,3 @@
 
 
 {% endblock %}
->>>>>>> a3a872963f6ccf5c853180d90d35a98f7c3a80cd
