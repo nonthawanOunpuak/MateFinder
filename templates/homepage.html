@@ -34,6 +34,85 @@
     <link rel="stylesheet" href="../static/css/aos.css" rel="stylesheet"  />
 
     <link rel="stylesheet" href="../static/css/styleabout.css" rel="stylesheet"  />
+    <style>
+      .toggle-3 {
+        font-size: 0.8rem;
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 15px 0 0;
+    }
+    
+        .toggle-3__input {
+            display: none;
+        }
+    
+        .toggle-3__button {
+            position: relative;
+            display: inline-block;
+            font-family: 'Roboto', sans-serif;
+            text-transform: uppercase;
+    
+            width: 150px;
+            height: 40px;
+            background: #d2d2d2;
+            color: #FFF;
+            border: solid 1px #d2d2d2;
+            border-radius: 7px;
+    
+            padding: 5px 10px 5px 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+    
+        .toggle-3__button::before {
+            position: absolute;
+            content: '';
+            top: 10px;
+            left: 5px;
+    
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+    
+            /* background: #FFF;
+            border-radius: 100%; */
+    
+            transition: all 0.3s ease;
+        }
+    
+        .toggle-3__button::after {
+            content: "JOIN";
+            position: absolute;
+            top: 5px;
+            left: 55px;
+            font-size: 1rem;
+        }
+    
+        .toggle-3__button--correct {
+            position: absolute;
+            width: 12px;
+            top: 16px;
+            left: 14px;
+            visibility: hidden;
+        }
+    
+    
+        .toggle-3__input:checked + .toggle-3__button {
+            background: #32be8f;
+            border: #32be8f;
+            color: white;
+        }
+    
+            .toggle-3__input:checked + .toggle-3__button > .toggle-3__button--correct {
+            visibility: visible;
+            }  
+    
+                .toggle-3__input:checked + .toggle-3__button::after {
+                left:35%;
+                content: "JOINED";
+                }
+      
+    </style>
   </head>
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -76,7 +155,7 @@
                   <li><a href="about" class="nav-link">About</a></li>
                   <li><a href="#" class="nav-link">Blog</a></li>
                   <li><a href="{{request.user.username}}" class="nav-link">profile</a></li>
-                  <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
+                  <li style="margin-left: 300px;">{{request.user.username}}<a href="{% url 'login' %}" class="nav-link">Logout</a></li>
                 </ul>
               </nav>
             </div>
@@ -110,13 +189,18 @@
                 Raising animals : {{ i.pet }} <br>
                 Detail : {{ i.details_dorm }} <br>
               </div>
+              
               {% if i.username != user.username %}
-              <button type="submit" class="btn btn-primary">Join</button>
+              <!-- <button type="submit" class="btn btn-primary">Join</button> -->
+                <label for="toggle-3" class="toggle-3">
+                    <input type="checkbox" name="toggle-3" id="toggle-3" class="toggle-3__input">
+                    <span class="toggle-3__button">
+                    </span>
+                </label>
               {% endif %}
               {% if i.username == user.username %}
-
-              <a href="{% url 'editPost' i.id %}" id="myBtn" class="btn btn-warning" style="margin-left: 67%;">Edit</a>
-              
+              <!-- <a href="{% url 'editPost' i.id %}" id="myBtn" class="btn btn-warning" style="margin-left: 67%;">Edit</a> -->
+              <button class="btn btn-warning"><a href="{% url 'editPost' i.id %}" style="color:white">Edit</a></button>
               <button type="button" class="btn btn-danger"><a href="{% url 'delete' i.id %}" style="color:white">Delete</button>
               {% endif %}
              {% csrf_token %}

@@ -21,6 +21,7 @@ from . import views
 
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
     path('', views.login, name='login'),
     path('login', views.login, name='login'),
@@ -29,8 +30,6 @@ urlpatterns = [
 
     path('signup', views.createAccount, name='signup'),
     path('storeAccount', views.storeAccount, name='storeAccount'),
-
-    path('home', views.home, name='home'),
 
 
     path('profile_edit', views.profile_edit, name='profile_edit'),
@@ -45,7 +44,7 @@ urlpatterns = [
     path('post', views.createDorm, name='post'),
     path('editPost/<int:pk>', views.editPost, name='editPost'),
     path('delete/<int:pk>', views.deleteDorm, name='delete'),
-    path('updatePost', views.updatePost, name='updatePost'),
+    path('updatePost/<int:pk>', views.updatePost, name='updatePost'),
     path('<studentlink>', views.profile, name='profile'),
 
 

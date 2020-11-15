@@ -120,7 +120,7 @@
             {% csrf_token %}
             <article class="card-body mx-auto" style="max-width: 50%;">
 
-                <div class="form-group">
+                <div class="form-group" style="margin-top: -5px;">
                     <!-- <label for="username">Your name</label> -->
                     <input for="username" type="username" class="form-control" id="username" name="username" placeholder="Name Surname (e.g. Alice Jodan)">
                   </div>
@@ -149,15 +149,17 @@
                 <label for="details_dorm"></label>
                 <input type="details_dorm" class="form-control" id="details_dorm" name="details_dorm" placeholder="Detail (e.g. don't snoring )">
               </div>
-              Sleeping with lights :  
-            <div class="form-group">
+               
+            <div class="form-group" style="margin-bottom: -5px;">
+              Sleeping with lights : 
                 <input type="radio" id="lightOn" name="light" value="True">
                 <label for="lightOn">On</label>
                 <input type="radio" id="lightOff" name="light" value="False">
                 <label for="lightOff">Off</label>
             </div>
-            Raising animals :  
-            <div class="form-group">
+             
+            <div class="form-group" style="margin-bottom: -5px;">
+              Raising animals : 
                 <input type="radio" id="lightOn" name="pet" value="True">
                 <label for="animalYes">Yes</label>
                 <input type="radio" id="lightOff" name="pet" value="False">
