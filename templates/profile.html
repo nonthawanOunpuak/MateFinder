@@ -69,7 +69,7 @@
                   <li class="has-children">
                   <li><a href="about" class="nav-link">About</a></li>
                   <li><a href="#" class="nav-link">Blog</a></li>
-                  <li class="active"><a href="profile" class="nav-link">Profile</a></li>
+                  <li class="active"><a href="{{request.user.username}}J" class="nav-link">Profile</a></li>
                   <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
                 </ul>
               </nav>
@@ -83,7 +83,10 @@
       <div class="row">
         <div class="col-md-6 img">
           <img src="../static/images/profile.png"  alt="" style="max-width: 60%; max-height: 60%; margin-left: 30%; margin-top: 10%;">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 22ef6b88bce9a4c802f03fd400da60043ddb23cb
         </div>
         <div class="col-md-6 details">
           <blockquote>
@@ -123,12 +126,24 @@
                 </div>
                 <div class="rectangle"><h4>Year&nbsp;{{year}}</h4></div>
             </div>
+<<<<<<< HEAD
 
 
         </form>
     </div>
 </div>
 
+=======
+            <a class="btn btn-primary" href="profile_edit" >Edit Profile</a>
+
+        </form>
+    </div>
+</body>
+</html>
+</html>
+</div> 
+      
+>>>>>>> 22ef6b88bce9a4c802f03fd400da60043ddb23cb
 <br>
       <div class="row text-center">
         <div class="col-md-12">
