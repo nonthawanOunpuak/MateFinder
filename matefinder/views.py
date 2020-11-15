@@ -27,11 +27,12 @@ def home(request):
 
 def index(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("homepage"))
-    return render(request, "index.html")
+        return HttpResponseRedirect(reverse("login"))
+    return render(request, "homepage.html")
 
 
 def login(request):
+    print("loooooogin: ", request.user.is_authenticated)
     print("login methodd")
     if request.method == "POST":
         username = request.POST["username"]
@@ -92,7 +93,12 @@ def profileInfo(request):
 
 def createDorm(request):
 
-    return render(request, 'post.html')
+    print("auuuuuuuuuuuuuuu: ", request.user.is_authenticated)
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("index"))
+    else:
+
+        return render(request, 'post.html')
 
 
 def storeDorm(request):
@@ -121,7 +127,7 @@ def storeDorm(request):
 
 
 def viewPostDorm(request):
-
+    print("auuuuuuuuuuuuuuu: ", request.user.is_authenticated)
     print("viewPostDorm")
     return render(request, 'homepage.html', {
         "dorms": DormInformation.objects.all()
@@ -129,7 +135,11 @@ def viewPostDorm(request):
 
 
 def post(request):
-    return render(request, 'post.html')
+    print("auuuuuuuuuuuuuuu: ", request.user.is_authenticated)
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, 'post.html')
 
 
 def profile_edit(request):
