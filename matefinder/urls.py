@@ -39,7 +39,7 @@ urlpatterns = [
     path('home', views.viewPostDorm, name='viewPost'),
     path('homepage', views.viewPostDorm, name='homepage'),
 
-
+    path('index', views.index, name='index'),
     path('store', views.storeDorm, name='store'),
     path('post', views.createDorm, name='post'),
     path('editPost/<int:pk>', views.editPost, name='editPost'),
