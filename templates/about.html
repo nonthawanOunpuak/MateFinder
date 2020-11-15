@@ -1,4 +1,4 @@
-{% block body %}
+﻿{% block body %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static '/css/styleabout.css' %}" />
 
@@ -76,7 +76,7 @@
                   <li class="has-children">                  
                   <li class="active"><a href="about.html" class="nav-link">About</a></li>
                   <li><a href="#" class="nav-link">Blog</a></li>
-                  <li><a href="profile" class="nav-link">Profile</a></li>
+                  <li><a href="{{request.user.username}}" class="nav-link">Profile</a></li>
                   <li style="margin-left: 300px;"><a href="login" class="nav-link">Logout</a></li>
                 </ul>
               </nav>

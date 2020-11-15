@@ -4,15 +4,12 @@
 
 <html lang="en">
   <head>
-    <title>Profile</title>
+    <title>MateFinder &mdash; About </title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-        <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link
       href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;900&display=swap"
@@ -37,15 +34,21 @@
     <link rel="stylesheet" href="../static/css/aos.css" rel="stylesheet"  />
 
     <link rel="stylesheet" href="../static/css/styleabout.css" rel="stylesheet"  />
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-    <div class="site-wrap">
 
+    <!-- <div id="overlayer"></div>
+    <div class="loader">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div> -->
+  
+  
+    <div class="site-wrap">
+  
       <div class="site-mobile-menu site-navbar-target">
         <div class="site-mobile-menu-header">
           <div class="site-mobile-menu-close mt-3">
@@ -54,22 +57,25 @@
         </div>
         <div class="site-mobile-menu-body"></div>
       </div>
-
-
+  
+      
       <header class="site-navbar light js-sticky-header site-navbar-target" role="banner">
-
+  
         <div class="container">
-
           <div class="row align-items-center">
+  
+            <!-- <div class="col-6 col-xl-2">
+              <div class="mb-0 site-logo"><a href="index.html" class="mb-0">Covid<span class="text-primary">.</span> </a></div>
+            </div> -->
+  
             <div class="col-10 col-md-12 d-none d-xl-block" style="background-color:#c5f0e1;" >
-
               <nav class="site-navigation position-relative text-right" role="navigation">
                 <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                  <li ><a href="homepage" class="nav-link">Home</a></li>
-                  <li class="has-children">
+                  <li  class="active"><a href="homepage" class="nav-link">Home</a></li>
+                  <li class="has-children">                  
                   <li><a href="about" class="nav-link">About</a></li>
                   <li><a href="#" class="nav-link">Blog</a></li>
-                  <li class="active"><a href="{{request.user.username}}" class="nav-link">Profile</a></li>
+                  <li><a href="profile" class="nav-link">Profile</a></li>
                   <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
                 </ul>
               </nav>
@@ -80,79 +86,85 @@
       </header>
       <br><br><br>
 
-      <div class="row">
-        <div class="col-md-6 img">
-          <img src="../static/images/profile.png"  alt="" style="max-width: 60%; max-height: 60%; margin-left: 30%; margin-top: 10%;">
+          <!-- <center> -->
 
-        </div>
-        <div class="col-md-6 details">
-          <blockquote>
-  <article class="card-body mx-auto" style="max-width: 400px; margin-top: 50px; padding-right: 50px;">
-    <!-- <img src="../static/images/bg.svg" style="max-width: 60%; max-height: 60%;"> -->
 
-        <div class="section-heading">
-            <h3 class="team">Profile</h3> <hr>
-          </div>
-        <form method="post">
+            <!-- <h3 class="team">{{ dorm.name_dorm }}</h3> -->
+       
+
+            <div class="section-heading">
+                <h3 class="team">Edit Post</h3> <hr>
+              </div>
+              
+          <form action={% url "updatePost" %} method="POST">
             {% csrf_token %}
-            <!-- Student Name -->
-            <div class="form-group input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                </div>
-                <div class="rectangle"><h4>{{name}}</h4></div>
+            <article class="card-body mx-auto" style="max-width: 50%;">
+
+                <div class="form-group" style="margin-top: -5px;">
+                    <label class="form-control" for="username">{{ dorm.username }}</label>
+                    <!-- <label for="username" type="username" class="form-control" id="username" name="username" placeholder="{{ dorm.username }}"></label> -->
+                  </div>
+
+              <div class="form-group">
+                <!-- <label for="name_dorm">Dormitory</label> -->
+                <input type="name_dorm" class="form-control" id="name_dorm" name="name_dorm" placeholder="{{ dorm.name_dorm }}">
+              </div>
+
+              <div class="form-group">
+                <!-- <label for="type_dorm">Type</label> -->
+                <input type="type_dorm" class="form-control" id="type_dorm" name="type_dorm" placeholder="{{ dorm.type_dorm }}">
+              </div>
+
+              <div class="form-group">
+                <!-- <label for="price">Price</label> -->
+                <input type="price" class="form-control" id="price" name="price" placeholder="{{ dorm.price }}">
+              </div>
+
+              <div class="form-group">
+                <label for="timetosleep"></label>
+                <input type="timetosleep" class="form-control" id="timetosleep" name="timetosleep" placeholder="{{ dorm.timetosleep }}">
+              </div>
+
+              <div class="form-group">
+                <label for="details_dorm"></label>
+                <input type="details_dorm" class="form-control" id="details_dorm" name="details_dorm" placeholder="{{ dorm.details_dorm }}">
+              </div>
+              <center>
+               
+            <div class="form-group" style="margin-bottom: -5px;">
+              Sleeping with lights : 
+                <input type="radio" id="lightOn" name="light" value="True">
+                <label for="lightOn">On</label>
+                <input type="radio" id="lightOff" name="light" value="False">
+                <label for="lightOff">Off</label>
             </div>
-            <!-- Student Email -->
-            <div class="form-group input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-                </div>
-                <div class="rectangle"><h4>{{email}}</h4></div>
-            </div>
-            <!-- Student Phone No. -->
-            <div class="form-group input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                </div>
-                <div class="rectangle"><h4>{{phone}}</h4></div>
-            </div>
-            <!-- Student Year -->
-            <div class="form-group input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-                </div>
-                <div class="rectangle"><h4>Year&nbsp;{{year}}</h4></div>
+            <div class="form-group" style="margin-bottom: -5px;">
+              Raising animals :  
+                <input type="radio" id="lightOn" name="pet" value="True">
+                <label for="animalYes">Yes</label>
+                <input type="radio" id="lightOff" name="pet" value="False">
+                <label for="animalNo">No</label>
             </div>
 
+              <button type="submit" class="btn btn-primary">Save</button>
+              
+       </article> 
+      </form>
+    </center>
+      <br>
+    
 
-
-        </form>
-    </div>
-</div>
-
-
-            <a class="btn btn-primary" href="profile_edit" >Edit Profile</a>
-
-        </form>
-    </div>
-</body>
-</html>
-</html>
-</div>
-
-<br>
       <div class="row text-center">
         <div class="col-md-12">
           <div class="border-top pt-5">
             <p class="copyright"><small>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
 
             </div>
           </div>
 
         </div>
-    </div>
+    </div> 
     <!-- .site-wrap -->
 
     <script src="{% static '../static/js/jquery-3.3.1.min.js' %}"></script>
@@ -178,11 +190,11 @@
     <script src="../static/js/jquery.fancybox.min.js"></script>
     <script src="../static/js/jquery.sticky.js"></script>
     <script src="../static/js/isotope.pkgd.min.js"></script> -->
-
-
+  
+  
     <script src="../static/js/main_about.js"></script>
-
-
+  
+  
   </body>
   </html>
 

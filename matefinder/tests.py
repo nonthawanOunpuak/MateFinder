@@ -5,21 +5,10 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
-# from selenium import webdriver
-# from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-# from selenium.webdriver.firefox.webdriver import WebDriver
-# from django_selenium_test import selenium, SeleniumTestCase, PageElement
-# from selenium.webdriver.common.by import By
 
 class UserTestCase(TestCase):
 
-
-
     def setUp(self):
-
-        # super().setUpClass()
-        # self.selenium.implicitly_wait(10)
-        # self.selenium = webdriver.Chrome()
 
         Student.objects.create(username="nonthawan1", name="nonthawan1",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
         Student.objects.create(username="nonthawan2", name="nonthawan2",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
@@ -28,25 +17,29 @@ class UserTestCase(TestCase):
         DormInformation.objects.create(username="nonthawan1", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000,light=True,timetosleep="1 a.m",pet=True)
 
         # Create User
-        self.user1 = User.objects.create_user(username="nonthawan1",password="Knanporn1",email="3591@mail.com")
+        self.user1 = User.objects.create_user(username="nonthawan1",password="123456789",email="3591@mail.com")
 
         self.about = reverse("about")
         self.signup = reverse("signup")
-        self.home = reverse("home")
         self.logout = reverse("logout")
         self.login = reverse("login")
         self.post = reverse("post")
         self.store = reverse("store")
         self.homepage = reverse("homepage")
-        # self.profile = reverse("profile")
+        self.profile_edit = reverse("profile_edit")
+        self.edited = reverse("edited")
 
     # Django Testing
-    # def test_delete_post(self):
-    def test_delete_post(self):
-        d = DormInformation.objects.get(id=1)
-        d.delete()
-        # self.assertEqual(response.context["message"],"Post Deleted Successfully")
 
+    # กรณีที่เราลบ post post นั้นจะหายไปจากหน้า homegage และ post นั้นจะถูกลบออกจาก database
+    def test_delete_post(self):
+        c = Client()
+        response = c.get('/homepage')
+        self.assertEqual(response.status_code, 200)
+        userPost = DormInformation.objects.get(username="nonthawan1")
+        userPost.delete()
+        self.assertTemplateUsed(response , 'homepage.html')
+        # self.assertEqual(response.context["message"],"Post Deleted Successfully")
 
     # Client Testing
 
@@ -78,7 +71,6 @@ class UserTestCase(TestCase):
         # Check that the response message.
         self.assertEqual(response.context["message"],"Please enter the correct username and password.")
 
-
     def test_add_signup(self):
         c = Client()
         response = c.get('/signup')
@@ -101,11 +93,12 @@ class UserTestCase(TestCase):
         response = c.post(self.about)
         self.assertEqual(response.status_code, 200)
 
-    def test_home(self):
+    def test_homepage(self):
         c = Client()
         c.force_login(self.user1)
-        response = c.post(self.home)
+        response = c.post(self.homepage)
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'homepage.html')
 
     def test_logout(self):
         c = Client()
@@ -123,45 +116,47 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
 
-    def test_add_post(self):
-        c = Client()
-        c.force_login(self.user1)
-        response = c.post(self.home)
-        self.assertEqual(response.status_code, 200)
-        response = c.post(self.post)
-        response = c.get('/post')
-        self.assertEqual(response.status_code, 200)
-        response = c.post('/post',{'username':'nonthawan','name_dorm':'city park','details_dorm':'aaaaaa','type_dorm':'man','price':7500,'light':True,'timetosleep':'1 a.m','pet':True}, follow=True)
-        response = self.client.post(self.post,{'post':'post',})
-        self.assertTemplateUsed(response , 'post.html')
-        # response = c.get(self.store)
-        # self.assertEqual(response.status_code, 200)
-        # self.assertTemplateUsed(response , 'homepage.html')
-        # self.assertEqual(response.status_code, 200)
-
-    def test_show_post(self):
+    def test_post_and_show_post(self):
         c = Client()
         c.force_login(self.user1)
         response = c.post(self.homepage)
         self.assertEqual(response.status_code, 200)
-        userPost = DormInformation.objects.filter(username="nonthawan1").get()
-        self.assertEqual(userPost.username, 'nonthawan1')
-        self.assertEqual(userPost.name_dorm, '1234')
-        self.assertEqual(userPost.details_dorm, '123')
-        self.assertEqual(userPost.type_dorm, '1123')
-        self.assertEqual(userPost.price, 4000)
-        self.assertEqual(userPost.light, True)
-        self.assertEqual(userPost.timetosleep, '1 a.m')
-        self.assertEqual(userPost.pet, True)
+        response = c.post('/store',{
+            'username':'gift',
+            'name_dorm':'citypark',
+            'details_dorm':'-',
+            'type_dorm':'woman',
+            'price':7000,
+            'light':True,
+            'timetosleep':'3 a.m',
+            'pet':True
+        }, follow=True)
+        self.assertTemplateUsed(response, 'homepage.html')
+        # userPost = DormInformation.objects.filter(username="gift").get()
+        # self.assertEqual(userPost.username, 'gift')
 
-        # self.assertEqual(response.context["dorms"],self.user)
+    def test_profileInfo(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.get("/" + self.user1.username)
+        self.assertEqual(response.status_code, 200)
+        response = c.get("/" + self.user1.username)
+        response = c.post(self.profile_edit)
+        self.assertEqual(response.status_code, 200)
 
-    # def test_profileInfo(self):
-    #     c = Client()
-    #     c.force_login(self.user1)
-    #     response = c.post(self.profile)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(response.context["Profile"],self.user1)
-
-
+    def test_edit_profile(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.get("/" + self.user1.username)
+        self.assertEqual(response.status_code, 200)
+        response = c.post('/edited',{
+            'name':'mai',
+            'phone':'1111111111',
+            'email':'124@mail.com',
+            'year':3
+        }, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'homepage.html')
+        response = c.get("/" + self.user1.username)
+        self.assertEqual(response.status_code, 200)
 
