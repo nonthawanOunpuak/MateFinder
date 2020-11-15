@@ -31,6 +31,12 @@ def home(request):
         return render(request, 'home.html')
 
 
+def index(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("homepage"))
+    return render(request, "index.html")
+
+
 def login(request):
     print("login methodd")
     if request.method == "POST":
@@ -42,12 +48,12 @@ def login(request):
 
         if user is not None:
             dj_login(request, user)
-            return HttpResponseRedirect(reverse("homepage"))
+            return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "login.html", {
                 "message": "Please enter the correct username and password."
             })
-    return render(request, "login.html")
+    # return render(request, "login.html")
 
 
 def logout(request):
@@ -82,7 +88,7 @@ def storeAccount(request):
         # u.password = s.password
         s.save()
 
-        #user = Student.objects.filter(username=s.username)
+        # user = Student.objects.filter(username=s.username)
 
         User.objects.create_user(username=s.username, password=s.password)
 
@@ -114,7 +120,7 @@ def storeDorm(request):
     else:
         d = DormInformation()
         d.username = request.POST.get('username')
-        #d.name_owner = request.POST.get('name_owner')
+        # d.name_owner = request.POST.get('name_owner')
         d.name_dorm = request.POST.get('name_dorm')
         d.details_dorm = request.POST.get('details_dorm')
         d.type_dorm = request.POST.get('type_dorm')
@@ -216,7 +222,7 @@ def updatePost(request, pk):
 
         d = DormInformation.objects.get(id=pk)
         # request.user.is_authenticated
-        #d.username = request.POST.get('username')
+        # d.username = request.POST.get('username')
         d.name_dorm = request.POST.get('name_dorm')
         d.details_dorm = request.POST.get('details_dorm')
         d.type_dorm = request.POST.get('type_dorm')
