@@ -16,12 +16,16 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
+
+from .views import about, contact, login, home, logout, storeDorm, createDorm
+
 from .views import about, contact, login, home, logout, storeDorm, createDorm, viewPostDorm, createAccount, storeAccount
 from django.urls import path
 from . import views
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', views.login, name='login'),
     path('login', views.login, name='login'),
     path('logout', views.logout, name='logout'),
@@ -31,7 +35,11 @@ urlpatterns = [
     path('storeAccount', views.storeAccount, name='storeAccount'),
 
     path('home', views.home, name='home'),
-    path('admin/', admin.site.urls),
+
+
+    path('profile_edit', views.profile_edit, name='profile_edit'),
+
+    path('home', views.viewPostDorm, name='viewPost'),
     path('homepage', views.viewPostDorm, name='homepage'),
 
 

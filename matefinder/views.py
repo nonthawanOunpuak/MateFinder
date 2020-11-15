@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .forms import DormInformationForm
+from .forms import StudentForm
 
 
 def about(request):
@@ -106,6 +107,7 @@ def profileInfo(request):
         })
 
 
+
 def createDorm(request):
     return render(request, 'post.html')
 
@@ -124,6 +126,11 @@ def storeDorm(request):
     d.save()
 
     messages.success(request, "Post Added Successfully")
+    return redirect('/home')
+
+
+def viewPostDorm(request):
+    return render(request, 'home.html')
     return redirect('/homepage')
 
 
@@ -134,8 +141,15 @@ def viewPostDorm(request):
     })
 
 
-def post(request):
+def post(request):  
     return render(request, 'post.html')
+
+def profile_edit(request):
+    form = StudentForm()
+    context = {'form':form}
+    return render(request, 'profile_edit.html', context)
+
+    
 
 
 def profile(request, studentlink):
@@ -153,4 +167,5 @@ def deleteDorm(request, pk):
     d = DormInformation.objects.get(id=pk)
     d.delete()
     messages.success(request, "Post Deleted Successfully")
+    return redirect('/home')
     return redirect('/homepage')
