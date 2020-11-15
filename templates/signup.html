@@ -27,20 +27,27 @@
     <article class="card-body mx-auto" style="max-width: 400px; margin-top: 50px; padding-right: 50px;">
         <h4 class="card-title mt-3 text-center">Register</h4>
         <p class="text-center">Get started with your free account</p>
-        <form method="post">
+        <form action="storeAccount" method="post">
             {% csrf_token %}
             <!-- {{form.as_p}} -->
+            <div class="form-group input-group" >
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                 </div>
+                <input name="username" class="form-control" placeholder="Username" type="text">
+            </div> <!-- form-group// -->
+        
         <div class="form-group input-group" >
             <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
              </div>
-            <input name="" class="form-control" placeholder="Full name" type="text">
+            <input name="name" class="form-control" placeholder="name" type="text">
         </div> <!-- form-group// -->
         <div class="form-group input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
              </div>
-            <input name="" class="form-control" placeholder="Email address" type="email">
+            <input name="email" class="form-control" placeholder="Email address" type="email">
         </div> <!-- form-group// -->
         <div class="form-group input-group">
             <div class="input-group-prepend">
@@ -49,31 +56,33 @@
             <select class="custom-select" style="max-width: 120px;">
                 <option selected="">+66</option>
             </select>
-            <input name="" class="form-control" placeholder="Phone number" type="text">
+            <input name="phone" class="form-control" placeholder="Phone number" type="text">
         </div> <!-- form-group// -->
         <div class="form-group input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-building"></i> </span>
             </div>
-            <select class="form-control">
+            <select name="year" class="form-control">
                 <option selected=""> Select years</option>
-                <option>First years</option>
-                <option>Second years</option>
-                <option>Third years</option>
-                <option>Fourth years</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
             </select>
         </div> <!-- form-group end.// -->
         <div class="form-group input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
             </div>
-            <input class="form-control" placeholder="Create password" type="password">
+            <input name="password" class="form-control" placeholder="Create password" type="password">
         </div> <!-- form-group// -->
         <div class="form-group input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
             </div>
-            <input class="form-control" placeholder="Confirmz password" type="password">
+            <input class="form-control" placeholder="Confirm password" type="password">
         </div> <!-- form-group// -->                                      
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block" href="{% url 'login' %}"> Create Account  </button>
