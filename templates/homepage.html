@@ -110,8 +110,12 @@
                 Raising animals : {{ i.pet }} <br>
                 Detail : {{ i.details_dorm }} <br>
               </div>
-            <button type="submit" class="btn btn-primary">Join</button>
-            <button type="button" class="btn btn-danger">Delete</button>
+              <button type="submit" class="btn btn-primary">Join</button>
+            <button type="button" class="btn btn-danger"><a href="{% url 'delete' i.id %}">Delete</button>
+            
+            {% csrf_token %}
+
+    
             </div>
             
             

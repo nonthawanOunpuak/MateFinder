@@ -34,7 +34,7 @@ urlpatterns = [
 
     path('store', views.storeDorm, name='store'),
     path('post', views.createDorm, name='post'),
-     path('delete/<int:pk>', views.deleteDorm, name='delete'),
+    path('delete/<int:pk>', views.deleteDorm, name='delete'),
 
     path('<studentlink>', views.profile, name='profile'),
 ]
