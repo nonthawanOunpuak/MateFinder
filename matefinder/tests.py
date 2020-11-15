@@ -41,10 +41,14 @@ class UserTestCase(TestCase):
         # self.profile = reverse("profile")
 
     # Django Testing
-    # def test_delete_post(self):
+
     def test_delete_post(self):
-        d = DormInformation.objects.get(id=1)
-        d.delete()
+        c = Client()
+        response = c.get('/homepage')
+        self.assertEqual(response.status_code, 200)
+        userPost = DormInformation.objects.get(username="nonthawan1")
+        userPost.delete()
+        self.assertTemplateUsed(response , 'homepage.html')
         # self.assertEqual(response.context["message"],"Post Deleted Successfully")
 
 
@@ -153,8 +157,6 @@ class UserTestCase(TestCase):
         self.assertEqual(userPost.light, True)
         self.assertEqual(userPost.timetosleep, '1 a.m')
         self.assertEqual(userPost.pet, True)
-
-        # self.assertEqual(response.context["dorms"],self.user)
 
     # def test_profileInfo(self):
     #     c = Client()
