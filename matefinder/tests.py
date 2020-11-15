@@ -168,6 +168,7 @@ class UserTestCase(TestCase):
         response = c.get("/" + self.user1.username)
         self.assertEqual(response.status_code, 200)
 
+    #เมื่อ login เข้ามาได้แล้วเราสามารถแก้ไข post ของเราได้
     def test_editPost(self):
         c = Client()
         c.force_login(self.user1)
@@ -181,4 +182,16 @@ class UserTestCase(TestCase):
             'timetosleep':'3 a.m',
             'pet':True
         }, follow=True)
+        response = c.post('/updatePost/'+ self.user1.username,{
+            'name_dorm':'TU-dome',
+            'details_dorm':'12345',
+            'type_dorm':'man',
+            'price':7500,
+            'light':True,
+            'timetosleep':'4 a.m',
+            'pet':True
+        }, follow=True)
+        # self.assertTemplateUsed(response , 'homepage.html')
+        # self.assertEqual(response.status_code, 200)
+
 
