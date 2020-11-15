@@ -15,10 +15,7 @@ Including another URLconf
 
 from django.conf.urls import url
 from django.contrib import admin
-
-from .views import about, contact, login, home, logout, storeDorm, createDorm
-
-from .views import about, contact, login, home, logout, storeDorm, createDorm, viewPostDorm, createAccount, storeAccount
+from .views import about, contact, login, home, logout, storeDorm, createDorm, viewPostDorm, createAccount, storeAccount, updatePost
 from django.urls import path
 from . import views
 
@@ -45,9 +42,11 @@ urlpatterns = [
 
     path('store', views.storeDorm, name='store'),
     path('post', views.createDorm, name='post'),
+    path('editPost/<int:pk>', views.editPost, name='editPost'),
     path('delete/<int:pk>', views.deleteDorm, name='delete'),
-
+    path('updatePost', views.updatePost, name='updatePost'),
     path('<studentlink>', views.profile, name='profile'),
+
 
 
 ]
