@@ -38,6 +38,8 @@ urlpatterns = [
 
 
     path('profile_edit', views.profile_edit, name='profile_edit'),
+    path('edited', views.profile_edited, name='edited'),
+
 
     path('home', views.viewPostDorm, name='viewPost'),
     path('homepage', views.viewPostDorm, name='homepage'),
