@@ -99,7 +99,7 @@ def storeAccount(request):
 def profileInfo(request):
 
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         profile = User.object.all().get(username=request.user.username)
         return render(request, "profile.html", {
@@ -107,33 +107,16 @@ def profileInfo(request):
         })
 
 
-<<<<<<< HEAD
 def createDorm(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         return render(request, 'post.html')
-=======
-def storeDorm(request):
-    d = DormInformation()
-    d.username = request.POST.get('username')
-    d.name_dorm = request.POST.get('name_dorm')
-    d.details_dorm = request.POST.get('details_dorm')
-    d.type_dorm = request.POST.get('type_dorm')
-    d.price = request.POST.get('price')
-    d.timetosleep = request.POST.get('timetosleep')
-    d.pet = request.POST.get('pet')
-    d.light = request.POST.get('light')
-    d.save()
-
-    messages.success(request, "Post Added Successfully")
-    return redirect('/homepage')
->>>>>>> 68ebdcede7cdbb21e48ac5930b7dae0aa80b77e6
 
 
 def storeDorm(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         d = DormInformation()
         d.username = request.POST.get('username')
@@ -160,12 +143,13 @@ def storeDorm(request):
 
 def viewPostDorm(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         print("viewPostDorm")
         return render(request, 'homepage.html', {
             "dorms": DormInformation.objects.all()
         })
+
 
 def post(request):
     if not request.user.is_authenticated:
@@ -176,15 +160,14 @@ def post(request):
 
 def profile_edit(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         return render(request, 'profile_edit.html')
 
 
-<<<<<<< HEAD
 def profile_edited(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         s = Student(request.user.username)
         s.name = request.POST.get('name')
@@ -197,22 +180,22 @@ def profile_edited(request):
         messages.success(request, "Profile edited Successfully")
         return redirect('/home')
 
-=======
-def profile_edited(request): 
+
+def profile_edited(request):
     Student.objects.filter(username=request.user.username).update(
-    name = request.POST.get('name'),
-    phone = request.POST.get('phone'),
-    email = request.POST.get('email'),
-    year = request.POST.get('year')
+        name=request.POST.get('name'),
+        phone=request.POST.get('phone'),
+        email=request.POST.get('email'),
+        year=request.POST.get('year')
     )
 
     messages.success(request, "Profile edited Successfully")
     return redirect('homepage')
->>>>>>> 68ebdcede7cdbb21e48ac5930b7dae0aa80b77e6
+
 
 def profile(request, studentlink):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         student = Student.objects.get(username=studentlink)
         return render(request, 'profile.html', {
@@ -223,9 +206,10 @@ def profile(request, studentlink):
         }
         )
 
+
 def deleteDorm(request, pk):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         d = DormInformation.objects.get(id=pk)
         d.delete()
@@ -236,7 +220,7 @@ def deleteDorm(request, pk):
 
 def editPost(request, pk):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
         d = DormInformation.objects.get(id=pk)
         # return redirect('/post', {
@@ -249,12 +233,12 @@ def editPost(request, pk):
 
 def updatePost(request, pk):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("login"))
     else:
 
         d = DormInformation.objects.get(id=pk)
-
-        d.username = request.user.is_authenticated
+# request.user.is_authenticated
+        d.username = request.POST.get('username')
         d.name_dorm = request.POST.get('name_dorm')
         d.details_dorm = request.POST.get('details_dorm')
         d.type_dorm = request.POST.get('type_dorm')
