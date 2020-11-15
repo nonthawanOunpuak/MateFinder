@@ -166,22 +166,6 @@ def profile_edit(request):
 
 
 def profile_edited(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
-    else:
-        s = Student(request.user.username)
-        s.name = request.POST.get('name')
-        s.phone = request.POST.get('phone')
-        s.email = request.POST.get('email')
-        s.year = request.POST.get('year')
-        s.password = request.POST.get('password')
-        s.save()
-
-        messages.success(request, "Profile edited Successfully")
-        return redirect('/home')
-
-
-def profile_edited(request):
     Student.objects.filter(username=request.user.username).update(
         name=request.POST.get('name'),
         phone=request.POST.get('phone'),
@@ -237,8 +221,8 @@ def updatePost(request, pk):
     else:
 
         d = DormInformation.objects.get(id=pk)
-# request.user.is_authenticated
-        d.username = request.POST.get('username')
+        # request.user.is_authenticated
+        #d.username = request.POST.get('username')
         d.name_dorm = request.POST.get('name_dorm')
         d.details_dorm = request.POST.get('details_dorm')
         d.type_dorm = request.POST.get('type_dorm')

@@ -32,7 +32,6 @@ urlpatterns = [
     path('storeAccount', views.storeAccount, name='storeAccount'),
 
 
-
     path('profile_edit', views.profile_edit, name='profile_edit'),
     path('edited', views.profile_edited, name='edited'),
 
