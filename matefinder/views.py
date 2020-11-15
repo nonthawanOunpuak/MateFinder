@@ -106,11 +106,8 @@ def profileInfo(request):
             "Profile": profile
         })
 
-
-
 def createDorm(request):
     return render(request, 'post.html')
-
 
 def storeDorm(request):
     d = DormInformation()
@@ -126,7 +123,7 @@ def storeDorm(request):
     d.save()
 
     messages.success(request, "Post Added Successfully")
-    return redirect('/home')
+    return redirect('/homepage')
 
 
 def viewPostDorm(request):
@@ -141,16 +138,13 @@ def viewPostDorm(request):
     })
 
 
-def post(request):  
+def post(request):
     return render(request, 'post.html')
 
 def profile_edit(request):
     form = StudentForm()
     context = {'form':form}
     return render(request, 'profile_edit.html', context)
-
-    
-
 
 def profile(request, studentlink):
     student = Student.objects.get(username=studentlink)
