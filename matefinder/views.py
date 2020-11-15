@@ -11,20 +11,23 @@ from .forms import StudentForm
 
 
 def about(request):
+
     return render(request, 'about.html')
 
 
 def contact(request):
+
     return render(request, 'contact.html')
 
 
 def home(request):
+
     return render(request, 'home.html')
 
 
 def index(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
+        return HttpResponseRedirect(reverse("homepage"))
     return render(request, "index.html")
 
 
@@ -49,12 +52,7 @@ def login(request):
 
 def logout(request):
 
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
-    else:
-
-        # logout(request)
-        return render(request, "login.html")
+    return render(request, "login.html")
 
 
 def createAccount(request):
@@ -62,6 +60,7 @@ def createAccount(request):
 
 
 def storeAccount(request):
+
     s = Student()
     u = User()
     s.username = request.POST.get('username')
@@ -75,7 +74,7 @@ def storeAccount(request):
     # u.password = s.password
     s.save()
 
-    #user = Student.objects.filter(username=s.username)
+    # user = Student.objects.filter(username=s.username)
 
     User.objects.create_user(username=s.username, password=s.password)
 
@@ -83,41 +82,24 @@ def storeAccount(request):
     return redirect('/login')
 
 
-# def signup(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data.get('username')
-#             name = form.cleaned_data.get('name')
-#             password = form.cleaned_data.get('password')
-#             email = form.cleaned_data.get('email')
-#             phone = form.cleaned_data.get('phone')
-#             year = form.cleaned_data.get('year')
-#             User = authenticate(request, username=username, name=name,
-#                                 password=password, email=email, phone=phone, year=year)
-#             login(User)
-#             return HttpResponseRedirect('login')
-#     else:
-#         form = UserCreationForm()
-#     return render(request, 'signup.html', {'form': form})
-
-
 def profileInfo(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
-    else:
-        profile = User.object.all().get(username=request.user.username)
-        return render(request, "profile.html", {
-            "Profile": profile
-        })
+
+    profile = User.object.all().get(username=request.user.username)
+    return render(request, "profile.html", {
+        "Profile": profile
+    })
+
 
 def createDorm(request):
+
     return render(request, 'post.html')
 
+
 def storeDorm(request):
+
     d = DormInformation()
     d.username = request.POST.get('username')
+    # d.name_owner = request.POST.get('name_owner')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')
@@ -131,35 +113,54 @@ def storeDorm(request):
     return redirect('/homepage')
 
 
-def viewPostDorm(request):
-    return render(request, 'home.html')
-    return redirect('/homepage')
+# def viewPostDorm(request):
+#     if not request.user.is_authenticated:
+#         return HttpResponseRedirect(reverse("index"))
+#     else:
+#         return redirect('/homepage')
 
 
 def viewPostDorm(request):
+
     print("viewPostDorm")
     return render(request, 'homepage.html', {
         "dorms": DormInformation.objects.all()
     })
 
+
 def post(request):
     return render(request, 'post.html')
 
+
 def profile_edit(request):
-    return render(request, 'profile_edit.html')
+    student=Student.objects.get(username=request.user.username)
+    return render(request, 'profile_edit.html', {
+        "name": student.name,
+        "email": student.email,
+        "phone": student.phone,
+        "year": student.year,
+        })
 
-def profile_edited(request): 
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+    else:
+        return render(request, 'profile_edit.html')
+
+
+def profile_edited(request):
+    print("profile_editesdddd")
     Student.objects.filter(username=request.user.username).update(
-    name = request.POST.get('name'),
-    phone = request.POST.get('phone'),
-    email = request.POST.get('email'),
-    year = request.POST.get('year')
+        name=request.POST.get('name'),
+        phone=request.POST.get('phone'),
+        email=request.POST.get('email'),
+        year=request.POST.get('year')
     )
-
     messages.success(request, "Profile edited Successfully")
     return redirect('homepage')
 
+
 def profile(request, studentlink):
+    print("profile")
     student = Student.objects.get(username=studentlink)
     return render(request, 'profile.html', {
         "name": student.name,
@@ -169,7 +170,9 @@ def profile(request, studentlink):
     }
     )
 
+
 def deleteDorm(request, pk):
+
     d = DormInformation.objects.get(id=pk)
     d.delete()
     messages.success(request, "Post Deleted Successfully")
@@ -178,6 +181,7 @@ def deleteDorm(request, pk):
 
 
 def editPost(request, pk):
+
     d = DormInformation.objects.get(id=pk)
     # return redirect('/post', {
     #     "d": d
@@ -190,9 +194,8 @@ def editPost(request, pk):
 def updatePost(request, pk):
 
     d = DormInformation.objects.get(id=pk)
-
-    # d.username = request.user.is_authenticated
-    d.username = request.POST.get('username')
+    # request.user.is_authenticated
+    # d.username = request.POST.get('username')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')

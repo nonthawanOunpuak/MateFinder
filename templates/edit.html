@@ -90,8 +90,8 @@
             <div class="section-heading">
                 <h3 class="team">Edit Post</h3> <hr>
               </div>
-              
-          <form action={% url "updatePost" %} method="POST">
+            <form action={% url 'updatePost' dorm.id %} method="POST">
+          
             {% csrf_token %}
             <article class="card-body mx-auto" style="max-width: 50%;">
 

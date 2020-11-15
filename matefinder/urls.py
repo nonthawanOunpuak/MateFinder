@@ -21,6 +21,7 @@ from . import views
 
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
     path('', views.login, name='login'),
     path('login', views.login, name='login'),
@@ -43,7 +44,7 @@ urlpatterns = [
     path('post', views.createDorm, name='post'),
     path('editPost/<int:pk>', views.editPost, name='editPost'),
     path('delete/<int:pk>', views.deleteDorm, name='delete'),
-    path('updatePost', views.updatePost, name='updatePost'),
+    path('updatePost/<int:pk>', views.updatePost, name='updatePost'),
     path('<studentlink>', views.profile, name='profile'),
 
 
