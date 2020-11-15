@@ -112,7 +112,6 @@ def createDorm(request):
 def storeDorm(request):
     d = DormInformation()
     d.username = request.POST.get('username')
-    #d.name_owner = request.POST.get('name_owner')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')
@@ -136,7 +135,6 @@ def viewPostDorm(request):
     return render(request, 'homepage.html', {
         "dorms": DormInformation.objects.all()
     })
-
 
 def post(request):
     return render(request, 'post.html')
@@ -165,7 +163,6 @@ def profile(request, studentlink):
         "year": student.year,
     }
     )
-
 
 def deleteDorm(request, pk):
     d = DormInformation.objects.get(id=pk)

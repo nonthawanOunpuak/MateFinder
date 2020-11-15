@@ -33,7 +33,6 @@ urlpatterns = [
     path('signup', views.createAccount, name='signup'),
     path('storeAccount', views.storeAccount, name='storeAccount'),
 
-    path('home', views.home, name='home'),
 
 
     path('profile_edit', views.profile_edit, name='profile_edit'),
