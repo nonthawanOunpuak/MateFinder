@@ -38,7 +38,7 @@ def login(request):
             return HttpResponseRedirect(reverse("homepage"))
         else:
             return render(request, "login.html", {
-                "message": "กรุณากรอกรหัสผ่านที่ถูกต้อง"
+                "message": "Please enter the correct username and password."
             })
     return render(request, "login.html")
 
