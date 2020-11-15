@@ -36,6 +36,7 @@ def login(request):
         if user is not None:
             dj_login(request, user)
             return HttpResponseRedirect(reverse("homepage"))
+
         else:
             return render(request, "login.html", {
                 "message": "Please enter the correct username and password."
@@ -53,24 +54,46 @@ def logout(request):
         return render(request, "login.html")
 
 
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            name = form.cleaned_data.get('name')
-            password = form.cleaned_data.get('password')
-            email = form.cleaned_data.get('email')
-            phone = form.cleaned_data.get('phone')
-            year = form.cleaned_data.get('year')
-            User = authenticate(request, username=username, name=name,
-                                password=password, email=email, phone=phone, year=year)
-            login(User)
-            return HttpResponseRedirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+def createAccount(request):
+    return render(request, 'signup.html')
+
+
+def storeAccount(request):
+    s = Student()
+    u = User()
+    s.username = request.POST.get('username')
+    s.name = request.POST.get('name')
+    s.password = request.POST.get('password')
+    s.email = request.POST.get('email')
+    s.phone = request.POST.get('phone')
+    s.year = request.POST.get('year')
+    u.username = s.username
+    u.email = s.email
+    u.password = s.password
+    s.save()
+    u.save()
+    messages.success(request, "Created Account Successfully")
+    return redirect('/login')
+
+
+# def signup(request):
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             username = form.cleaned_data.get('username')
+#             name = form.cleaned_data.get('name')
+#             password = form.cleaned_data.get('password')
+#             email = form.cleaned_data.get('email')
+#             phone = form.cleaned_data.get('phone')
+#             year = form.cleaned_data.get('year')
+#             User = authenticate(request, username=username, name=name,
+#                                 password=password, email=email, phone=phone, year=year)
+#             login(User)
+#             return HttpResponseRedirect('login')
+#     else:
+#         form = UserCreationForm()
+#     return render(request, 'signup.html', {'form': form})
 
 
 def profileInfo(request):
