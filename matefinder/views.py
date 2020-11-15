@@ -148,7 +148,14 @@ def post(request):
     return render(request, 'post.html')
 
 def profile_edit(request):
-    return render(request, 'profile_edit.html')
+    student=Student.objects.get(username=request.user.username)
+    return render(request, 'profile_edit.html', {
+        "name": student.name,
+        "email": student.email,
+        "phone": student.phone,
+        "year": student.year,
+        })
+
 
 def profile_edited(request): 
     Student.objects.filter(username=request.user.username).update(
