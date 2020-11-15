@@ -25,7 +25,7 @@ class UserTestCase(TestCase):
         Student.objects.create(username="nonthawan2", name="nonthawan2",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
         RequestInformation.objects.create(username="nonthawan1", name_req="12345")
         SentRequestInformation.objects.create(username="nonthawan1", name_sent="nonthawan1")
-        self.user = DormInformation.objects.create(username="nonthawan1", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000,light=True,timetosleep="1 a.m",pet=True)
+        DormInformation.objects.create(username="nonthawan1", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000,light=True,timetosleep="1 a.m",pet=True)
 
         # Create User
         self.user1 = User.objects.create_user(username="nonthawan1",password="Knanporn1",email="3591@mail.com")
@@ -38,6 +38,7 @@ class UserTestCase(TestCase):
         self.post = reverse("post")
         self.store = reverse("store")
         self.homepage = reverse("homepage")
+        # self.profile = reverse("profile")
 
     # Django Testing
     # def test_delete_post(self):
@@ -66,7 +67,7 @@ class UserTestCase(TestCase):
         self.assertTemplateUsed(response , 'login.html')
 
         # Check that the response message.
-        self.assertEqual(response.context["message"],"กรุณากรอกรหัสผ่านที่ถูกต้อง")
+        self.assertEqual(response.context["message"],"Please enter the correct username and password.")
 
 
         response = c.post('/login',{'username':'knanporn','password':'Kanaporn1'}, follow=True)
@@ -75,7 +76,7 @@ class UserTestCase(TestCase):
         self.assertTemplateUsed(response , 'login.html')
 
         # Check that the response message.
-        self.assertEqual(response.context["message"],"กรุณากรอกรหัสผ่านที่ถูกต้อง")
+        self.assertEqual(response.context["message"],"Please enter the correct username and password.")
 
 
     def test_add_signup(self):
@@ -138,12 +139,29 @@ class UserTestCase(TestCase):
         # self.assertTemplateUsed(response , 'homepage.html')
         # self.assertEqual(response.status_code, 200)
 
-    def test_post(self):
+    def test_show_post(self):
         c = Client()
         c.force_login(self.user1)
         response = c.post(self.homepage)
         self.assertEqual(response.status_code, 200)
+        userPost = DormInformation.objects.filter(username="nonthawan1").get()
+        self.assertEqual(userPost.username, 'nonthawan1')
+        self.assertEqual(userPost.name_dorm, '1234')
+        self.assertEqual(userPost.details_dorm, '123')
+        self.assertEqual(userPost.type_dorm, '1123')
+        self.assertEqual(userPost.price, 4000)
+        self.assertEqual(userPost.light, True)
+        self.assertEqual(userPost.timetosleep, '1 a.m')
+        self.assertEqual(userPost.pet, True)
+
         # self.assertEqual(response.context["dorms"],self.user)
+
+    # def test_profileInfo(self):
+    #     c = Client()
+    #     c.force_login(self.user1)
+    #     response = c.post(self.profile)
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response.context["Profile"],self.user1)
 
 
 
