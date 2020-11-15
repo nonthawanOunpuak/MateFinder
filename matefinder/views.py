@@ -147,17 +147,16 @@ def post(request):
 def profile_edit(request):
     return render(request, 'profile_edit.html')
 
-def profile_edited(request):
-    s = Student(request.user.username)
-    s.name = request.POST.get('name')
-    s.phone = request.POST.get('phone')
-    s.email = request.POST.get('email')
-    s.year = request.POST.get('year')
-    s.password = request.POST.get('password')
-    s.save()
+def profile_edited(request): 
+    Student.objects.filter(username=request.user.username).update(
+    name = request.POST.get('name'),
+    phone = request.POST.get('phone'),
+    email = request.POST.get('email'),
+    year = request.POST.get('year')
+    )
 
     messages.success(request, "Profile edited Successfully")
-    return redirect('/home')
+    return redirect('homepage')
 
     
 
