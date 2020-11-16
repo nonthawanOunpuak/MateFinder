@@ -151,6 +151,7 @@ class UserTestCase(TestCase):
         response = c.post(self.profile_edit)
         self.assertEqual(response.status_code, 200)
 
+
     #เมื่อ login เข้ามาได้สำเร็จเราสามารถแก้ไขข้อมูลส่วนตัวของเราได้
     def test_edit_profile(self):
         c = Client()
