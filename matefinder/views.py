@@ -202,3 +202,6 @@ def updatePost(request, pk):
 
     messages.success(request, "Edited Successfully")
     return redirect('/homepage')
+
+def request(request):
+    return render(request, 'request.html')
