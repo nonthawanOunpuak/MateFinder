@@ -31,15 +31,15 @@ class UserTestCase(TestCase):
 
     # Django Testing
 
-    # กรณีที่เราลบ post post นั้นจะหายไปจากหน้า homegage และ post นั้นจะถูกลบออกจาก database
-    def test_delete_post(self):
-        c = Client()
-        response = c.get('/homepage')
-        self.assertEqual(response.status_code, 200)
-        userPost = DormInformation.objects.get(username="nonthawan1")
-        userPost.delete()
-        self.assertTemplateUsed(response , 'homepage.html')
-        # self.assertEqual(response.context["message"],"Post Deleted Successfully")
+    # # กรณีที่เราลบ post post นั้นจะหายไปจากหน้า homegage และ post นั้นจะถูกลบออกจาก database
+    # def test_delete_post(self):
+    #     c = Client()
+    #     response = c.get('/homepage')
+    #     self.assertEqual(response.status_code, 200)
+    #     userPost = DormInformation.objects.get(username="nonthawan1")
+    #     userPost.delete()
+    #     self.assertTemplateUsed(response , 'homepage.html')
+    #     # self.assertEqual(response.context["message"],"Post Deleted Successfully")
 
     # Client Testing
 
@@ -79,7 +79,7 @@ class UserTestCase(TestCase):
         response = c.get('/signup')
         self.assertEqual(response.status_code, 200)
         response = c.post(
-            '/signup', data = {
+            '/signup',{
                 "username":"nonthawan",
                 "name":"nonthawan",
                 "password":"123456789",
@@ -151,6 +151,7 @@ class UserTestCase(TestCase):
         response = c.post(self.profile_edit)
         self.assertEqual(response.status_code, 200)
 
+
     #เมื่อ login เข้ามาได้สำเร็จเราสามารถแก้ไขข้อมูลส่วนตัวของเราได้
     def test_edit_profile(self):
         c = Client()
@@ -167,4 +168,31 @@ class UserTestCase(TestCase):
         self.assertTemplateUsed(response , 'homepage.html')
         response = c.get("/" + self.user1.username)
         self.assertEqual(response.status_code, 200)
+
+    #เมื่อ login เข้ามาได้แล้วเราสามารถแก้ไข post ของเราได้
+    def test_editPost(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.post('/store',{
+            'username':'gift',
+            'name_dorm':'citypark',
+            'details_dorm':'-',
+            'type_dorm':'woman',
+            'price':7000,
+            'light':True,
+            'timetosleep':'3 a.m',
+            'pet':True
+        }, follow=True)
+        response = c.post('/updatePost/'+ self.user1.username,{
+            'name_dorm':'TU-dome',
+            'details_dorm':'12345',
+            'type_dorm':'man',
+            'price':7500,
+            'light':True,
+            'timetosleep':'4 a.m',
+            'pet':True
+        }, follow=True)
+        # self.assertTemplateUsed(response , 'homepage.html')
+        # self.assertEqual(response.status_code, 200)
+
 

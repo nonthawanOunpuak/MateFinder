@@ -172,7 +172,6 @@ def profile(request, studentlink):
 
 
 def deleteDorm(request, pk):
-
     d = DormInformation.objects.get(id=pk)
     d.delete()
     messages.success(request, "Post Deleted Successfully")
@@ -180,12 +179,10 @@ def deleteDorm(request, pk):
     return redirect('/homepage')
 
 
+
 def editPost(request, pk):
 
     d = DormInformation.objects.get(id=pk)
-    # return redirect('/post', {
-    #     "d": d
-    # })
     return render(request, 'edit.html', {
         "dorm": d
     })
@@ -194,8 +191,6 @@ def editPost(request, pk):
 def updatePost(request, pk):
 
     d = DormInformation.objects.get(id=pk)
-    # request.user.is_authenticated
-    # d.username = request.POST.get('username')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')
