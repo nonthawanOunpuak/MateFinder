@@ -143,13 +143,13 @@ def post(request):
 
 
 def profile_edit(request):
-    student=Student.objects.get(username=request.user.username)
+    student = Student.objects.get(username=request.user.username)
     return render(request, 'profile_edit.html', {
         "name": student.name,
         "email": student.email,
         "phone": student.phone,
         "year": student.year,
-        })
+    })
 
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
@@ -217,3 +217,18 @@ def updatePost(request, pk):
 
     messages.success(request, "Edited Successfully")
     return redirect('/homepage')
+
+# def sentRequestDorm(request):
+    # get ค่า username post's owner ออกมา
+    # สร้าง database request ให้ owner
+    # get ค่า username คนกด request
+    # สร้าง database sentRequest ให้คนกด request
+    # status ยังเป็น 0 - waiting button
+
+# def accept(request):
+   # get ค่า username คนกดออกมาแล้วบันทึกใน database sentRequest ของเขา
+   # status = 1 - joined button
+   #
+
+# def deny(request)
+# def cancle(request)
