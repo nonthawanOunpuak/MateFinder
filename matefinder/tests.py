@@ -12,11 +12,12 @@ class UserTestCase(TestCase):
 
         Student.objects.create(username="nonthawan1", name="nonthawan1",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
         Student.objects.create(username="nonthawan2", name="nonthawan2",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
-        RequestInformation.objects.create(username="nonthawan1", name_req="12345")
-        RequestInformation.objects.create(username="gift", name_req="gift")
-        SentRequestInformation.objects.create(username="nonthawan1", name_sent="nonthawan2")
-        SentRequestInformation.objects.create(username="mai", name_sent="mai")
+        RequestInformation.objects.create(username="nonthawan1", name_req="12345", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
+        RequestInformation.objects.create(username="gift", name_req="gift", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
+        SentRequestInformation.objects.create(username="nonthawan1", name_sent="nonthawan2", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
+        SentRequestInformation.objects.create(username="mai", name_sent="mai", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
         DormInformation.objects.create(username="nonthawan1", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000,light=True,timetosleep="1 a.m",pet=True)
+        DormInformation.objects.create(username="nonthawan2", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000,light=True,timetosleep="1 a.m",pet=True)
 
         # Create User
         self.user1 = User.objects.create_user(username="nonthawan1",password="123456789",email="2563@mail.com")
@@ -31,6 +32,7 @@ class UserTestCase(TestCase):
         self.homepage = reverse("homepage")
         self.profile_edit = reverse("profile_edit")
         self.edited = reverse("edited")
+        self.request = reverse("request")
 
     # Django Testing
 
@@ -49,13 +51,13 @@ class UserTestCase(TestCase):
     def test_RequestInformation(self):
         author = RequestInformation.objects.get(username="nonthawan1")
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
-        expected_object_username = f'{author.id}, {author.username}, {author.name_req}'
+        expected_object_username = f'{author.id}, {author.username}, {author.name_req}, {author.status}, {author.count}, {author.date}'
         self.assertEqual(expected_object_username, str(author))
 
     def test_SentRequestInformation(self):
         author = SentRequestInformation.objects.get(username="nonthawan1")
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
-        expected_object_username = f'{author.id}, {author.username}, {author.name_sent}'
+        expected_object_username = f'{author.id}, {author.username}, {author.name_sent}, {author.status}, {author.count},  {author.date}'
         self.assertEqual(expected_object_username, str(author))
 
     def test_user_sent_and_user_post(self):
@@ -92,7 +94,7 @@ class UserTestCase(TestCase):
         userPost.delete()
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 0)
         self.assertTemplateUsed(response , 'homepage.html')
-        # self.assertEqual(response.context["message"],"Post Deleted Successfully")
+        # self.assertEqual(response.context["messages"],"Post Deleted Successfully")
 
     # Client Testing
 
@@ -195,6 +197,10 @@ class UserTestCase(TestCase):
             'pet':True
         }, follow=True)
         self.assertTemplateUsed(response, 'homepage.html')
+        author = DormInformation.objects.get(username='gift')
+        self.assertEqual(DormInformation.objects.filter(username='gift').count(), 1)
+        expected_object_username = f'{author.id}, {author.username}, {author.name_dorm}, {author.details_dorm}, {author.type_dorm}, {author.price},{author.light}, {author.timetosleep},{author.pet}'
+        self.assertEqual(expected_object_username, str(author))
 
     #เมื่อ login เข้ามาได้สำเร็จ เราสามารถดูข้อมูลส่วนตัวของเราได้
     def test_profileInfo(self):
@@ -224,6 +230,10 @@ class UserTestCase(TestCase):
         self.assertTemplateUsed(response , 'homepage.html')
         response = c.get("/" + self.user1.username)
         self.assertEqual(response.status_code, 200)
+        author = Student.objects.get(username="nonthawan1")
+        self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
+        expected_object_username = f'{author.id}, {author.username}, {author.name},{author.password}, {author.email}, {author.phone}, {author.year}'
+        self.assertEqual(expected_object_username, str(author))
 
     #เมื่อ login เข้ามาได้แล้วเราสามารถแก้ไข post ของเราได้
     def test_editPost(self):
@@ -242,11 +252,43 @@ class UserTestCase(TestCase):
         }, follow=True)
         response = c.post(self.homepage)
         self.assertEqual(response.status_code, 200)
+        author = DormInformation.objects.get(username=self.user1.username)
+        self.assertEqual(DormInformation.objects.filter(username=self.user1.username).count(), 1)
+        expected_object_username = f'{author.id}, {author.username}, {author.name_dorm}, {author.details_dorm}, {author.type_dorm}, {author.price},{author.light}, {author.timetosleep},{author.pet}'
+        self.assertEqual(expected_object_username, str(author))
+
+    def test_request_page(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.post(self.homepage)
+        self.assertEqual(response.status_code, 200)
+        response = c.post(self.request)
+        self.assertEqual(response.status_code, 200)
 
     def test_request(self):
         c = Client()
         c.force_login(self.user1)
         response = c.post(self.homepage)
         self.assertEqual(response.status_code, 200)
+        response = c.post('/sentReq/'+ self.user2.username)
+        self.assertEqual(RequestInformation.objects.filter(username=self.user1.username).count(), 1)
+        self.assertEqual(SentRequestInformation.objects.filter(username=self.user1.username).count(), 1)
+
+    def test_acceptReq(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.post(self.homepage)
+        self.assertEqual(response.status_code, 200)
+        response = c.post('/accept/'+ self.user2.username)
+        userAccept = RequestInformation.objects.get(username=self.user1.username)
+        userAccept.status = "confirm"
+        userAccept.save()
+        status = (str)(userAccept.status)
+        self.assertTrue(status == "confirm")
+
+
+
+
+
 
 
