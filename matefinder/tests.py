@@ -13,7 +13,7 @@ class UserTestCase(TestCase):
         Student.objects.create(username="nonthawan1", name="nonthawan1",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
         Student.objects.create(username="nonthawan2", name="nonthawan2",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
         RequestInformation.objects.create(username="nonthawan1", name_req="12345")
-        SentRequestInformation.objects.create(username="nonthawan1", name_sent="nonthawan1")
+        SentRequestInformation.objects.create(username="nonthawan1", name_sent="nonthawan2")
         DormInformation.objects.create(username="nonthawan1", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000,light=True,timetosleep="1 a.m",pet=True)
 
         # Create User
@@ -31,13 +31,35 @@ class UserTestCase(TestCase):
 
     # Django Testing
 
+    def test_DormInformation(self):
+        author = DormInformation.objects.get(username="nonthawan1")
+        expected_object_username = f'{author.id}, {author.username}, {author.name_dorm}, {author.details_dorm}, {author.type_dorm}, {author.price},{author.light}, {author.timetosleep},{author.pet}'
+        self.assertEqual(expected_object_username, str(author))
+
+    def test_Student(self):
+        author = Student.objects.get(username="nonthawan1")
+        expected_object_username = f'{author.id}, {author.username}, {author.name},{author.password}, {author.email}, {author.phone}, {author.year}'
+        self.assertEqual(expected_object_username, str(author))
+
+    def test_RequestInformation(self):
+        author = RequestInformation.objects.get(username="nonthawan1")
+        expected_object_username = f'{author.id}, {author.username}, {author.name_req}'
+        self.assertEqual(expected_object_username, str(author))
+
+    def test_SentRequestInformation(self):
+        author = SentRequestInformation.objects.get(username="nonthawan1")
+        expected_object_username = f'{author.id}, {author.username}, {author.name_sent}'
+        self.assertEqual(expected_object_username, str(author))
+
     # กรณีที่เราลบ post post นั้นจะหายไปจากหน้า homegage และ post นั้นจะถูกลบออกจาก database
     def test_delete_post(self):
         c = Client()
         response = c.get('/homepage')
         self.assertEqual(response.status_code, 200)
         userPost = DormInformation.objects.get(username="nonthawan1")
+        self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
         userPost.delete()
+        self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 0)
         self.assertTemplateUsed(response , 'homepage.html')
         # self.assertEqual(response.context["message"],"Post Deleted Successfully")
 
@@ -79,7 +101,7 @@ class UserTestCase(TestCase):
         response = c.get('/signup')
         self.assertEqual(response.status_code, 200)
         response = c.post(
-            '/signup', data = {
+            '/signup',{
                 "username":"nonthawan",
                 "name":"nonthawan",
                 "password":"123456789",
@@ -124,10 +146,12 @@ class UserTestCase(TestCase):
         self.assertTemplateUsed(response , 'login.html')
 
     #เมื่อ login เข้ามาได้สำเร็จ เรามีสิทธิที่จะเข้าถึงหน้า homepage และมีสิทธิในการ post ข้อมูลต่าง ๆ
-    def test_post_and_show_post(self):
+    def test_post(self):
         c = Client()
         c.force_login(self.user1)
         response = c.post(self.homepage)
+        self.assertEqual(response.status_code, 200)
+        response = c.post(self.post)
         self.assertEqual(response.status_code, 200)
         response = c.post('/store',{
             'username':'gift',
@@ -157,6 +181,8 @@ class UserTestCase(TestCase):
         c.force_login(self.user1)
         response = c.get("/" + self.user1.username)
         self.assertEqual(response.status_code, 200)
+        response = c.post(self.profile_edit)
+        self.assertEqual(response.status_code, 200)
         response = c.post('/edited',{
             'name':'mai',
             'phone':'1111111111',
@@ -167,4 +193,24 @@ class UserTestCase(TestCase):
         self.assertTemplateUsed(response , 'homepage.html')
         response = c.get("/" + self.user1.username)
         self.assertEqual(response.status_code, 200)
+
+    #เมื่อ login เข้ามาได้แล้วเราสามารถแก้ไข post ของเราได้
+    def test_editPost(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.post(self.homepage)
+        self.assertEqual(response.status_code, 200)
+        response = c.post('/updatePost/'+ self.user1.username,{
+            'name_dorm':'TU-dome',
+            'details_dorm':'12345',
+            'type_dorm':'man',
+            'price':7500,
+            'light':True,
+            'timetosleep':'4 a.m',
+            'pet':True
+        }, follow=True)
+        response = c.post(self.homepage)
+        self.assertEqual(response.status_code, 200)
+
+
 

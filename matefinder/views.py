@@ -11,17 +11,14 @@ from .forms import StudentForm
 
 
 def about(request):
-
     return render(request, 'about.html')
 
 
 def contact(request):
-
     return render(request, 'contact.html')
 
 
 def home(request):
-
     return render(request, 'home.html')
 
 
@@ -52,7 +49,6 @@ def login(request):
 
 
 def logout(request):
-
     return render(request, "login.html")
 
 
@@ -61,7 +57,6 @@ def createAccount(request):
 
 
 def storeAccount(request):
-
     s = Student()
     u = User()
     s.username = request.POST.get('username')
@@ -70,21 +65,13 @@ def storeAccount(request):
     s.email = request.POST.get('email')
     s.phone = request.POST.get('phone')
     s.year = request.POST.get('year')
-    # u.username = s.username
-    # u.email = s.email
-    # u.password = s.password
     s.save()
-
-    # user = Student.objects.filter(username=s.username)
-
     User.objects.create_user(username=s.username, password=s.password)
-
     messages.success(request, "Created Account Successfully")
     return redirect('/login')
 
 
 def profileInfo(request):
-
     profile = User.object.all().get(username=request.user.username)
     return render(request, "profile.html", {
         "Profile": profile
@@ -92,17 +79,10 @@ def profileInfo(request):
 
 
 def createDorm(request):
-
-    print("auuuuuuuuuuuuuuu: ", request.user.is_authenticated)
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("index"))
-    else:
-
-        return render(request, 'post.html')
+    return render(request, 'post.html')
 
 
 def storeDorm(request):
-
     d = DormInformation()
     d.username = request.POST.get('username')
     # d.name_owner = request.POST.get('name_owner')
@@ -114,20 +94,11 @@ def storeDorm(request):
     d.pet = request.POST.get('pet')
     d.light = request.POST.get('light')
     d.save()
-
     messages.success(request, "Post Added Successfully")
     return redirect('/homepage')
 
 
-# def viewPostDorm(request):
-#     if not request.user.is_authenticated:
-#         return HttpResponseRedirect(reverse("index"))
-#     else:
-#         return redirect('/homepage')
-
-
 def viewPostDorm(request):
-    print("auuuuuuuuuuuuuuu: ", request.user.is_authenticated)
     print("viewPostDorm")
     return render(request, 'homepage.html', {
         "dorms": DormInformation.objects.all()
@@ -150,7 +121,6 @@ def profile_edit(request):
         "phone": student.phone,
         "year": student.year,
     })
-
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
     else:
@@ -182,7 +152,6 @@ def profile(request, studentlink):
 
 
 def deleteDorm(request, pk):
-
     d = DormInformation.objects.get(id=pk)
     d.delete()
     messages.success(request, "Post Deleted Successfully")
@@ -191,21 +160,14 @@ def deleteDorm(request, pk):
 
 
 def editPost(request, pk):
-
     d = DormInformation.objects.get(id=pk)
-    # return redirect('/post', {
-    #     "d": d
-    # })
     return render(request, 'edit.html', {
         "dorm": d
     })
 
 
 def updatePost(request, pk):
-
     d = DormInformation.objects.get(id=pk)
-    # request.user.is_authenticated
-    # d.username = request.POST.get('username')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')
@@ -214,15 +176,27 @@ def updatePost(request, pk):
     d.pet = request.POST.get('pet')
     d.light = request.POST.get('light')
     d.save()
-
     messages.success(request, "Edited Successfully")
     return redirect('/homepage')
 
 
-def sentRequest(request, pk):
+# def sentRequest(request, pk):
 
-    d = DormInformation.objects.get(id=pk)
-    d.username = request.GET.get('username')
-    newSent = SentRequestInformation()
-    newSent.name_req = d.username
-    newSent.username =
+#     d = DormInformation.objects.get(id=pk)
+#     d.username = request.GET.get('username')
+#     newSent = SentRequestInformation()
+#     newSent.name_req = d.username
+#
+# request feature
+
+
+def request(request):
+    obj = RequestInformation.objects.all()
+    return render(request, 'request.html', {'obj': obj})
+
+
+def declineReq(request, pk):
+    o = RequestInformation.objects.get(id=pk)
+    o.delete()
+    # messages.success(request, "Post Deleted Successfully")
+    return redirect('/request')

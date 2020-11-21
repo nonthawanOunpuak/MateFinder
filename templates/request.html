@@ -1,0 +1,89 @@
+{% block body %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/styleabout.css' %}" />
+
+<html lang="en">
+  <head>
+    <title>MateFinder &mdash; About </title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"  rel="stylesheet" />
+    <link rel="stylesheet" href="../static/css/styleabout.css" rel="stylesheet"  />
+    
+  </head>
+
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+      <header class="site-navbar light js-sticky-header site-navbar-target" role="banner">
+        <div class="container"  style="background-color:#c5f0e1; max-width: 140%;" >
+       
+          <div class="col-sm-12">
+            <div class="col-sm-12">
+              <nav class="site-navigation position-relative text-right" role="navigation"  style="margin-right: 30px;">
+                <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                  <li><a href="homepage" class="nav-link">Home</a></li>
+                  <li class="has-children">   
+                  <li class="active"><a href="request" class="nav-link">Request</a></li>  
+                  <li><a href="{{request.user.username}}" class="nav-link">profile</a></li>             
+                  <li><a href="about" class="nav-link">About</a></li>
+                  <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle float-right"><span class="icon-menu h3 text-black"></span></a></div>
+          </div>
+        </div>
+      </header>
+    
+      
+  
+      <br><br><br>
+      <div class="row text-center">
+        <div class="col-md-12">
+          <div class="border-top pt-5">
+            <p class="copyright"><small>
+              <div class="container">
+                <table style="width:100%">
+                  <tr>
+                    <th>From</th>
+                    <th>Title</th> 
+                    <th>Date</th> 
+                    <!-- <th>Accept</th>
+                    <th>Decline</th> -->
+                  </tr>
+                  {% for o in obj %}
+                  {% if o.username == user.username %}
+                  <tr>
+                    <td>{{o.name_req}}</td>
+                    <td>{{o.name_req}} want to be your roommate</td>
+                    <td>yesterday</td> <!--จะเพิ่มวันที่ก็ได้นะ -->
+                    <td><button class="btn btn-warning"><a href="" style="color:white">Accept</a></button></td>
+                    <td><button type="button" class="btn btn-danger"><a href="{% url 'decline' o.id %}" style="color:white">Decline</button></td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                 
+                </table>
+              <!-- Copyright &copy;<script>document.write(new Date().getFullYear());</script>  -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div> 
+
+  </body>
+  </html>
+
+</html>
+
+
+{% endblock %}
