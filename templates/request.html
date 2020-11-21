@@ -65,7 +65,7 @@
                     <td>{{o.name_req}}</td>
                     <td>{{o.name_req}} want to be your roommate</td>
                     <td>yesterday</td> <!--จะเพิ่มวันที่ก็ได้นะ -->
-                    <td><button class="btn btn-warning"><a href="" style="color:white">Accept</a></button></td>
+                    <td><button class="btn btn-warning"><a href="{% url 'acceptReq' o.id %}" style="color:white">Accept</a></button></td>
                     <td><button type="button" class="btn btn-danger"><a href="{% url 'decline' o.id %}" style="color:white">Decline</button></td>
                   </tr>
                   {% endif %}

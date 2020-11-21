@@ -13,11 +13,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from . import views
+from django.urls import path
 from django.conf.urls import url
 from django.contrib import admin
-from .views import about, contact, login, home, logout, storeDorm, createDorm, viewPostDorm, createAccount, storeAccount, updatePost
-from django.urls import path
-from . import views
+from .views import about, contact, login, home, logout, storeDorm, createDorm, viewPostDorm, createAccount, storeAccount, updatePost, sentRequestInformation, declineReq, acceptReq
 
 
 urlpatterns = [
@@ -47,7 +47,8 @@ urlpatterns = [
     path('updatePost/<int:pk>', views.updatePost, name='updatePost'),
     path('<studentlink>', views.profile, name='profile'),
 
-    #request feature
+    # request feature
     path('decline/<int:pk>', views.declineReq, name='decline'),
-
+    path('sentReq/<int:pk>', views.sentRequestInformation, name='sentReq'),
+    path('accept/<int:pk>', views.acceptReq, name='acceptReq')
 ]

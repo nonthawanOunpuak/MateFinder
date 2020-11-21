@@ -155,7 +155,7 @@ def deleteDorm(request, pk):
     d = DormInformation.objects.get(id=pk)
     d.delete()
     messages.success(request, "Post Deleted Successfully")
-    return redirect('/home')
+
     return redirect('/homepage')
 
 
@@ -179,15 +179,45 @@ def updatePost(request, pk):
     messages.success(request, "Edited Successfully")
     return redirect('/homepage')
 
+# ตอนกดขอ join
+# db ถูกสร้างสองฝั่ง คือ sentRequest (username-mine) ของเรา กับ Request ของเขา (เราจะเป็น name_req)
 
-# def sentRequest(request, pk):
 
-#     d = DormInformation.objects.get(id=pk)
-#     d.username = request.GET.get('username')
-#     newSent = SentRequestInformation()
-#     newSent.name_req = d.username
-#
-# request feature
+def sentRequestInformation(request, pk):
+
+    d = DormInformation.objects.get(id=pk)
+    #dusername = d.username
+    # d.username = request.GET.get('username')
+    # user ของคนที่เราไปขอ
+    newSent = SentRequestInformation()
+    newSent.name_sent = d.username
+    newSent.username = request.user.username
+    newSent.status = "waiting"
+    newSent.count = 1
+    newSent.save()
+
+    newReq = RequestInformation()
+    newReq.username = d.username
+    newReq.name_req = request.user.username
+    newReq.count = 1
+    newReq.status = "waiting"
+    newReq.save()
+
+    objReq = RequestInformation.objects.all()
+    objSent = SentRequestInformation.objects.all()
+    return render(request, 'request.html', {
+        "req": objReq,
+        "sent": objSent,
+    })
+
+# request feature showing
+
+
+def acceptReq(request, pk):
+    req = RequestInformation.objects.get(id=pk)
+    req.status = "confirm"
+    req.save()
+    return redirect('/request')
 
 
 def request(request):
