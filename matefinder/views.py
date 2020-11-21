@@ -155,6 +155,13 @@ def updatePost(request, pk):
     d.save()
     messages.success(request, "Edited Successfully")
     return redirect('/homepage')
-
+#request feature
 def request(request):
-    return render(request, 'request.html')
+    obj = RequestInformation.objects.all()
+    return render(request, 'request.html',{'obj':obj})
+
+def declineReq(request, pk):
+    o = RequestInformation.objects.get(id=pk)
+    o.delete()
+    # messages.success(request, "Post Deleted Successfully")
+    return redirect('/request')

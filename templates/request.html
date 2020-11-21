@@ -50,8 +50,30 @@
         <div class="col-md-12">
           <div class="border-top pt-5">
             <p class="copyright"><small>
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
-
+              <div class="container">
+                <table style="width:100%">
+                  <tr>
+                    <th>From</th>
+                    <th>Title</th> 
+                    <th>Date</th> 
+                    <!-- <th>Accept</th>
+                    <th>Decline</th> -->
+                  </tr>
+                  {% for o in obj %}
+                  {% if o.username == user.username %}
+                  <tr>
+                    <td>{{o.name_req}}</td>
+                    <td>{{o.name_req}} want to be your roommate</td>
+                    <td>yesterday</td> <!--จะเพิ่มวันที่ก็ได้นะ -->
+                    <td><button class="btn btn-warning"><a href="" style="color:white">Accept</a></button></td>
+                    <td><button type="button" class="btn btn-danger"><a href="{% url 'decline' o.id %}" style="color:white">Decline</button></td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                 
+                </table>
+              <!-- Copyright &copy;<script>document.write(new Date().getFullYear());</script>  -->
+              </div>
             </div>
           </div>
 

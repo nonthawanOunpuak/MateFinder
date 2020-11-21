@@ -47,6 +47,7 @@ urlpatterns = [
     path('updatePost/<int:pk>', views.updatePost, name='updatePost'),
     path('<studentlink>', views.profile, name='profile'),
 
-
+    #request feature
+    path('decline/<int:pk>', views.declineReq, name='decline'),
 
 ]
