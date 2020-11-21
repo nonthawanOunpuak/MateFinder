@@ -155,6 +155,7 @@ def updatePost(request, pk):
     d.save()
     messages.success(request, "Edited Successfully")
     return redirect('/homepage')
+
 #request feature
 def request(request):
     obj = RequestInformation.objects.all()
