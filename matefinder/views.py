@@ -209,20 +209,44 @@ def sentRequestInformation(request, pk):
         "req": objReq,
         "sent": objSent,
     })
+    # พอกด join แล้วเปลี่ยนเป็น waiting อัตโนมัติเลย แบบไม่ต้องเช็คจาก backend
+    # จริงๆอันนี้อยู่หน้า homepage ก็ได้ ใช้ def request ส่งมาเอา
+    # return render(request, 'homepage.html', {
+    #     "req": objReq,
+    #     "sent": objSent,
+    # })
 
 # request feature showing
 
 
 def acceptReq(request, pk):
     req = RequestInformation.objects.get(id=pk)
-    req.status = "confirm"
+    req.status = "joined"
     req.save()
-    return redirect('/request')
+    s = SentRequestInformation()
+    sent = SentRequestInformation.objects.get(username=s.username)
+    sent.status = "confirm"
+    sent.save()
+    objAcc = RequestInformation.objects.all()
+
+    # พอเด้งไปหน้า homepage ปุ่มจะเปลี่ยนเป็น join
+    # ให้ get acc.name_req ขึ้นมาแล้วหาว่าโพสไหนชื่อตรง
+    # แล้วก็ get acc.status ออกมาเช็คว่า == "joined" มั้ย แล้วเปลี่ยนปุ่ม
+
+    return render(request, 'homepage.html', {
+        "acc": objAcc,
+
+    })
 
 
 def request(request):
+    # จะดึงข้อมูลละก็ข้อคาม status มาเช็ค ถ้า == 'confirm' จะเป็น message บอก
     obj = RequestInformation.objects.all()
-    return render(request, 'request.html', {'obj': obj})
+    objSentReq = SentRequestInformation.objects.all()
+    return render(request, 'request.html', {
+        'obj': obj,
+        'objSentReq': objSentReq
+    })
 
 
 def declineReq(request, pk):

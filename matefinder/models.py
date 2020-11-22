@@ -50,4 +50,4 @@ class DormInformation(models.Model):
     pet = models.BooleanField()
 
     def __str__(self):
-        return f"{self.id}, {self.username}, {self.name_dorm}, {self.details_dorm}, {self.type_dorm}, {self.price},{self.light}, {self.timetosleep},{self.pet}"
+        return f"{self.id}, {self.username}, {self.name_dorm}, {self.details_dorm}, {self.type_dorm}, {self.price},{self.light}, {self.timetosleep},{self.pet},{self.status}"
