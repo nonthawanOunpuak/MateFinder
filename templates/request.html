@@ -56,34 +56,51 @@
                     <th>From</th>
                     <th>Title</th> 
                     <th>Date</th> 
-                    <!-- <th>Accept</th>
-                    <th>Decline</th> -->
+                    <th>Status</th>
                   </tr>
                   {% for o in obj %}
                   {% if o.username == user.username %}
                   <tr>
                     <td>{{o.name_req}}</td>
                     <td>{{o.name_req}} want to be your roommate</td>
-                    <td>yesterday</td> <!--จะเพิ่มวันที่ก็ได้นะ -->
+                    <td>{{o.date}}</td>
+                    <td>{{o.status}}</td>
                     <td><button class="btn btn-warning"><a href="{% url 'acceptReq' o.id %}" style="color:white">Accept</a></button></td>
                     <td><button type="button" class="btn btn-danger"><a href="{% url 'decline' o.id %}" style="color:white">Decline</button></td>
                   </tr>
                   {% endif %}
                   {% endfor %}
-                 
                 </table>
-              <!-- Copyright &copy;<script>document.write(new Date().getFullYear());</script>  -->
+              </div>
+              <!-- sent request table-->
+              <div class="container">
+                <h2>sentReq</h2>
+                <table style="width:100%">
+                  <tr>
+                    <th>From</th>
+                    <th>Title</th> 
+                    <th>Date</th> 
+                    <th>Status</th>
+                  </tr>
+                  {% for sentR in sentReq %}
+                  {% if sentR.username == user.username %}
+                  <tr>
+                    <td>You [ {{sentR.username}} ]</td>
+                    <td>You want to be roommate with [ {{sentR.name_sent}} ]</td>
+                    <td>{{sentR.date}}</td> 
+                    <td>{{sentR.status}}</td> 
+                    <!-- <td><button class="btn btn-warning"><a href="{% url 'acceptReq' sentR.id %}" style="color:white">Accept</a></button></td>
+                    <td><button type="button" class="btn btn-danger"><a href="{% url 'decline' sentR.id %}" style="color:white">Decline</button></td> -->
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                </table>
               </div>
             </div>
           </div>
-
         </div>
     </div> 
-
   </body>
   </html>
-
 </html>
-
-
 {% endblock %}
