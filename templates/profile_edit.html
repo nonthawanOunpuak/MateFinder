@@ -4,7 +4,7 @@
 
 <html lang="en">
 <head>
-    <title>MateFinder &mdash; About </title>
+    <title>MateFinder &mdash; Edit Profile </title>
     <meta charset="utf-8" />
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -12,35 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;900&display=swap"
           rel="stylesheet" />
 
-    <link rel="stylesheet" href="../static/fonts/icomoon/style.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../static/css/jquery-ui.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../static/css/owl.carousel.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../static/css/owl.theme.default.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../static/css/owl.theme.default.min.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="../static/css/jquery.fancybox.min.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="../static/css/bootstrap-datepicker.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="../static/fonts/flaticon/font/flaticon.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../static/fonts/flaticon-covid/font/flaticon.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="../static/css/aos.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="../static/css/styleabout.css" rel="stylesheet" />
+          <link rel="stylesheet" href="../static/css/bootstrap.min.css"  rel="stylesheet" />
+          <link rel="stylesheet" href="../static/css/styleabout.css" rel="stylesheet"  />
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-
-    <!-- <div id="overlayer"></div>
-    <div class="loader">
-      <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div> -->
 
 
     <div class="site-wrap">
@@ -63,10 +40,10 @@
                   <nav class="site-navigation position-relative text-right" role="navigation"  style="margin-right: 30px;">
                     <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                       <li class="active"><a href="homepage" class="nav-link">Home</a></li>
-                      <li class="has-children">                  
+                      <li class="has-children">   
+                      <li><a href="request" class="nav-link">Request</a></li>  
+                      <li><a href="{{request.user.username}}" class="nav-link">profile</a></li>             
                       <li><a href="about" class="nav-link">About</a></li>
-                      <li><a href="#" class="nav-link">Blog</a></li>
-                      <li><a href="{{request.user.username}}" class="nav-link">profile</a></li>
                       <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
                     </ul>
                   </nav>
@@ -76,34 +53,6 @@
             </div>
           </header>
         <br><br><br>
-
-        <!-- <center>
-            <div class="section-heading">
-              <h3 class="team"> Create Post</h3> <hr>
-            </div>
-          <form>
-          <article class="card-body mx-auto" style="max-width: 50%;">
-          <input name="" class="form-control" placeholder="Dormitory (e.g. city park, inter, etc.)" type="text"> <br>
-          <input name="" class="form-control" placeholder="Type (e.g. Male, Female)" type="text"> <br>
-          <input name="" class="form-control" placeholder="Price" type="text"> <br>
-          <input name="" class="form-control" placeholder="Time to sleep (e.g. 10 p.m., 1 a.m.)" type="text"> <br>
-          <input name="" class="form-control" placeholder="Detail (e.g. don't snoring )" type="text"> <br>
-          Sleeping with lights :
-          <input type="radio" id="lightOn" name="light" value="lightOn">
-          <label for="lightOn">On</label>
-          <input type="radio" id="lightOff" name="light" value="lightOff">
-          <label for="lightOff">Off</label><br>
-          Raising animals :
-          <input type="radio" id="lightOn" name="animal" value="animalYes">
-          <label for="animalYes">Yes</label>
-          <input type="radio" id="lightOff" name="animal" value="animalNo">
-          <label for="animalNo">No</label> <br>
-          <p><a href="#" id="post" class="btn btn-primary">Post</a></p>
-        </article>
-        </form>
-        </center> -->
-
-        <!-- <center> -->
             <div class="section-heading">
                 <h3 class="team"> Edit Profile</h3> <hr>
             </div>
@@ -111,9 +60,9 @@
                 {% csrf_token %}
                 <article class="card-body mx-auto" style="max-width: 50%;">
                     
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="form-control" for="username">{{request.user.username}}</label>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <!-- <label class="form-control" for="username">{{request.user.username}}</label> -->
                         <input type="name" class="form-control" id="name" name="name" placeholder="{{name}}">
@@ -155,36 +104,6 @@
 
         </div>
     </div>
-    <!-- .site-wrap -->
-
-    <script src="{% static '../static/js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static '../static/js/popper.min.js' %}"></script>
-    <script src="{% static '../static/js/popper.min.js' %}"></script>
-    <script src="{% static '../static/js/bootstrap.min.js' %}"></script>
-    <script src="{% static '../static/js/owl.carousel.min.js' %}"></script>
-    <script src="{% static '../static/js/jquery.countdown.min.js' %}"></script>
-    <script src="{% static '../static/js/jquery.easing.1.3.js' %}"></script>
-    <script src="{% static '../static/js/aos.js' %}"></script>
-    <script src="{% static '../static/js/jquery.fancybox.min.js' %}"></script>
-    <script src="{% static '../static/js/jquery.sticky.js' %}"></script>
-    <script src="{% static '../static/js/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static '../static/js/main_about.js' %}"></script>
-    <!-- <script src="../static/js/jquery-3.3.1.min.js"></script>
-    <script src="../static/js/jquery-ui.js"></script>
-    <script src="../static/js/popper.min.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
-    <script src="../static/js/owl.carousel.min.js"></script>
-    <script src="../static/js/jquery.countdown.min.js"></script>
-    <script src="../static/js/jquery.easing.1.3.js"></script>
-    <script src="../static/js/aos.js"></script>
-    <script src="../static/js/jquery.fancybox.min.js"></script>
-    <script src="../static/js/jquery.sticky.js"></script>
-    <script src="../static/js/isotope.pkgd.min.js"></script> -->
-
-
-    <script src="../static/js/main_about.js"></script>
-
-
 </body>
 </html>
 

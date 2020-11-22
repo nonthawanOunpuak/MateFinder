@@ -17,17 +17,23 @@ class Student(models.Model):
 class RequestInformation(models.Model):
     username = models.CharField(max_length=255)
     name_req = models.CharField(max_length=255)
+    status = models.CharField(max_length=255)
+    count = models.IntegerField()
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.id}, {self.username}, {self.name_req}"
+        return f"{self.id}, {self.username}, {self.name_req}, {self.status}, {self.count}, {self.date}"
 
 
 class SentRequestInformation(models.Model):
     username = models.CharField(max_length=255)
     name_sent = models.CharField(max_length=255)
+    status = models.CharField(max_length=255)
+    count = models.IntegerField()
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.id}, {self.username}, {self.name_sent}"
+        return f"{self.id}, {self.username}, {self.name_sent}, {self.status}, {self.count}, {self.date}"
 
 
 class DormInformation(models.Model):
