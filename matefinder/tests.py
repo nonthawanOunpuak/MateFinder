@@ -312,15 +312,11 @@ class UserTestCase(TestCase):
         # status = (str)(userAccept.status)
         # self.assertTrue(status == "confirm")
 
-    def test_storeaccout(self) :
+    def test_storeAccout(self) :
         c = Client()
         response = c.post(reverse('storeAccount'),{'username':'test1','name':'name1','password':'1234','email':'test@matfinder.com','phone':'0818111111','year':'2'})
         student = Student.objects.get(username='test1')
         self.assertEqual(response.status_code,302)
-        # print(type(student))
-        # self.assertEqual(len(student),1)
-        # user = User.objects.get(username=student.username)
-        # self.assertEqual(len(user),1)
 
     def redirect(self , res):
         return dict(res.items())['Location']
@@ -341,3 +337,8 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code,200)
         # self.assertTemplateUsed(response,'post.html')
 
+    def test_deleteDorm(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.post('/delete/'+ self.user1.username)
+        self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)

@@ -29,15 +29,10 @@ def index(request):
 
 
 def login(request):
-    print("loooooogin: ", request.user.is_authenticated)
-    print("login methodd")
     if request.method == "POST":
         username = request.POST["username"]
-        print('uuuuuu    :', username)
         password = request.POST["password"]
-        print('pwwww  :', password)
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
             dj_login(request, user)
             return HttpResponseRedirect(reverse("homepage"))
@@ -67,7 +62,6 @@ def storeAccount(request):
     s.year = request.POST.get('year')
     s.save()
     User.objects.create_user(username=s.username, password=s.password)
-    messages.success(request, "Created Account Successfully")
     return redirect('/login')
 
 
@@ -85,7 +79,6 @@ def createDorm(request):
 def storeDorm(request):
     d = DormInformation()
     d.username = request.POST.get('username')
-    # d.name_owner = request.POST.get('name_owner')
     d.name_dorm = request.POST.get('name_dorm')
     d.details_dorm = request.POST.get('details_dorm')
     d.type_dorm = request.POST.get('type_dorm')
@@ -94,19 +87,16 @@ def storeDorm(request):
     d.pet = request.POST.get('pet')
     d.light = request.POST.get('light')
     d.save()
-    messages.success(request, "Post Added Successfully")
     return redirect('/homepage')
 
 
 def viewPostDorm(request):
-    print("viewPostDorm")
     return render(request, 'homepage.html', {
         "dorms": DormInformation.objects.all()
     })
 
 
 def post(request):
-    print("auuuuuuuuuuuuuuu: ", request.user.is_authenticated)
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("index"))
     else:
@@ -128,19 +118,16 @@ def profile_edit(request):
 
 
 def profile_edited(request):
-    print("profile_editesdddd")
     Student.objects.filter(username=request.user.username).update(
         name=request.POST.get('name'),
         phone=request.POST.get('phone'),
         email=request.POST.get('email'),
         year=request.POST.get('year')
     )
-    messages.success(request, "Profile edited Successfully")
     return redirect('homepage')
 
 
 def profile(request, studentlink):
-    print("profile")
     student = Student.objects.get(username=studentlink)
     return render(request, 'profile.html', {
         "name": student.name,
@@ -154,8 +141,6 @@ def profile(request, studentlink):
 def deleteDorm(request, pk):
     d = DormInformation.objects.get(id=pk)
     d.delete()
-    messages.success(request, "Post Deleted Successfully")
-
     return redirect('/homepage')
 
 
@@ -176,7 +161,6 @@ def updatePost(request, pk):
     d.pet = request.POST.get('pet')
     d.light = request.POST.get('light')
     d.save()
-    messages.success(request, "Edited Successfully")
     return redirect('/homepage')
 
 # ตอนกดขอ join
@@ -252,5 +236,4 @@ def request(request):
 def declineReq(request, pk):
     o = RequestInformation.objects.get(id=pk)
     o.delete()
-    # messages.success(request, "Post Deleted Successfully")
     return redirect('/request')
