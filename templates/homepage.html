@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-    <title>MateFinder &mdash; About </title>
+    <title>MateFinder</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -18,85 +18,6 @@
 
     <link rel="stylesheet" href="../static/css/bootstrap.min.css"  rel="stylesheet" />
     <link rel="stylesheet" href="../static/css/styleabout.css" rel="stylesheet"  />
-    <style>
-      .toggle-3 {
-        font-size: 0.8rem;
-        display: inline-block;
-        vertical-align: top;
-        margin: 0 15px 0 0;
-    }
-    
-        .toggle-3__input {
-            display: none;
-        }
-    
-        .toggle-3__button {
-            position: relative;
-            display: inline-block;
-            font-family: 'Roboto', sans-serif;
-            text-transform: uppercase;
-    
-            width: 150px;
-            height: 40px;
-            background: #d2d2d2;
-            color: #FFF;
-            border: solid 1px #d2d2d2;
-            border-radius: 7px;
-    
-            padding: 5px 10px 5px 30px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-    
-        .toggle-3__button::before {
-            position: absolute;
-            content: '';
-            top: 10px;
-            left: 5px;
-    
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-    
-            /* background: #FFF;
-            border-radius: 100%; */
-    
-            transition: all 0.3s ease;
-        }
-    
-        .toggle-3__button::after {
-            content: "JOIN";
-            position: absolute;
-            top: 5px;
-            left: 55px;
-            font-size: 1rem;
-        }
-    
-        .toggle-3__button--correct {
-            position: absolute;
-            width: 12px;
-            top: 16px;
-            left: 14px;
-            visibility: hidden;
-        }
-    
-    
-        .toggle-3__input:checked + .toggle-3__button {
-            background: #32be8f;
-            border: #32be8f;
-            color: white;
-        }
-    
-            .toggle-3__input:checked + .toggle-3__button > .toggle-3__button--correct {
-            visibility: visible;
-            }  
-    
-                .toggle-3__input:checked + .toggle-3__button::after {
-                left:35%;
-                content: "JOINED";
-                }
-      
-    </style>
   </head>
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -127,14 +48,12 @@
       <br>
       <center>
     {% for i in dorms %} 
-    <div class="card mb-3" style="max-width: 720px;">
+      <div class="card mb-3" style="max-width: 720px;">
         <div class="row no-gutters">
           <div class="col-md-4">
             <img src="../static/images/dorm2.jpg" class="card-img" alt="Image" style="height: 100%; width: 100%;">
           </div>
           <div class="col-md-8">
-            <form method="post">
-            
             <div class="card-body">          
               <div class="section-heading" style="background-color: #c5f0e1">
                 <h3 class="team" >{{ i.username }}</h3>
@@ -149,28 +68,26 @@
               </div>
               
               {% if i.username != user.username %}
-              <button type="submit" class="btn btn-primary"><a href="{% url 'sentReq' i.id %}" ></a>Join</button>
-                <!-- <label for="toggle-3" class="toggle-3" ><a href="{% url 'sentReq' i.id %}" ></a>
-                    <input type="checkbox" name="toggle-3" id="toggle-3" class="toggle-3__input">
-                    <span class="toggle-3__button">
-                    </span>
-                </label> -->
+              <div>
+              <form action = "{% url 'sentReq' i.id %}" method="post">
+                {% csrf_token %}  
+                <button class="btn btn-primary">Join</button>
+              </form>
+            </div>
               {% endif %}
               {% if i.username == user.username %}
-              <!-- <a href="{% url 'editPost' i.id %}" id="myBtn" class="btn btn-warning" style="margin-left: 67%;">Edit</a> -->
-              <button class="btn btn-warning"><a href="{% url 'editPost' i.id %}" style="color:white">Edit</a></button>
-              <button type="button" class="btn btn-danger"><a href="{% url 'delete' i.id %}" style="color:white">Delete</button>
-              {% endif %}
-             {% csrf_token %}
-
-             </div>     
-              <br><br>
+              <div>
+              <button class="btn btn-warning"><a href="{% url 'editPost' i.id %}" style="color: white;">Edit</a></button>
+              <button type="button" class="btn btn-danger"><a href="{% url 'delete' i.id %}" style="color: white;" >Delete</a></button>
+              </div><br>
+              {% endif %}  
+              
+            </div>     
           </form>
-        </div>
-      
+          </div>
       </div>
-      <br>
-      {% endfor %}
+
+    {% endfor %}
       </center>
       <br>
       <div class="row text-center">
@@ -179,12 +96,9 @@
             <p class="copyright"><small>
               Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
 
-            </div>
           </div>
-
         </div>
-    </div> 
-
+      </div> 
   </body>
   </html>
 

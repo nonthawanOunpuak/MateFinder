@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-    <title>MateFinder &mdash; About </title>
+    <title>MateFinder &mdash; Request</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -29,7 +29,7 @@
             <div class="col-sm-12">
               <nav class="site-navigation position-relative text-right" role="navigation"  style="margin-right: 30px;">
                 <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                  <li><a href="homepage" class="nav-link">Home</a></li>
+                  <li><a href="{% url 'homepage' %}" class="nav-link">Home</a></li>
                   <li class="has-children">   
                   <li class="active"><a href="request" class="nav-link">Request</a></li>  
                   <li><a href="{{request.user.username}}" class="nav-link">Profile</a></li>             
@@ -52,6 +52,7 @@
             <p class="copyright"><small>
               <div class="container">
                 <h2>Request</h2>
+                <hr>
                 <table style="width:100%">
                   <tr>
                     <th>From</th>
@@ -74,8 +75,10 @@
                 </table>
               </div>
               <!-- sent request table-->
+
               <div class="container">
                 <h2>Sent Request</h2>
+                <hr>
                 <table style="width:100%">
                   <tr>
                     <th>From</th>
@@ -83,7 +86,7 @@
                     <th>Date</th> 
                     <th>Status</th>
                   </tr>
-                  {% for sentR in sentReq %}
+                  {% for sentR in objSentReq %}
                   {% if sentR.username == user.username %}
                   <tr>
                     <td>You [ {{sentR.username}} ]</td>

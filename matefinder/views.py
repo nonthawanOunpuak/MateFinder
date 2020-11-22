@@ -92,7 +92,7 @@ def storeDorm(request):
 
 def viewPostDorm(request):
     return render(request, 'homepage.html', {
-        "dorms": DormInformation.objects.all()
+        "dorms": DormInformation.objects.all(),
     })
 
 
@@ -189,10 +189,11 @@ def sentRequestInformation(request, pk):
 
     objReq = RequestInformation.objects.all()
     objSent = SentRequestInformation.objects.all()
-    return render(request, 'request.html', {
-        "req": objReq,
-        "sent": objSent,
-    })
+    return HttpResponseRedirect(reverse('homepage'))
+    # return render(request, 'request.html', {
+    #     "req": objReq,
+    #     "sent": objSent,
+    # })
     # พอกด join แล้วเปลี่ยนเป็น waiting อัตโนมัติเลย แบบไม่ต้องเช็คจาก backend
     # จริงๆอันนี้อยู่หน้า homepage ก็ได้ ใช้ def request ส่งมาเอา
     # return render(request, 'homepage.html', {
@@ -217,10 +218,11 @@ def acceptReq(request, pk):
     # ให้ get acc.name_req ขึ้นมาแล้วหาว่าโพสไหนชื่อตรง
     # แล้วก็ get acc.status ออกมาเช็คว่า == "joined" มั้ย แล้วเปลี่ยนปุ่ม
 
-    return render(request, 'homepage.html', {
-        "acc": objAcc,
-
-    })
+    return render(request, 'homepage.html', 
+    # {
+    #     "acc": objAcc,
+    # }
+    )
 
 
 def request(request):
