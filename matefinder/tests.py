@@ -306,11 +306,6 @@ class UserTestCase(TestCase):
         response = c.post(self.request)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'request.html')
-        # userAccept = RequestInformation.objects.get(username=self.user1.username)
-        # userAccept.status = "confirm"
-        # userAccept.save()
-        # status = (str)(userAccept.status)
-        # self.assertTrue(status == "confirm")
 
     def test_storeAccout(self) :
         c = Client()
@@ -318,8 +313,8 @@ class UserTestCase(TestCase):
         student = Student.objects.get(username='test1')
         self.assertEqual(response.status_code,302)
 
-    def redirect(self , res):
-        return dict(res.items())['Location']
+    # def redirect(self , res):
+    #     return dict(res.items())['Location']
 
     def test_post_1(self):
         """ check test_post_1 """
@@ -342,3 +337,9 @@ class UserTestCase(TestCase):
         c.force_login(self.user1)
         response = c.post('/delete/'+ self.user1.username)
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
+
+    def test_declineReq(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.post('/decline/'+ self.user1.username)
+
