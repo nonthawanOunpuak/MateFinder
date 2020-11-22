@@ -221,7 +221,7 @@ def acceptReq(request, pk):
     # พอเด้งไปหน้า homepage ปุ่มจะเปลี่ยนเป็น join
     # ให้ get acc.name_req ขึ้นมาแล้วหาว่าโพสไหนชื่อตรง
     # แล้วก็ get acc.status ออกมาเช็คว่า == "joined" มั้ย แล้วเปลี่ยนปุ่ม
-    return redirect('/homepage')
+    return redirect('/request')
     # return render(request, 'homepage.html',
     #               # {
     #               #     "acc": objAcc,
@@ -241,5 +241,10 @@ def request(request):
 
 def declineReq(request, pk):
     o = RequestInformation.objects.get(id=pk)
+    o.delete()
+    return redirect('/request')
+
+def cancleReq(request, pk):
+    o = SentRequestInformation.objects.get(id=pk)
     o.delete()
     return redirect('/request')

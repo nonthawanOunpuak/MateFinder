@@ -18,21 +18,21 @@
 
     <link rel="stylesheet" href="../static/css/bootstrap.min.css"  rel="stylesheet" />
     <link rel="stylesheet" href="../static/css/styleabout.css" rel="stylesheet"  />
-    
+
   </head>
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
       <header class="site-navbar light js-sticky-header site-navbar-target" role="banner">
         <div class="container"  style="background-color:#c5f0e1; max-width: 140%;" >
-       
+
           <div class="col-sm-12">
             <div class="col-sm-12">
               <nav class="site-navigation position-relative text-right" role="navigation"  style="margin-right: 30px;">
                 <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                   <li><a href="{% url 'homepage' %}" class="nav-link">Home</a></li>
-                  <li class="has-children">   
-                  <li class="active"><a href="request" class="nav-link">Request</a></li>  
-                  <li><a href="{{request.user.username}}" class="nav-link">Profile</a></li>             
+                  <li class="has-children">
+                  <li class="active"><a href="request" class="nav-link">Request</a></li>
+                  <li><a href="{{request.user.username}}" class="nav-link">Profile</a></li>
                   <li><a href="about" class="nav-link">About</a></li>
                   <li style="margin-left: 300px;"><a href="{% url 'login' %}" class="nav-link">Logout</a></li>
                 </ul>
@@ -42,9 +42,9 @@
           </div>
         </div>
       </header>
-    
-      
-  
+
+
+
       <br><br><br>
       <div class="row text-center">
         <div class="col-md-12">
@@ -56,8 +56,8 @@
                 <table style="width:100%">
                   <tr>
                     <th>From</th>
-                    <th>Title</th> 
-                    <th>Date</th> 
+                    <th>Title</th>
+                    <th>Date</th>
                     <th>Status</th>
                   </tr>
                   {% for o in obj %}
@@ -82,8 +82,8 @@
                 <table style="width:100%">
                   <tr>
                     <th>From</th>
-                    <th>Title</th> 
-                    <th>Date</th> 
+                    <th>Title</th>
+                    <th>Date</th>
                     <th>Status</th>
                   </tr>
                   {% for sentR in objSentReq %}
@@ -91,8 +91,9 @@
                   <tr>
                     <td>You [ {{sentR.username}} ]</td>
                     <td>You want to be roommate with [ {{sentR.name_sent}} ]</td>
-                    <td>{{sentR.date}}</td> 
-                    <td>{{sentR.status}}</td> 
+                    <td>{{sentR.date}}</td>
+                    <td>{{sentR.status}}</td>
+                     <td><button type="button" class="btn btn-danger"><a href="{% url 'cancle' sentR.id %}" style="color:white">Cancle</button></td>
                     <!-- <td><button class="btn btn-warning"><a href="{% url 'acceptReq' sentR.id %}" style="color:white">Accept</a></button></td>
                     <td><button type="button" class="btn btn-danger"><a href="{% url 'decline' sentR.id %}" style="color:white">Decline</button></td> -->
                   </tr>
@@ -103,7 +104,7 @@
             </div>
           </div>
         </div>
-    </div> 
+    </div>
   </body>
   </html>
 </html>

@@ -49,6 +49,7 @@ urlpatterns = [
 
     # request feature
     path('decline/<int:pk>', views.declineReq, name='decline'),
+    path('cancle/<int:pk>', views.cancleReq, name='cancle'),
     path('sentReq/<int:pk>', views.sentRequestInformation, name='sentReq'),
     path('accept/<int:pk>', views.acceptReq, name='acceptReq')
 ]
