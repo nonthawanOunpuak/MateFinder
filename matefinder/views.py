@@ -208,21 +208,25 @@ def acceptReq(request, pk):
     req = RequestInformation.objects.get(id=pk)
     req.status = "joined"
     req.save()
-    s = SentRequestInformation()
-    sent = SentRequestInformation.objects.get(username=s.username)
-    sent.status = "confirm"
-    sent.save()
+    #s = SentRequestInformation()
+    print("accept   : ", request.user.username)
+    #sent = SentRequestInformation()
+    sent = SentRequestInformation.objects.filter(
+        date=req.date, username=request.user.username).update(
+        status="confirm"
+    )
+
     objAcc = RequestInformation.objects.all()
 
     # พอเด้งไปหน้า homepage ปุ่มจะเปลี่ยนเป็น join
     # ให้ get acc.name_req ขึ้นมาแล้วหาว่าโพสไหนชื่อตรง
     # แล้วก็ get acc.status ออกมาเช็คว่า == "joined" มั้ย แล้วเปลี่ยนปุ่ม
-
-    return render(request, 'homepage.html', 
-    # {
-    #     "acc": objAcc,
-    # }
-    )
+    return redirect('/homepage')
+    # return render(request, 'homepage.html',
+    #               # {
+    #               #     "acc": objAcc,
+    #               # }
+    #               )
 
 
 def request(request):
