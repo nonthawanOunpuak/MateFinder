@@ -35,30 +35,35 @@ class UserTestCase(TestCase):
 
     # Django Testing
 
+    # ตรวจสอบว่าในตาราง DormInformation มีข้อมูลเก็บอยู่จริง
     def test_DormInformation(self):
         author = DormInformation.objects.get(username="nonthawan1")
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
         expected_object_username = f'{author.id}, {author.username}, {author.name_dorm}, {author.details_dorm}, {author.type_dorm}, {author.price},{author.light}, {author.timetosleep},{author.pet}'
         self.assertEqual(expected_object_username, str(author))
 
+    # ตรวจสอบว่าในตาราง Student มีข้อมูลเก็บอยู่จริง
     def test_Student(self):
         author = Student.objects.get(username="nonthawan1")
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
         expected_object_username = f'{author.id}, {author.username}, {author.name},{author.password}, {author.email}, {author.phone}, {author.year}'
         self.assertEqual(expected_object_username, str(author))
 
+    # ตรวจสอบว่าในตาราง RequestInformation มีข้อมูลเก็บอยู่จริง
     def test_RequestInformation(self):
         author = RequestInformation.objects.get(username="nonthawan1")
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
         expected_object_username = f'{author.id}, {author.username}, {author.name_req}, {author.status}, {author.count}, {author.date}'
         self.assertEqual(expected_object_username, str(author))
 
+    # ตรวจสอบว่าในตาราง SentRequestInformation มีข้อมูลเก็บอยู่จริง
     def test_SentRequestInformation(self):
         author = SentRequestInformation.objects.get(username="nonthawan1")
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
         expected_object_username = f'{author.id}, {author.username}, {author.name_sent}, {author.status}, {author.count}, {author.date}'
         self.assertEqual(expected_object_username, str(author))
 
+    # ตรวจสอบว่าคนที่ส่ง request ไม่เป็นคนเดียวกับคนที่ post (ในตาราง SentRequestInformation )
     def test_user_sent_and_user_post(self):
         user = SentRequestInformation.objects.get(username="nonthawan1")
         userPost = (str)(user.username)
@@ -71,6 +76,7 @@ class UserTestCase(TestCase):
         userSent = (str)(user.name_sent)
         self.assertFalse(userPost != userSent)
 
+    # ตรวจสอบว่าคนที่ส่ง request ไม่เป็นคนเดียวกับคนที่ post (ในตาราง  RequestInformation )
     def test_user_request_and_user_post(self):
         user = RequestInformation.objects.get(username="nonthawan1")
         userPost = (str)(user.username)
@@ -96,7 +102,7 @@ class UserTestCase(TestCase):
 
     # Client Testing
 
-    #กรณีที่เรา login และใส่ username และ passwork ที่ถูกต้องเราจะสามารถ login ได้และเข้าสู่ระบบได้สำเร็จ
+    # กรณีที่เรา login และใส่ username และ passwork ที่ถูกต้องเราจะสามารถ login ได้และเข้าสู่ระบบได้สำเร็จ
     def test_login(self):
         pass
         c = Client()
@@ -107,7 +113,7 @@ class UserTestCase(TestCase):
 
     def test_loginFalse(self):
         c = Client()
-        #กรณีที่ login ไม่สำเร็จเพราะใส่ password ผิด จะมีข้อความแจ้งเตือนและให้ทำการ login ใหม่
+        # กรณีที่ login ไม่สำเร็จเพราะใส่ password ผิด จะมีข้อความแจ้งเตือนและให้ทำการ login ใหม่
         response = c.post('/login',{'username':'knanporn','password':'Kanaporn1111'}, follow=True)
 
         # Check that the response is 200 OK.
@@ -117,7 +123,7 @@ class UserTestCase(TestCase):
         # Check that the response message.
         self.assertEqual(response.context["message"],"Please enter the correct username and password.")
 
-        #กรณีที่ login ไม่สำเร็จเพราะใส่ username ผิด จะมีข้อความแจ้งเตือนและให้ทำการ login ใหม่
+        # กรณีที่ login ไม่สำเร็จเพราะใส่ username ผิด จะมีข้อความแจ้งเตือนและให้ทำการ login ใหม่
         response = c.post('/login',{'username':'knanpornn','password':'Kanaporn1'}, follow=True)
         # Check that the response is 200 OK.
         self.assertEqual(response.status_code, 200)
@@ -126,7 +132,7 @@ class UserTestCase(TestCase):
         # Check that the response message.
         self.assertEqual(response.context["message"],"Please enter the correct username and password.")
 
-    #กรณีที่มีการเข้ามาใช้งานครั้งแรกจะต้องมีการสมัครก่อนใช้งานและกรอกข้อมูลต่าง ๆ
+    # กรณีที่มีการเข้ามาใช้งานครั้งแรกจะต้องมีการสมัครก่อนใช้งานและกรอกข้อมูลต่าง ๆ
     def test_add_signup(self):
         c = Client()
         response = c.get('/signup')
@@ -143,14 +149,14 @@ class UserTestCase(TestCase):
             )
         self.assertEqual(response.status_code, 200)
 
-    #เมื่อ login สำเร็จจะมีสิทธิเข้าถึงหน้า about
+    # เมื่อ login สำเร็จจะมีสิทธิเข้าถึงหน้า about
     def test_about(self):
         c = Client()
         c.force_login(self.user1)
         response = c.post(self.about)
         self.assertEqual(response.status_code, 200)
 
-    #เมื่อ login สำเร็จจะมีสิทธิเข้าจึงหน้า homepage
+    # เมื่อ login สำเร็จจะมีสิทธิเข้าจึงหน้า homepage
     def test_homepage(self):
         c = Client()
         c.force_login(self.user1)
@@ -158,7 +164,7 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'homepage.html')
 
-    #เมื่อ login เข้ามาได้แล้ว เราสามารถ logout ออกมาได้และจะกลับมาที่หน้า login
+    # เมื่อ login เข้ามาได้แล้ว เราสามารถ logout ออกมาได้และจะกลับมาที่หน้า login
     def test_logout(self):
         c = Client()
         c.force_login(self.user1)
@@ -166,9 +172,8 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
 
-    # def test_profileInfo(self):
 
-
+    # ตรวจสอบว่าผู้ใช้งานสามารถสร้าง post ได้
     def  test_createDorm(self):
         c = Client()
         c.force_login(self.user1)
@@ -176,6 +181,7 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'post.html')
 
+    # ตรวจสอบว่าผู้ใช้งานสามารถใส่ข้อมูลต่าง ๆ ลงใน post ได้
     def test_storeDorm(self):
         c = Client()
         c.force_login(self.user1)
@@ -191,7 +197,7 @@ class UserTestCase(TestCase):
         }, follow=True)
 
 
-    #เมื่อเรา login เข้ามาได้เราสามารถเข้าถึงหน้า about และสามารถ logout ออกจากหน้า about ได้และจะกลับมาที่หน้า login
+    # เมื่อเรา login เข้ามาได้เราสามารถเข้าถึงหน้า about และสามารถ logout ออกจากหน้า about ได้และจะกลับมาที่หน้า login
     def test_logout_form_about(self):
         c = Client()
         c.force_login(self.user1)
@@ -201,7 +207,7 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
 
-    #เมื่อ login เข้ามาได้สำเร็จ เรามีสิทธิที่จะเข้าถึงหน้า homepage และมีสิทธิในการ post ข้อมูลต่าง ๆ
+    # เมื่อ login เข้ามาได้สำเร็จ เรามีสิทธิที่จะเข้าถึงหน้า homepage และมีสิทธิในการ post ข้อมูลต่าง ๆ
     def test_post(self):
         c = Client()
         c.force_login(self.user1)
@@ -225,7 +231,7 @@ class UserTestCase(TestCase):
         expected_object_username = f'{author.id}, {author.username}, {author.name_dorm}, {author.details_dorm}, {author.type_dorm}, {author.price},{author.light}, {author.timetosleep},{author.pet}'
         self.assertEqual(expected_object_username, str(author))
 
-    #เมื่อ login เข้ามาได้สำเร็จ เราสามารถดูข้อมูลส่วนตัวของเราได้
+    # เมื่อ login เข้ามาได้สำเร็จ เราสามารถดูข้อมูลส่วนตัวของเราได้
     def test_profileInfo(self):
         c = Client()
         c.force_login(self.user1)
@@ -235,7 +241,7 @@ class UserTestCase(TestCase):
         response = c.post(self.profile_edit)
         self.assertEqual(response.status_code, 200)
 
-    #เมื่อ login เข้ามาได้สำเร็จเราสามารถแก้ไขข้อมูลส่วนตัวของเราได้
+    # เมื่อ login เข้ามาได้สำเร็จเราสามารถแก้ไขข้อมูลส่วนตัวของเราได้
     def test_edit_profile(self):
         c = Client()
         c.force_login(self.user1)
@@ -258,7 +264,7 @@ class UserTestCase(TestCase):
         expected_object_username = f'{author.id}, {author.username}, {author.name},{author.password}, {author.email}, {author.phone}, {author.year}'
         self.assertEqual(expected_object_username, str(author))
 
-    #เมื่อ login เข้ามาได้แล้วเราสามารถแก้ไข post ของเราได้
+    # เมื่อ login เข้ามาได้แล้วเราสามารถแก้ไข post ของเราได้
     def test_editPost(self):
         c = Client()
         c.force_login(self.user1)
@@ -280,6 +286,7 @@ class UserTestCase(TestCase):
         expected_object_username = f'{author.id}, {author.username}, {author.name_dorm}, {author.details_dorm}, {author.type_dorm}, {author.price},{author.light}, {author.timetosleep},{author.pet}'
         self.assertEqual(expected_object_username, str(author))
 
+    # ตรวจสอบว่าผู้ใช้งานที่ login เข้ามาแล้าสามารถเข้าถึงหน้า request ได้
     def test_request_page(self):
         c = Client()
         c.force_login(self.user1)
@@ -288,6 +295,7 @@ class UserTestCase(TestCase):
         response = c.post(self.request)
         self.assertEqual(response.status_code, 200)
 
+    # ตรวจสอบว่าผู้ใช้งานสามารถส่ง request ให้ผู้ใช้งานอีกคนที่เราสนใจได้
     def test_request(self):
         c = Client()
         c.force_login(self.user1)
@@ -297,6 +305,7 @@ class UserTestCase(TestCase):
         self.assertEqual(RequestInformation.objects.filter(username=self.user1.username).count(), 1)
         self.assertEqual(SentRequestInformation.objects.filter(username=self.user1.username).count(), 1)
 
+    # ตรวจสอบว่าผู้ใช้งานสามารถตอบรับ request ที่ผู้ให้งานคนอื่นส่งมาได้
     def test_acceptReq(self):
         c = Client()
         c.force_login(self.user1)
@@ -307,15 +316,14 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'request.html')
 
+    # ตรวจสอบว่าผู้ใช้งานสามารถสร้าง Account ได้
     def test_storeAccout(self) :
         c = Client()
         response = c.post(reverse('storeAccount'),{'username':'test1','name':'name1','password':'1234','email':'test@matfinder.com','phone':'0818111111','year':'2'})
         student = Student.objects.get(username='test1')
         self.assertEqual(response.status_code,302)
 
-    # def redirect(self , res):
-    #     return dict(res.items())['Location']
-
+    # ตรวจสอบว่าก่อนที่ post ต้องมีการ login เข้ามาก่อน
     def test_post_1(self):
         """ check test_post_1 """
         c = Client()
@@ -324,6 +332,7 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'post.html')
 
+    # ตรวจสอบว่าก่อนที่ post ต้องมีการ login เข้ามาก่อน
     def test_post_2(self):
         """ check test_post_2 """
         c = Client()
@@ -332,12 +341,14 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code,200)
         # self.assertTemplateUsed(response,'post.html')
 
+    # ตรวจสอบว่าผู้ใช้งานสามารถลบ post ที่เรา post ไปแล้วได้
     def test_deleteDorm(self):
         c = Client()
         c.force_login(self.user1)
         response = c.post('/delete/'+ self.user1.username)
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
 
+    # ตรวจสอบว่าผู้ใช้งานสามารถยกเลิก request ที่ส่งไปแล้วได้
     def test_declineReq(self):
         c = Client()
         c.force_login(self.user1)
