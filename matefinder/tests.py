@@ -1,4 +1,3 @@
-from django.test import TestCase
 from django.test import Client, TestCase
 from .models import Student, RequestInformation, SentRequestInformation, DormInformation
 from django.contrib.auth.models import User
@@ -10,14 +9,14 @@ class UserTestCase(TestCase):
 
     def setUp(self):
 
-        Student.objects.create(username="nonthawan1", name="nonthawan1",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
-        Student.objects.create(username="nonthawan2", name="nonthawan2",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
-        RequestInformation.objects.create(username="nonthawan1", name_req="12345", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
-        RequestInformation.objects.create(username="gift", name_req="gift", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
-        SentRequestInformation.objects.create(username="nonthawan1", name_sent="nonthawan2", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
-        SentRequestInformation.objects.create(username="mai", name_sent="mai", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
-        DormInformation.objects.create(username="nonthawan1", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000,light=True,timetosleep="1 a.m",pet=True)
-        DormInformation.objects.create(username="nonthawan2", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000,light=True,timetosleep="1 a.m",pet=True)
+        self.s1 = Student.objects.create(username="nonthawan1", name="nonthawan1",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
+        self.s2 = Student.objects.create(username="nonthawan2", name="nonthawan2",password="123456789", email= "2563@mail.com", phone="0123456789",year = 1)
+        self.r1 = RequestInformation.objects.create(username="nonthawan1", name_req="12345", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
+        self.r2 = RequestInformation.objects.create(username="gift", name_req="gift", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
+        self.sr1 = SentRequestInformation.objects.create(username="nonthawan1", name_sent="nonthawan2", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
+        self.sr2 = SentRequestInformation.objects.create(username="mai", name_sent="mai", status = "waiting", count = 0 , date = "2020-11-21 17:04:48.680158+00:00")
+        self.d1 = DormInformation.objects.create(username="nonthawan1", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000,light=True,timetosleep="1 a.m",pet=True)
+        self.d2 = DormInformation.objects.create(username="nonthawan2", name_dorm="1234", details_dorm="123",type_dorm="1123",price=4000,light=True,timetosleep="1 a.m",pet=True)
 
         # Create User
         self.user1 = User.objects.create_user(username="nonthawan1",password="123456789",email="2563@mail.com")
@@ -57,7 +56,7 @@ class UserTestCase(TestCase):
     def test_SentRequestInformation(self):
         author = SentRequestInformation.objects.get(username="nonthawan1")
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 1)
-        expected_object_username = f'{author.id}, {author.username}, {author.name_sent}, {author.status}, {author.count},  {author.date}'
+        expected_object_username = f'{author.id}, {author.username}, {author.name_sent}, {author.status}, {author.count}, {author.date}'
         self.assertEqual(expected_object_username, str(author))
 
     def test_user_sent_and_user_post(self):
@@ -94,7 +93,6 @@ class UserTestCase(TestCase):
         userPost.delete()
         self.assertEqual(DormInformation.objects.filter(username="nonthawan1").count(), 0)
         self.assertTemplateUsed(response , 'homepage.html')
-        # self.assertEqual(response.context["messages"],"Post Deleted Successfully")
 
     # Client Testing
 
@@ -167,6 +165,31 @@ class UserTestCase(TestCase):
         response = c.get(self.logout)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'login.html')
+
+    # def test_profileInfo(self):
+
+
+    def  test_createDorm(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.get(self.post)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'post.html')
+
+    def test_storeDorm(self):
+        c = Client()
+        c.force_login(self.user1)
+        response = c.post('/store',{
+            'username':'gift',
+            'name_dorm':'citypark',
+            'details_dorm':'-',
+            'type_dorm':'woman',
+            'price':7000,
+            'light':True,
+            'timetosleep':'3 a.m',
+            'pet':True
+        }, follow=True)
+
 
     #เมื่อเรา login เข้ามาได้เราสามารถเข้าถึงหน้า about และสามารถ logout ออกจากหน้า about ได้และจะกลับมาที่หน้า login
     def test_logout_form_about(self):
@@ -280,15 +303,41 @@ class UserTestCase(TestCase):
         response = c.post(self.homepage)
         self.assertEqual(response.status_code, 200)
         response = c.post('/accept/'+ self.user2.username)
-        userAccept = RequestInformation.objects.get(username=self.user1.username)
-        userAccept.status = "confirm"
-        userAccept.save()
-        status = (str)(userAccept.status)
-        self.assertTrue(status == "confirm")
+        response = c.post(self.request)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'request.html')
+        # userAccept = RequestInformation.objects.get(username=self.user1.username)
+        # userAccept.status = "confirm"
+        # userAccept.save()
+        # status = (str)(userAccept.status)
+        # self.assertTrue(status == "confirm")
 
+    def test_storeaccout(self) :
+        c = Client()
+        response = c.post(reverse('storeAccount'),{'username':'test1','name':'name1','password':'1234','email':'test@matfinder.com','phone':'0818111111','year':'2'})
+        student = Student.objects.get(username='test1')
+        self.assertEqual(response.status_code,302)
+        # print(type(student))
+        # self.assertEqual(len(student),1)
+        # user = User.objects.get(username=student.username)
+        # self.assertEqual(len(user),1)
 
+    def redirect(self , res):
+        return dict(res.items())['Location']
 
+    def test_post_1(self):
+        """ check test_post_1 """
+        c = Client()
+        c.force_login(self.user1)
+        response = c.post(reverse('post'))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'post.html')
 
-
-
+    def test_post_2(self):
+        """ check test_post_2 """
+        c = Client()
+        # c.force_login(self.user1)
+        response = c.post(reverse('post'))
+        self.assertEqual(response.status_code,200)
+        # self.assertTemplateUsed(response,'post.html')
 

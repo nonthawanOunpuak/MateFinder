@@ -33,7 +33,7 @@ class SentRequestInformation(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.id}, {self.username}, {self.name_sent}, {self.status}, {self.count},  {self.date}"
+        return f"{self.id}, {self.username}, {self.name_sent}, {self.status}, {self.count}, {self.date}"
 
 
 class DormInformation(models.Model):
@@ -50,4 +50,4 @@ class DormInformation(models.Model):
     pet = models.BooleanField()
 
     def __str__(self):
-        return f"{self.id}, {self.username}, {self.name_dorm}, {self.details_dorm}, {self.type_dorm}, {self.price},{self.light}, {self.timetosleep},{self.pet},{self.status}"
+        return f"{self.id}, {self.username}, {self.name_dorm}, {self.details_dorm}, {self.type_dorm}, {self.price},{self.light}, {self.timetosleep},{self.pet}"
