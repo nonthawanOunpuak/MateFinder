@@ -111,6 +111,10 @@ def profile_edit(request):
         "phone": student.phone,
         "year": student.year,
     })
+<<<<<<< HEAD
+
+=======
+>>>>>>> mai
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
     else:
@@ -163,6 +167,22 @@ def updatePost(request, pk):
     d.save()
     return redirect('/homepage')
 
+<<<<<<< HEAD
+# def sentRequestDorm(request):
+    # get ค่า username post's owner ออกมา
+    # สร้าง database request ให้ owner
+    # get ค่า username คนกด request
+    # สร้าง database sentRequest ให้คนกด request
+    # status ยังเป็น 0 - waiting button
+
+# def accept(request):
+   # get ค่า username คนกดออกมาแล้วบันทึกใน database sentRequest ของเขา
+   # status = 1 - joined button
+   #
+
+# def deny(request)
+# def cancle(request)
+=======
 # ตอนกดขอ join
 # db ถูกสร้างสองฝั่ง คือ sentRequest (username-mine) ของเรา กับ Request ของเขา (เราจะเป็น name_req)
 
@@ -248,3 +268,4 @@ def cancleReq(request, pk):
     o = SentRequestInformation.objects.get(id=pk)
     o.delete()
     return redirect('/request')
+>>>>>>> mai
