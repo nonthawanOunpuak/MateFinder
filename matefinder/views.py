@@ -9,23 +9,33 @@ from django import forms
 from .forms import DormInformationForm
 from .forms import StudentForm
 
+# About's page
+
 
 def about(request):
     return render(request, 'about.html')
+
+# Contact's page
 
 
 def contact(request):
     return render(request, 'contact.html')
 
+# Home's page
+
 
 def home(request):
     return render(request, 'home.html')
+
+# Homepage's page
 
 
 def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
     return render(request, "homepage.html")
+
+# Login page
 
 
 def login(request):
@@ -42,13 +52,20 @@ def login(request):
             })
     return render(request, "login.html")
 
+# Logout page
+
 
 def logout(request):
     return render(request, "login.html")
 
+# Signup page
+
 
 def createAccount(request):
     return render(request, 'signup.html')
+
+# create account when fill out of field in signup page and then click create account
+# the server will be call storeAccount method for keep acc.
 
 
 def storeAccount(request):
@@ -64,6 +81,8 @@ def storeAccount(request):
     User.objects.create_user(username=s.username, password=s.password)
     return redirect('/login')
 
+# get the Information's Profile
+
 
 def profileInfo(request):
     profile = User.object.all().get(username=request.user.username)
@@ -71,9 +90,13 @@ def profileInfo(request):
         "Profile": profile
     })
 
+# Post's page
+
 
 def createDorm(request):
     return render(request, 'post.html')
+
+# Create post method
 
 
 def storeDorm(request):
@@ -89,6 +112,8 @@ def storeDorm(request):
     d.save()
     return redirect('/homepage')
 
+# Showing all post of dorm in timeline
+
 
 def viewPostDorm(request):
     return render(request, 'homepage.html', {
@@ -102,6 +127,8 @@ def post(request):
     else:
         return render(request, 'post.html')
 
+# require fields of profile
+
 
 def profile_edit(request):
     student = Student.objects.get(username=request.user.username)
@@ -112,6 +139,8 @@ def profile_edit(request):
         "year": student.year,
     })
 
+# editing
+
 
 def profile_edited(request):
     Student.objects.filter(username=request.user.username).update(
@@ -121,6 +150,8 @@ def profile_edited(request):
         year=request.POST.get('year')
     )
     return redirect('homepage')
+
+# show profile for each student's user
 
 
 def profile(request, studentlink):
@@ -133,11 +164,15 @@ def profile(request, studentlink):
     }
     )
 
+# delete post
+
 
 def deleteDorm(request, pk):
     d = DormInformation.objects.get(id=pk)
     d.delete()
     return redirect('/homepage')
+
+# edit post
 
 
 def editPost(request, pk):
@@ -145,6 +180,8 @@ def editPost(request, pk):
     return render(request, 'edit.html', {
         "dorm": d
     })
+
+# upate post
 
 
 def updatePost(request, pk):
@@ -161,6 +198,8 @@ def updatePost(request, pk):
 
 # ตอนกดขอ join
 # db ถูกสร้างสองฝั่ง คือ sentRequest (username-mine) ของเรา กับ Request ของเขา (เราจะเป็น name_req)
+
+# when you sent request to someone. the server will be call this method
 
 
 def sentRequestInformation(request, pk):
@@ -199,6 +238,8 @@ def sentRequestInformation(request, pk):
 
 # request feature showing
 
+# accept method for request
+
 
 def acceptReq(request, pk):
     req = RequestInformation.objects.get(id=pk)
@@ -224,6 +265,8 @@ def acceptReq(request, pk):
     #               # }
     #               )
 
+# get request's info
+
 
 def request(request):
     # จะดึงข้อมูลละก็ข้อคาม status มาเช็ค ถ้า == 'confirm' จะเป็น message บอก
@@ -234,11 +277,15 @@ def request(request):
         'objSentReq': objSentReq
     })
 
+# decline method for a request
+
 
 def declineReq(request, pk):
     o = RequestInformation.objects.get(id=pk)
     o.delete()
     return redirect('/request')
+
+# cancel Request when you change minds.
 
 
 def cancleReq(request, pk):
